@@ -2,7 +2,9 @@
 import SEO from '../components/SEO.astro';
 import Navigation from '../components/Navigation.astro';
 import type { WPSEO } from '../types/wp';
+import { env } from '../lib/env';
 import '../styles/prose.css';
+import '../styles/wp-blocks.css';
 
 interface Props {
   title?: string;
@@ -12,15 +14,20 @@ interface Props {
 }
 
 const { title, description, seo, type = 'website' } = Astro.props;
+
+// WordPress block library CSS URL (for Gutenberg block rendering)
+const wpBaseUrl = env.WORDPRESS_API_URL.replace(/\/graphql$/, '');
+const wpBlockCssUrl = `${wpBaseUrl}/wp-includes/css/dist/block-library/style.min.css`;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+		<link rel="stylesheet" href={wpBlockCssUrl} />
 		<SEO title={title} description={description} seo={seo} type={type} />
 	</head>
 	<body class="min-h-screen bg-white text-gray-900">

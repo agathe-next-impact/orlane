@@ -17,7 +17,7 @@ export interface GraphQLVariables {
   [key: string]: string | number | boolean | null | undefined;
 }
 
-const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+const CACHE_TTL = 30 * 1000; // 30 seconds
 
 export async function fetchGraphQL<T>(
   query: string,
@@ -86,6 +86,55 @@ export async function fetchGraphQL<T>(
       query
     );
   }
+}
+
+/**
+ * Fetch GraphQL with custom headers (e.g. Authorization for preview/draft access).
+ * Bypasses cache since preview content should always be fresh.
+ */
+export async function fetchGraphQLWithAuth<T>(
+  query: string,
+  variables?: GraphQLVariables,
+  authToken?: string
+): Promise<T> {
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
+
+  if (authToken) {
+    headers['Authorization'] = authToken;
+  }
+
+  const response = await fetch(WORDPRESS_API_URL, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ query, variables }),
+  });
+
+  if (!response.ok) {
+    throw new WPGraphQLError(
+      `HTTP error ${response.status}`,
+      query,
+      response.status
+    );
+  }
+
+  const json: GraphQLResponse<T> = await response.json();
+
+  if (json.errors) {
+    throw new WPGraphQLError(
+      'GraphQL query failed',
+      query,
+      response.status,
+      json.errors
+    );
+  }
+
+  if (!json.data) {
+    throw new WPGraphQLError('No data in response', query);
+  }
+
+  return json.data;
 }
 
 export function getWordPressApiUrl(): string {

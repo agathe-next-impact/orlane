@@ -12,7 +12,14 @@ interface Props {
 const { title, description, image, seo, type = 'website' } = Astro.props;
 
 const siteUrl = Astro.url.origin;
-const currentUrl = Astro.url.href;
+
+// Strip preview query params from URLs to avoid leaking secrets in meta tags
+const cleanUrl = new URL(Astro.url.href);
+const isPreview = cleanUrl.searchParams.has('secret') && cleanUrl.searchParams.has('id');
+cleanUrl.searchParams.delete('secret');
+cleanUrl.searchParams.delete('id');
+cleanUrl.searchParams.delete('postType');
+const canonicalUrl = cleanUrl.href;
 
 const metaTitle = seo?.title || title || 'Headless WordPress Site';
 const metaDescription = seo?.metaDesc || description || 'A modern headless WordPress site built with Astro';
@@ -21,17 +28,18 @@ const metaImage = seo?.opengraphImage?.sourceUrl || image || `${siteUrl}/og-imag
 
 <title>{metaTitle}</title>
 <meta name="description" content={metaDescription} />
+{isPreview && <meta name="robots" content="noindex, nofollow" />}
 
 <meta property="og:type" content={type} />
-<meta property="og:url" content={currentUrl} />
+<meta property="og:url" content={canonicalUrl} />
 <meta property="og:title" content={metaTitle} />
 <meta property="og:description" content={metaDescription} />
 <meta property="og:image" content={metaImage} />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:url" content={currentUrl} />
+<meta name="twitter:url" content={canonicalUrl} />
 <meta name="twitter:title" content={metaTitle} />
 <meta name="twitter:description" content={metaDescription} />
 <meta name="twitter:image" content={metaImage} />
 
-<link rel="canonical" href={currentUrl} />
+<link rel="canonical" href={canonicalUrl} />

@@ -53,6 +53,20 @@ class SimpleCache {
   }
 
   /**
+   * Remove all entries whose key starts with the given prefix
+   */
+  clearByPrefix(prefix: string): number {
+    let count = 0;
+    for (const key of this.cache.keys()) {
+      if (key.startsWith(prefix)) {
+        this.cache.delete(key);
+        count++;
+      }
+    }
+    return count;
+  }
+
+  /**
    * Clear all cached values
    */
   clear(): void {

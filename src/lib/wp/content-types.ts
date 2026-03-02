@@ -162,7 +162,7 @@ export async function getAvailableContentTypes(): Promise<ContentType[]> {
   }
   const apiTypes = await detectContentTypesViaAPI();
   if (apiTypes && apiTypes.length > 0) {
-    cache.set(CONTENT_TYPES_CACHE_KEY, apiTypes, 10 * 60 * 1000);
+    cache.set(CONTENT_TYPES_CACHE_KEY, apiTypes, 2 * 60 * 1000);
     return apiTypes;
   }
 
@@ -203,7 +203,7 @@ export async function getAvailableContentTypes(): Promise<ContentType[]> {
         console.warn('Could not find RootQuery type, using manual detection');
       }
       const manualTypes = await detectContentTypesManually();
-      cache.set(CONTENT_TYPES_CACHE_KEY, manualTypes, 10 * 60 * 1000);
+      cache.set(CONTENT_TYPES_CACHE_KEY, manualTypes, 2 * 60 * 1000);
       return manualTypes;
     }
 
@@ -256,7 +256,7 @@ export async function getAvailableContentTypes(): Promise<ContentType[]> {
       }
     }
 
-    cache.set(CONTENT_TYPES_CACHE_KEY, contentTypes, 10 * 60 * 1000);
+    cache.set(CONTENT_TYPES_CACHE_KEY, contentTypes, 2 * 60 * 1000);
     if (import.meta.env.DEV) {
       console.log('Detected content types:', contentTypes.map(ct => ct.name).join(', '));
     }
@@ -267,7 +267,7 @@ export async function getAvailableContentTypes(): Promise<ContentType[]> {
       console.warn('Introspection failed, using manual detection');
     }
     const manualTypes = await detectContentTypesManually();
-    cache.set(CONTENT_TYPES_CACHE_KEY, manualTypes, 10 * 60 * 1000);
+    cache.set(CONTENT_TYPES_CACHE_KEY, manualTypes, 2 * 60 * 1000);
     return manualTypes;
   }
 }

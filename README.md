@@ -1,467 +1,229 @@
-# Headless WordPress + Astro Boilerplate
+# Headless WordPress + Astro
 
-A modern, production-ready boilerplate for building headless WordPress sites with Astro SSR mode, TypeScript, and WPGraphQL.
+Frontend headless pour WordPress utilisant Astro SSR, WPGraphQL et TypeScript.
 
-## Features
+## Stack technique
 
-- **Astro SSR Mode**: Server-side rendering for optimal performance and SEO
-- **TypeScript**: Full type safety across the entire application
-- **WPGraphQL Integration**: Efficient data fetching from WordPress
-- **Automatic CPT Detection**: 🆕 Dynamically discovers and displays all WordPress Custom Post Types without manual configuration
-- **Tailwind CSS**: Utility-first CSS framework for rapid UI development
-- **Advanced Custom Fields (ACF)**: Support for flexible content layouts
-- **Optimized Images**: Automatic image optimization with responsive srcsets
-- **SEO Ready**: Built-in SEO component with Open Graph and Twitter Card support
-- **Dynamic Routing**: Automatic routing for posts, pages, and custom post types
-- **Flexible Content System**: Modular component system for ACF flexible content fields
+- **Astro 5** en mode SSR (Node.js standalone)
+- **WPGraphQL** pour la communication avec WordPress
+- **TypeScript** avec validation Zod des variables d'environnement
+- **Tailwind CSS** pour le styling
+- **Cache in-memory** avec TTL et invalidation par webhook
 
-## Project Structure
+## Structure du projet
 
 ```
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   ├── flexible/
-│   │   │   ├── FlexibleContent.astro    # Main flexible content mapper
-│   │   │   ├── HeroSection.astro        # Hero section component
-│   │   │   ├── ContentBlock.astro       # Content block component
-│   │   │   └── ImageGallery.astro       # Image gallery component
-│   │   ├── PostCard.astro               # Blog post card component
-│   │   ├── SEO.astro                    # SEO meta tags component
-│   │   └── WPImage.astro                # Optimized image component
-│   ├── layouts/
-│   │   └── Layout.astro                 # Base layout with header/footer
-│   ├── lib/
-│   │   └── wp.ts                        # WordPress GraphQL client
-│   ├── pages/
-│   │   ├── blog/
-│   │   │   ├── index.astro              # Blog listing page
-│   │   │   └── [slug].astro             # Individual blog post
-│   │   ├── projects/
-│   │   │   ├── index.astro              # Projects listing page
-│   │   │   └── [slug].astro             # Individual project
-│   │   ├── [slug].astro                 # Dynamic page routing
-│   │   └── index.astro                  # Homepage
-│   ├── types/
-│   │   └── wp.d.ts                      # WordPress TypeScript types
-├── .env.example
-├── astro.config.mjs
-└── tailwind.config.mjs
+src/
+├── components/
+│   ├── Navigation.astro           # Menu dynamique (auto-detection WordPress)
+│   ├── PostCard.astro             # Carte d'article
+│   ├── SEO.astro                  # Meta tags SEO / Open Graph
+│   ├── WPImage.astro              # Image WordPress optimisee
+│   └── flexible/                  # Composants ACF Flexible Content
+│       ├── FlexibleContent.astro
+│       ├── HeroSection.astro
+│       ├── ContentBlock.astro
+│       └── ImageGallery.astro
+├── layouts/
+│   └── Layout.astro               # Layout principal (header, footer, nav)
+├── lib/
+│   ├── cache.ts                   # Cache in-memory avec TTL
+│   ├── env.ts                     # Validation Zod des variables d'env
+│   ├── errors.ts                  # Classes d'erreur personnalisees
+│   ├── wp.ts                      # Barrel exports
+│   ├── wp/
+│   │   ├── fetcher.ts             # Client GraphQL (standard + authentifie)
+│   │   ├── content-types.ts       # Detection automatique des CPT
+│   │   ├── queries.ts             # Requetes GraphQL (posts, pages, menus)
+│   │   ├── cpt.ts                 # Module CPT haut niveau
+│   │   └── resolver.ts            # Resolution de contenu par slug
+│   └── utils/
+│       ├── date.ts                # Formatage de dates
+│       └── sanitize.ts            # Sanitisation HTML
+├── pages/
+│   ├── index.astro                # Page d'accueil
+│   ├── [...slug].astro            # Route catch-all (pages, posts, CPT)
+│   ├── blog/
+│   │   └── index.astro            # Archive du blog
+│   ├── content-types.astro        # Liste de tous les CPT detectes
+│   └── api/
+│       ├── revalidate.ts          # Webhook d'invalidation du cache
+│       └── preview.ts             # Preview des brouillons WordPress
+├── styles/
+│   └── prose.css                  # Styles pour le contenu WordPress
+└── types/
+    └── wp.d.ts                    # Interfaces TypeScript WordPress
+
+wp-plugins/
+└── astro-headless-preview/
+    └── astro-headless-preview.php  # Plugin WP : preview + revalidation
 ```
 
-## Getting Started
+## Installation
 
-### Prerequisites
+### Pre-requis
 
-- Node.js 18+ installed
-- A WordPress site with WPGraphQL plugin installed
-- (Optional) Advanced Custom Fields Pro plugin for flexible content
+- Node.js 18+
+- WordPress avec [WPGraphQL](https://wordpress.org/plugins/wp-graphql/) active
 
-### Installation
+### Demarrage
 
-1. Clone this repository:
-```bash
-git clone <your-repo-url>
-cd headless-wp-astro
-```
-
-2. Install dependencies:
 ```bash
 npm install
-```
-
-3. Copy `.env.example` to `.env`:
-```bash
-cp .env.example .env
-```
-
-4. Update the `.env` file with your WordPress GraphQL endpoint:
-```env
-WORDPRESS_API_URL=https://your-wordpress-site.com/graphql
-```
-
-5. Start the development server:
-```bash
+cp .env.example .env.local
+# Editer .env.local avec vos valeurs
 npm run dev
 ```
 
-6. Open http://localhost:4321 in your browser
+### Variables d'environnement
 
-## WordPress Setup
+```env
+# Requis
+WORDPRESS_API_URL=https://votre-site.com/graphql
 
-### Required Plugins
+# Invalidation du cache (optionnel)
+REVALIDATE_SECRET=un-secret-aleatoire
 
-1. **WPGraphQL** (Required)
-   - Install from: https://wordpress.org/plugins/wp-graphql/
-   - Or via WP-CLI: `wp plugin install wp-graphql --activate`
-
-2. **WPGraphQL for Advanced Custom Fields** (REQUIRED for ACF CPT Detection)
-   - Install from: https://github.com/wp-graphql/wp-graphql-acf
-   - **⚠️ CRITICAL**: Without this plugin, ACF Custom Post Types will NOT be detected!
-   - Requires ACF Pro or ACF Free plugin
-
-3. **Yoast SEO** or **Rank Math** (Optional, for SEO support)
-   - WPGraphQL for Yoast SEO: https://github.com/ashhitch/wp-graphql-yoast-seo
-   - Or use Rank Math's built-in GraphQL support
-
-### Setting Up WPGraphQL
-
-After installing WPGraphQL:
-
-1. Go to **GraphQL > Settings** in WordPress admin
-2. Enable public introspection (optional, for development)
-3. Your GraphQL endpoint will be: `https://yourdomain.com/graphql`
-
-### Registering Custom Post Types
-
-To add a custom post type (like "Projects") to WPGraphQL, add this to your theme's `functions.php`:
-
-```php
-function register_project_post_type() {
-    register_post_type('project', [
-        'label' => 'Projects',
-        'public' => true,
-        'show_in_graphql' => true,
-        'graphql_single_name' => 'project',
-        'graphql_plural_name' => 'projects',
-        'supports' => ['title', 'editor', 'thumbnail', 'excerpt'],
-        'has_archive' => true,
-        'rewrite' => ['slug' => 'projects'],
-    ]);
-}
-add_action('init', 'register_project_post_type');
+# Preview des brouillons (optionnel)
+WP_PREVIEW_SECRET=votre-secret-preview
+WP_AUTH_TOKEN=Basic dXNlcjphcHBfcGFzc3dvcmQ=
 ```
 
-### Setting Up ACF Flexible Content
+## Routage
 
-1. Install Advanced Custom Fields Pro
-2. Create a new Field Group
-3. Add a Flexible Content field named "flexible_content"
-4. Add layouts matching the components in `src/components/flexible/`:
+Toutes les URLs sont des slugs directs apres le domaine, comme dans WordPress :
 
-#### Hero Section Layout
-- Layout Name: `hero_section`
-- Fields:
-  - `heading` (Text)
-  - `subheading` (Text)
-  - `cta_text` (Text)
-  - `cta_url` (URL)
+| URL | Contenu |
+|-----|---------|
+| `/` | Page d'accueil |
+| `/blog` | Archive des articles |
+| `/a-propos` | Page WordPress "A propos" |
+| `/mon-article` | Article WordPress |
+| `/projects` | Archive du CPT "Projects" |
+| `/projects/mon-projet` | Item du CPT "Projects" |
+| `/content-types` | Liste des types de contenu detectes |
 
-#### Content Block Layout
-- Layout Name: `content_block`
-- Fields:
-  - `content` (WYSIWYG Editor)
-  - `layout` (Select: left, right, center)
+Le fichier `[...slug].astro` resout automatiquement chaque slug vers le bon type de contenu via le module `resolver.ts`. Ordre de priorite :
 
-#### Image Gallery Layout
-- Layout Name: `image_gallery`
-- Fields:
-  - `images` (Gallery)
+1. Archive CPT (le slug correspond au pluralName d'un CPT)
+2. Page WordPress
+3. Article WordPress
+4. Item CPT (recherche dans tous les CPT enregistres)
 
-5. In Field Group settings:
-   - Location: Post Type is equal to "Project" (or "Page")
-   - Show in GraphQL: Yes
-   - GraphQL Field Name: `flexibleContent`
+## Modules principaux
 
-### ACF Field Group Settings
+### Menu dynamique
 
-For any ACF field group to work with this boilerplate:
+Le composant `Navigation.astro` detecte automatiquement le menu WordPress a utiliser :
 
-1. Set "Show in GraphQL" to **Yes**
-2. Set a clear "GraphQL Field Name" (e.g., `acfFields`)
-3. Make sure individual fields have GraphQL enabled
+1. Menu assigne a l'emplacement `PRIMARY`
+2. Premier menu avec un emplacement assigne
+3. Premier menu par ID
 
-Example ACF configuration in PHP:
+Sous-menus supportes. Fallback sur des liens codes en dur si aucun menu n'est trouve.
+
+### Detection des CPT
+
+Le module `content-types.ts` detecte automatiquement tous les Custom Post Types enregistres dans WPGraphQL, via 3 strategies en cascade :
+
+1. **API** : requete `contentTypes` de WPGraphQL
+2. **Introspection** : analyse du schema GraphQL
+3. **Manuel** : test d'une liste de noms courants
+
+Les CPT detectes sont disponibles via :
+
+```typescript
+import { getCustomPostTypes, getCPTArchive, getCPTSingle } from './lib/wp';
+
+const types = await getCustomPostTypes();           // Liste des CPT (exclut posts/pages)
+const archive = await getCPTArchive('projects');     // Config + items d'un CPT
+const item = await getCPTSingle('projects', 'slug'); // Item unique d'un CPT
+```
+
+### Cache et invalidation
+
+Le cache in-memory a deux niveaux de TTL :
+- **30 secondes** pour les requetes GraphQL
+- **2 minutes** pour la detection des types de contenu
+
+L'endpoint `/api/revalidate` permet a WordPress de purger le cache instantanement :
+
+```
+POST /api/revalidate
+Headers: { "x-revalidate-secret": "votre-secret" }
+Body:    { "post_type": "post", "slug": "mon-article" }
+```
+
+Sans body, le cache est entierement purge.
+
+### Preview des brouillons
+
+Le systeme de preview permet de visualiser les brouillons/revisions WordPress directement dans le frontend Astro.
+
+**Cote WordPress** : installer le plugin `wp-plugins/astro-headless-preview/` qui :
+- Remplace le bouton "Preview" par un lien vers le frontend Astro
+- Envoie un webhook de revalidation a chaque publication (`save_post`) et mise a jour de menu (`wp_update_nav_menu`)
+- Propose une page de configuration (Reglages > Astro Preview)
+
+**Cote Astro** : l'endpoint `/api/preview` :
+- Valide le secret partage
+- Fait une requete GraphQL authentifiee (`WP_AUTH_TOKEN`) avec `asPreview: true`
+- Rend une page HTML autonome avec banniere de preview
+
+**Configuration du token** : dans WordPress, creer un Application Password (Utilisateurs > Profil > Mots de passe d'application), puis encoder en base64 :
+
+```
+WP_AUTH_TOKEN=Basic base64(username:application_password)
+```
+
+## Plugins WordPress requis/optionnels
+
+| Plugin | Statut | Fonction |
+|--------|--------|----------|
+| WPGraphQL | Requis | API GraphQL |
+| WPGraphQL for ACF | Optionnel | Expose les champs ACF dans GraphQL |
+| Yoast SEO / Rank Math | Optionnel | Champs `seo` dans les requetes |
+| ACF Pro | Optionnel | Flexible Content, champs avances |
+| Astro Headless Preview | Optionnel | Preview + revalidation (inclus dans `wp-plugins/`) |
+
+Le site s'adapte automatiquement a la presence ou absence de chaque plugin optionnel.
+
+## Enregistrer un CPT dans WPGraphQL
 
 ```php
-if( function_exists('acf_add_local_field_group') ):
-
-acf_add_local_field_group([
-    'key' => 'group_project_fields',
-    'title' => 'Project Fields',
-    'fields' => [
-        [
-            'key' => 'field_client_name',
-            'label' => 'Client Name',
-            'name' => 'client_name',
-            'type' => 'text',
-            'show_in_graphql' => 1,
-        ],
-        [
-            'key' => 'field_project_url',
-            'label' => 'Project URL',
-            'name' => 'project_url',
-            'type' => 'url',
-            'show_in_graphql' => 1,
-        ],
-        [
-            'key' => 'field_flexible_content',
-            'label' => 'Flexible Content',
-            'name' => 'flexible_content',
-            'type' => 'flexible_content',
-            'show_in_graphql' => 1,
-            'layouts' => [
-                // Your layouts here
-            ],
-        ],
-    ],
-    'location' => [
-        [
-            [
-                'param' => 'post_type',
-                'operator' => '==',
-                'value' => 'project',
-            ],
-        ],
-    ],
-    'show_in_graphql' => 1,
-    'graphql_field_name' => 'acfFields',
+register_post_type('project', [
+    'label' => 'Projects',
+    'public' => true,
+    'show_in_graphql' => true,
+    'graphql_single_name' => 'project',
+    'graphql_plural_name' => 'projects',
+    'supports' => ['title', 'editor', 'thumbnail', 'excerpt'],
 ]);
-
-endif;
 ```
 
-## Dynamic Custom Post Type Detection
+## Commandes
 
-This boilerplate includes automatic detection of WordPress Custom Post Types! The system uses GraphQL introspection to discover all available content types without manual configuration.
+| Commande | Action |
+|----------|--------|
+| `npm run dev` | Serveur de developpement (`localhost:4321`) |
+| `npm run build` | Build de production dans `./dist/` |
+| `npm run preview` | Preview du build de production |
 
-### Key Features
+## Deploiement
 
-- **Automatic Discovery**: Detects all CPTs registered with WPGraphQL support
-- **Dynamic Queries**: Generates appropriate GraphQL queries for any content type
-- **Zero Configuration**: No need to manually create routes for new CPTs
-- **Type Flexible**: Works with any CPT structure
-- **Fallback Detection**: Works even when GraphQL introspection is disabled
+Le projet utilise l'adapter `@astrojs/node` en mode standalone. Compatible avec toute plateforme supportant Node.js (Vercel, Railway, DigitalOcean, VPS).
 
-### Built-in Pages
+Variables d'environnement a configurer sur la plateforme :
+- `WORDPRESS_API_URL` (requis)
+- `REVALIDATE_SECRET` (si invalidation active)
+- `WP_PREVIEW_SECRET` et `WP_AUTH_TOKEN` (si preview active)
 
-- **`/content-types`**: View all detected content types with counts
-- **Homepage**: Automatically displays custom post types
-- **Dynamic Access**: Use `getAllItemsByType()` and `getItemBySlug()` for any CPT
+## Depannage
 
-### Testing Your CPT Detection
+**Le contenu ne se met pas a jour** : verifier que `REVALIDATE_SECRET` est configure des deux cotes (WordPress plugin + `.env.local`). Tester manuellement : `GET /api/revalidate?secret=votre-secret`.
 
-Run these scripts to verify your WordPress setup:
+**Les menus ne s'affichent pas** : verifier que WPGraphQL expose les menus (natif depuis v1.0). Tester dans GraphiQL : `{ menus { nodes { name locations } } }`.
 
-```bash
-# Test if ACF CPTs are detected
-node test-acf-cpt.mjs
+**Les CPT ne sont pas detectes** : verifier que `show_in_graphql` est `true` dans l'enregistrement du CPT. Si ACF est utilise, installer WPGraphQL for ACF.
 
-# Test specific content type
-node add-custom-cpt.mjs projects "Project" project
-
-# Full validation test
-node test-final-validation.mjs
-```
-
-### Adding ACF Custom Post Types
-
-**IMPORTANT**: For ACF Custom Post Types to be detected, you MUST:
-
-1. Install **WPGraphQL for ACF** plugin
-2. In ACF, when creating/editing a Post Type:
-   - Enable "Show in GraphQL"
-   - Set "GraphQL Single Name" (e.g., `project`)
-   - Set "GraphQL Plural Name" (e.g., `projects`)
-
-For detailed instructions, see [ACF-CPT-SETUP.md](./ACF-CPT-SETUP.md).
-
-### Adding Custom CPT Names
-
-If your CPT is not auto-detected, add it manually using the script:
-
-```bash
-node add-custom-cpt.mjs yourCptPluralName "Display Name" yourCptSingleName
-```
-
-This will:
-1. Test if the CPT exists in WordPress
-2. Automatically add it to `src/lib/wp.ts`
-3. Show you a preview of the data
-
-### Usage Example
-
-```typescript
-import { getAllItemsByType, getItemBySlug } from '../lib/wp';
-
-// Get all items of any content type
-const portfolios = await getAllItemsByType('portfolios');
-const testimonials = await getAllItemsByType('testimonials');
-
-// Get single item by slug
-const portfolio = await getItemBySlug('portfolios', 'my-work');
-```
-
-### Documentation
-
-For complete documentation on dynamic CPT detection, see [DYNAMIC-CPT.md](./DYNAMIC-CPT.md).
-
-## Customization
-
-### Adding New Flexible Content Components
-
-1. Create a new component in `src/components/flexible/`:
-```astro
----
-// src/components/flexible/YourComponent.astro
-interface Props {
-  fieldGroupName: string;
-  yourField?: string;
-}
-
-const { yourField } = Astro.props;
----
-
-<section class="your-component">
-  <!-- Your component markup -->
-</section>
-```
-
-2. Register it in `FlexibleContent.astro`:
-```typescript
-const componentMap: Record<string, any> = {
-  'Project_Acffields_FlexibleContent_YourComponent': YourComponent,
-  // ... other components
-};
-```
-
-3. Add the corresponding layout in WordPress ACF
-
-### Modifying GraphQL Queries
-
-Edit queries in `src/lib/wp.ts`:
-
-```typescript
-export const queries = {
-  getPostBySlug: `
-    query GetPostBySlug($slug: ID!) {
-      post(id: $slug, idType: SLUG) {
-        id
-        title
-        content
-        // Add your custom fields here
-      }
-    }
-  `,
-};
-```
-
-### Adding Custom Types
-
-Add new types in `src/types/wp.d.ts`:
-
-```typescript
-export interface WPCustomType {
-  id: string;
-  title: string;
-  // Your custom fields
-}
-```
-
-## Deployment
-
-### Build for Production
-
-```bash
-npm run build
-```
-
-### Preview Production Build
-
-```bash
-npm run preview
-```
-
-### Deployment Platforms
-
-This boilerplate can be deployed to any platform that supports Node.js:
-
-- **Vercel**: Zero-config deployment
-- **Netlify**: Add build command `npm run build`
-- **Railway**: Automatic deployment from Git
-- **DigitalOcean App Platform**: Container-based deployment
-
-#### Environment Variables
-
-Make sure to set `WORDPRESS_API_URL` in your deployment platform's environment variables.
-
-## Development
-
-### Commands
-
-| Command | Action |
-|---------|--------|
-| `npm install` | Install dependencies |
-| `npm run dev` | Start dev server at `localhost:4321` |
-| `npm run build` | Build production site to `./dist/` |
-| `npm run preview` | Preview production build locally |
-
-### SSR vs SSG
-
-This boilerplate uses SSR (Server-Side Rendering) by default. To switch to SSG (Static Site Generation):
-
-1. Update `astro.config.mjs`:
-```javascript
-export default defineConfig({
-  output: 'static', // Change from 'server' to 'static'
-  integrations: [tailwind()]
-});
-```
-
-2. Add `getStaticPaths` to dynamic routes:
-```astro
----
-export async function getStaticPaths() {
-  const posts = await getAllPosts();
-  return posts.map(post => ({
-    params: { slug: post.slug },
-  }));
-}
-
-const { slug } = Astro.params;
----
-```
-
-## Troubleshooting
-
-### GraphQL Errors
-
-If you get GraphQL errors:
-
-1. Verify your `WORDPRESS_API_URL` is correct
-2. Check WPGraphQL is installed and activated
-3. Test your endpoint directly: `https://your-site.com/graphql`
-4. Use GraphiQL IDE in WordPress admin: **GraphQL > GraphiQL IDE**
-
-### ACF Fields Not Showing
-
-1. Ensure "Show in GraphQL" is enabled on the field group
-2. Check field names match your GraphQL query
-3. Verify WPGraphQL for ACF plugin is installed
-4. Clear WordPress object cache if using caching plugins
-
-### Image Optimization Issues
-
-If images aren't loading:
-
-1. Check WordPress media URLs are accessible
-2. Verify CORS settings on your WordPress server
-3. Ensure images exist in WordPress media library
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-MIT License - feel free to use this boilerplate for any project.
-
-## Resources
-
-- [Astro Documentation](https://docs.astro.build)
-- [WPGraphQL Documentation](https://www.wpgraphql.com/docs/introduction)
-- [Advanced Custom Fields](https://www.advancedcustomfields.com/resources/)
-- [Tailwind CSS](https://tailwindcss.com/docs)
-- [TypeScript](https://www.typescriptlang.org/docs/)
+**La preview ne fonctionne pas** : verifier que `WP_AUTH_TOKEN` est correct et que l'Application Password est active. Tester : `GET /api/preview?secret=xxx&id=1&postType=post`.

@@ -1,0 +1,79 @@
+/**
+ * Overrides to reconcile Tailwind's preflight with WordPress block library CSS.
+ * Tailwind resets heading sizes, margins, and list styles — these rules restore
+ * them inside WordPress content blocks so Gutenberg layouts render correctly.
+ */
+
+/* Allow full-width blocks to break out of .prose max-width */
+.prose :global(.alignfull) {
+  max-width: none;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+.prose :global(.alignwide) {
+  max-width: none;
+  width: 100%;
+  margin-left: -2rem;
+  margin-right: -2rem;
+}
+
+/* Ensure cover blocks render correctly */
+.prose :global(.wp-block-cover) {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.prose :global(.wp-block-cover img) {
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Prevent .prose from overriding inline font sizes */
+.prose :global([style*="font-size"]) {
+  font-size: unset;
+}
+
+/* Let WordPress's flex layouts work inside .prose */
+.prose :global(.is-layout-flex) {
+  display: flex;
+}
+
+.prose :global(.is-layout-flow) {
+  display: block;
+}
+
+.prose :global(.is-content-justification-center) {
+  justify-content: center;
+}
+
+.prose :global(.is-content-justification-space-between) {
+  justify-content: space-between;
+}
+
+.prose :global(.is-content-justification-right) {
+  justify-content: flex-end;
+}
+
+.prose :global(.is-vertical) {
+  flex-direction: column;
+}
+
+.prose :global(.is-nowrap) {
+  flex-wrap: nowrap;
+}
+
+/* WordPress button blocks */
+.prose :global(.wp-block-button__link) {
+  text-decoration: none;
+}
+
+/* Spacer blocks */
+.prose :global(.wp-block-spacer) {
+  margin: 0;
+  padding: 0;
+}

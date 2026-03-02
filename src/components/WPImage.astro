@@ -1,5 +1,6 @@
 ---
 import type { WPImage, WPFeaturedImage } from '../types/wp';
+import { decodeWPEntities } from '../lib/utils/sanitize';
 
 interface Props {
   image?: WPImage | WPFeaturedImage;
@@ -39,7 +40,7 @@ const imgData = 'node' in image ? image.node : image;
 const imgWidth = width || imgData.mediaDetails?.width || 800;
 const imgHeight = height || imgData.mediaDetails?.height || 600;
 
-const baseAlt = altProp || imgData.altText || '';
+const baseAlt = decodeWPEntities(altProp || imgData.altText || '');
 const altText = context && baseAlt
   ? `${baseAlt} - ${context}`
   : context
