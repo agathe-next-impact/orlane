@@ -1,0 +1,67 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getAllItemsByType, getAvailableContentTypes } from '../../lib/wp';
+import type { WPPostPreview } from '../../types/wp';
+
+const { contentType } = Astro.params;
+
+if (!contentType) {
+  return Astro.redirect('/404');
+}
+
+const excludedTypes = ['page', 'post', 'mediaitem'];
+if (excludedTypes.includes(contentType.toLowerCase())) {
+  return Astro.redirect('/404');
+}
+
+const contentTypes = await getAvailableContentTypes();
+const typeConfig = contentTypes.find(
+  t => t.graphqlPluralName.toLowerCase() === contentType.toLowerCase()
+);
+
+if (!typeConfig) {
+  return Astro.redirect('/404');
+}
+
+const typeName = typeConfig.name;
+const pluralName = typeConfig.graphqlPluralName;
+
+let items: WPPostPreview[] = [];
+
+try {
+  items = await getAllItemsByType(pluralName);
+} catch (error) {
+  console.error(`Error fetching ${contentType}:`, error);
+}
+---
+
+<Layout
+  title={typeName}
+  description={`Browse all ${typeName.toLowerCase()}`}
+>
+  <div class="archive-page">
+    <div class="page-header bg-gradient-to-br from-blue-50 to-blue-100 py-16">
+      <div class="container mx-auto px-4">
+        <h1 class="text-5xl font-bold text-center mb-4">{typeName}</h1>
+        <p class="text-xl text-center text-gray-600 max-w-2xl mx-auto">
+          Explore all {typeName.toLowerCase()}
+        </p>
+      </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-16">
+      {items.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {items.map((item) => (
+            <PostCard post={item} basePath={`/${contentType}`} />
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-16">
+          <p class="text-xl text-gray-600">No {typeName.toLowerCase()} found. Check your WordPress connection.</p>
+        </div>
+      )}
+    </div>
+  </div>
+</Layout>

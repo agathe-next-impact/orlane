@@ -1,0 +1,78 @@
+---
+import type { WPImage, WPFeaturedImage } from '../types/wp';
+
+interface Props {
+  image?: WPImage | WPFeaturedImage;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+  sizes?: string;
+  width?: number;
+  height?: number;
+  priority?: boolean;
+  fetchpriority?: 'high' | 'low' | 'auto';
+  alt?: string;
+  context?: string;
+}
+
+const {
+  image,
+  class: className = '',
+  loading: loadingProp,
+  sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw',
+  width,
+  height,
+  priority = false,
+  fetchpriority: fetchpriorityProp,
+  alt: altProp,
+  context
+} = Astro.props;
+
+const loading = priority ? 'eager' : (loadingProp || 'lazy');
+const fetchpriority = priority ? 'high' : (fetchpriorityProp || (loading === 'lazy' ? 'low' : 'auto'));
+
+if (!image) {
+  return null;
+}
+
+const imgData = 'node' in image ? image.node : image;
+
+const imgWidth = width || imgData.mediaDetails?.width || 800;
+const imgHeight = height || imgData.mediaDetails?.height || 600;
+
+const baseAlt = altProp || imgData.altText || '';
+const altText = context && baseAlt
+  ? `${baseAlt} - ${context}`
+  : context
+    ? context
+    : baseAlt || 'Image';
+
+function getOptimizedUrl(url: string, width: number): string {
+  if (!url) return '';
+
+  const urlObj = new URL(url);
+  urlObj.searchParams.set('w', width.toString());
+  urlObj.searchParams.set('quality', '80');
+
+  return urlObj.toString();
+}
+
+const srcset = [320, 640, 768, 1024, 1280, 1536]
+  .filter(w => w <= imgWidth)
+  .map(w => `${getOptimizedUrl(imgData.sourceUrl, w)} ${w}w`)
+  .join(', ');
+---
+
+{imgData.sourceUrl && (
+  <img
+    src={getOptimizedUrl(imgData.sourceUrl, imgWidth)}
+    srcset={srcset}
+    sizes={sizes}
+    alt={altText}
+    width={imgWidth}
+    height={imgHeight}
+    loading={loading}
+    fetchpriority={fetchpriority}
+    class={className}
+    decoding="async"
+  />
+)}

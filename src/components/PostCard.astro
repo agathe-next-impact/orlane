@@ -1,0 +1,78 @@
+---
+import { sanitizeExcerpt } from '../lib/utils/sanitize';
+import { formatDate } from '../lib/utils/date';
+import type { WPPostPreview } from '../types/wp';
+import WPImage from './WPImage.astro';
+
+interface Props {
+  post: WPPostPreview;
+  basePath?: string;
+}
+
+const { post, basePath = '/blog' } = Astro.props;
+---
+
+<article class="post-card bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+  {post.featuredImage && (
+    <a href={`${basePath}/${post.slug}`} class="block">
+      <WPImage
+        image={post.featuredImage}
+        class="w-full h-64 object-cover"
+        loading="lazy"
+        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        context={`Featured image for ${post.title}`}
+      />
+    </a>
+  )}
+
+  <div class="p-6">
+    {post.categories?.nodes && post.categories.nodes.length > 0 && (
+      <div class="flex flex-wrap gap-2 mb-3">
+        {post.categories.nodes.slice(0, 2).map((category) => (
+          <span class="text-xs bg-primary-100 text-primary-700 px-3 py-1 rounded-full">
+            {category.name}
+          </span>
+        ))}
+      </div>
+    )}
+
+    <h2 class="text-2xl font-bold mb-3">
+      <a href={`${basePath}/${post.slug}`} class="hover:text-primary-600 transition-colors">
+        {post.title}
+      </a>
+    </h2>
+
+    {post.excerpt && (
+      <div class="text-gray-600 mb-4 line-clamp-3" set:html={sanitizeExcerpt(post.excerpt)} />
+    )}
+
+    <div class="flex items-center gap-4 text-sm text-gray-500">
+      {post.date && (
+        <div class="flex items-center gap-1">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          <time datetime={post.date}>{formatDate(post.date)}</time>
+        </div>
+      )}
+
+      {post.author && (
+        <div class="flex items-center gap-1">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+          <span>{post.author.node.name}</span>
+        </div>
+      )}
+    </div>
+  </div>
+</article>
+
+<style>
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

@@ -1,0 +1,34 @@
+---
+import type { WPFlexibleContent } from '../../types/wp';
+import HeroSection from './HeroSection.astro';
+import ContentBlock from './ContentBlock.astro';
+import ImageGallery from './ImageGallery.astro';
+
+interface Props {
+  blocks?: WPFlexibleContent[];
+}
+
+const { blocks = [] } = Astro.props;
+
+const componentMap: Record<string, any> = {
+  'Project_Acffields_FlexibleContent_HeroSection': HeroSection,
+  'Project_Acffields_FlexibleContent_ContentBlock': ContentBlock,
+  'Project_Acffields_FlexibleContent_ImageGallery': ImageGallery,
+  'Page_Acffields_FlexibleContent_HeroSection': HeroSection,
+  'Page_Acffields_FlexibleContent_ContentBlock': ContentBlock,
+  'Page_Acffields_FlexibleContent_ImageGallery': ImageGallery,
+};
+---
+
+<div class="flexible-content">
+  {blocks.map((block, index) => {
+    const Component = componentMap[block.fieldGroupName];
+
+    if (!Component) {
+      console.warn(`No component found for: ${block.fieldGroupName}`);
+      return null;
+    }
+
+    return <Component {...block} key={index} />;
+  })}
+</div>

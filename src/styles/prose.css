@@ -1,0 +1,54 @@
+/**
+ * Shared prose styles for WordPress content
+ * Used across blog posts, pages, projects, and custom post types
+ */
+
+.prose :global(h2) {
+  @apply text-3xl font-bold mb-4 mt-8;
+}
+
+.prose :global(h3) {
+  @apply text-2xl font-semibold mb-3 mt-6;
+}
+
+.prose :global(h4) {
+  @apply text-xl font-semibold mb-2 mt-4;
+}
+
+.prose :global(p) {
+  @apply mb-4 text-gray-700 leading-relaxed;
+}
+
+.prose :global(ul),
+.prose :global(ol) {
+  @apply mb-4 pl-6;
+}
+
+.prose :global(li) {
+  @apply mb-2;
+}
+
+.prose :global(a) {
+  @apply text-primary-600 hover:text-primary-700 underline;
+}
+
+.prose :global(img) {
+  @apply rounded-lg shadow-lg my-6 max-w-full h-auto;
+}
+
+.prose :global(blockquote) {
+  @apply border-l-4 border-primary-500 pl-4 italic my-6;
+}
+
+.prose :global(pre) {
+  @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto my-6;
+}
+
+.prose :global(code) {
+  @apply bg-gray-100 text-gray-800 px-2 py-1 rounded text-sm;
+}
+
+.prose :global(pre code) {
+  @apply bg-transparent p-0;
+}
+

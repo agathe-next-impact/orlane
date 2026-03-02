@@ -1,0 +1,26 @@
+---
+import type { WPACFImageGallery } from '../../types/wp';
+import WPImage from '../WPImage.astro';
+
+interface Props extends WPACFImageGallery {}
+
+const { images = [] } = Astro.props;
+---
+
+<section class="image-gallery py-16 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {images.map((image, index) => (
+        <div class="gallery-item overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow">
+          <WPImage
+            image={image}
+            class="w-full h-64 object-cover"
+            loading="lazy"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            context={`Gallery image ${index + 1}`}
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

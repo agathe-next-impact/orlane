@@ -1,0 +1,103 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getAvailableContentTypes, getItemsCountByType } from '../lib/wp';
+
+interface ContentType {
+  name: string;
+  graphqlSingleName: string;
+  graphqlPluralName: string;
+  isPostType: boolean;
+}
+
+let contentTypes: ContentType[] = [];
+let contentCounts: Record<string, number> = {};
+
+try {
+  contentTypes = await getAvailableContentTypes();
+
+  // Fetch counts in parallel for better performance
+  const countPromises = contentTypes.map(async (type) => {
+    try {
+      const count = await getItemsCountByType(type.graphqlPluralName);
+      return { key: type.graphqlSingleName, count };
+    } catch {
+      return { key: type.graphqlSingleName, count: 0 };
+    }
+  });
+
+  const counts = await Promise.all(countPromises);
+  counts.forEach(({ key, count }) => {
+    contentCounts[key] = count;
+  });
+} catch (error) {
+  console.error('Error fetching content types:', error);
+}
+
+function getArchiveUrl(pluralName: string): string {
+  if (pluralName === 'posts') return '/blog';
+  if (pluralName === 'pages') return '/pages';
+  return `/${pluralName}`;
+}
+---
+
+<Layout
+  title="Content Types"
+  description="Browse all available content types from WordPress"
+>
+  <div class="content-types-page">
+    <div class="page-header bg-gradient-to-br from-primary-50 to-primary-100 py-16">
+      <div class="container mx-auto px-4">
+        <h1 class="text-5xl font-bold text-center mb-4">Content Types</h1>
+        <p class="text-xl text-center text-gray-600 max-w-2xl mx-auto">
+          Explore all available content types from your WordPress site
+        </p>
+      </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-16">
+      {contentTypes.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {contentTypes.map((type) => (
+            <a
+              href={getArchiveUrl(type.graphqlPluralName)}
+              class="content-type-card bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow"
+            >
+              <div class="flex items-start justify-between mb-4">
+                <h2 class="text-2xl font-bold text-gray-900">{type.name}</h2>
+                <span class="bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-sm font-semibold">
+                  {contentCounts[type.graphqlSingleName] || 0}
+                </span>
+              </div>
+              <div class="text-sm text-gray-600 space-y-1">
+                <p><span class="font-semibold">Single:</span> {type.graphqlSingleName}</p>
+                <p><span class="font-semibold">Plural:</span> {type.graphqlPluralName}</p>
+              </div>
+              <div class="mt-4 text-primary-600 font-semibold flex items-center gap-2">
+                View All
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-16">
+          <p class="text-xl text-gray-600 mb-4">
+            No content types found. Check your WordPress connection.
+          </p>
+        </div>
+      )}
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .content-type-card {
+    border: 2px solid transparent;
+  }
+
+  .content-type-card:hover {
+    border-color: rgb(14, 165, 233);
+  }
+</style>

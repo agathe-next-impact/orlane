@@ -1,0 +1,32 @@
+---
+import type { WPACFHeroSection } from '../../types/wp';
+
+interface Props extends WPACFHeroSection {}
+
+const { heading, subheading, ctaText, ctaUrl } = Astro.props;
+---
+
+<section class="hero-section bg-gradient-to-br from-primary-500 to-primary-700 text-white py-20">
+  <div class="container mx-auto px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      {heading && (
+        <h1 class="text-5xl md:text-6xl font-bold mb-6">
+          {heading}
+        </h1>
+      )}
+      {subheading && (
+        <p class="text-xl md:text-2xl mb-8 text-primary-50">
+          {subheading}
+        </p>
+      )}
+      {ctaText && ctaUrl && (
+        <a
+          href={ctaUrl}
+          class="inline-block bg-white text-primary-600 px-8 py-4 rounded-lg font-semibold hover:bg-primary-50 transition-colors"
+        >
+          {ctaText}
+        </a>
+      )}
+    </div>
+  </div>
+</section>
