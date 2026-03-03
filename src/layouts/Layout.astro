@@ -30,11 +30,11 @@ const wpBlockCssUrl = `${wpBaseUrl}/wp-includes/css/dist/block-library/style.min
 		<link rel="stylesheet" href={wpBlockCssUrl} />
 		<SEO title={title} description={description} seo={seo} type={type} />
 	</head>
-	<body class="min-h-screen bg-white text-gray-900">
-		<header class="bg-white shadow-sm sticky top-0 z-50">
+	<body class="min-h-screen bg-creme text-taupe">
+		<header class="bg-creme border-b border-beige sticky top-0 z-50">
 			<nav class="container mx-auto px-4 py-4">
 				<div class="flex items-center justify-between">
-					<a href="/" class="text-2xl font-bold text-primary-600 hover:text-primary-700">
+					<a href="/" class="text-2xl font-bold text-taupe hover:text-sauge transition-colors">
 						WordPress + Astro
 					</a>
 					<Navigation />
@@ -46,12 +46,12 @@ const wpBlockCssUrl = `${wpBaseUrl}/wp-includes/css/dist/block-library/style.min
 			<slot />
 		</main>
 
-		<footer class="bg-gray-900 text-white py-12 mt-20">
+		<footer class="bg-taupe text-creme py-12 mt-20">
 			<div class="container mx-auto px-4">
 				<div class="text-center">
-					<p class="text-gray-400">
-						Powered by <a href="https://astro.build" class="text-primary-400 hover:text-primary-300">Astro</a>
-						and <a href="https://wordpress.org" class="text-primary-400 hover:text-primary-300">WordPress</a>
+					<p class="text-creme/70">
+						Powered by <a href="https://astro.build" class="text-sauge hover:text-beige transition-colors">Astro</a>
+						and <a href="https://wordpress.org" class="text-sauge hover:text-beige transition-colors">WordPress</a>
 					</p>
 				</div>
 			</div>

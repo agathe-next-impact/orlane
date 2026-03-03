@@ -4,19 +4,19 @@
  */
 
 .prose :global(h2) {
-  @apply text-3xl font-bold mb-4 mt-8;
+  @apply text-3xl font-bold mb-4 mt-8 text-taupe;
 }
 
 .prose :global(h3) {
-  @apply text-2xl font-semibold mb-3 mt-6;
+  @apply text-2xl font-semibold mb-3 mt-6 text-taupe;
 }
 
 .prose :global(h4) {
-  @apply text-xl font-semibold mb-2 mt-4;
+  @apply text-xl font-semibold mb-2 mt-4 text-taupe;
 }
 
 .prose :global(p) {
-  @apply mb-4 text-gray-700 leading-relaxed;
+  @apply mb-4 leading-relaxed text-taupe/80;
 }
 
 .prose :global(ul),
@@ -29,7 +29,7 @@
 }
 
 .prose :global(a) {
-  @apply text-primary-600 hover:text-primary-700 underline;
+  @apply text-sauge hover:text-taupe underline transition-colors;
 }
 
 .prose :global(img) {
@@ -37,18 +37,17 @@
 }
 
 .prose :global(blockquote) {
-  @apply border-l-4 border-primary-500 pl-4 italic my-6;
+  @apply border-l-4 border-sauge pl-4 italic my-6 text-taupe/70;
 }
 
 .prose :global(pre) {
-  @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto my-6;
+  @apply bg-taupe text-creme p-4 rounded-lg overflow-x-auto my-6;
 }
 
 .prose :global(code) {
-  @apply bg-gray-100 text-gray-800 px-2 py-1 rounded text-sm;
+  @apply bg-beige text-taupe px-2 py-1 rounded text-sm;
 }
 
 .prose :global(pre code) {
-  @apply bg-transparent p-0;
+  @apply bg-transparent p-0 text-creme;
 }
-

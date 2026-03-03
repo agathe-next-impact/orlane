@@ -30,17 +30,17 @@ const fallbackItems = [
       <li class="relative group">
         <a
           href={toRelativePath(item)}
-          class="hover:text-primary-600 transition-colors"
+          class="hover:text-sauge transition-colors"
         >
           {item.label}
         </a>
         {item.childItems && item.childItems.nodes.length > 0 && (
-          <ul class="absolute left-0 top-full mt-1 min-w-48 bg-white shadow-lg rounded-md py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+          <ul class="absolute left-0 top-full mt-1 min-w-48 bg-creme border border-beige shadow-lg rounded-md py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
             {item.childItems.nodes.map((child) => (
               <li>
                 <a
                   href={toRelativePath(child)}
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-primary-50 hover:text-primary-600 transition-colors"
+                  class="block px-4 py-2 text-sm text-taupe hover:bg-beige hover:text-taupe transition-colors"
                 >
                   {child.label}
                 </a>
@@ -53,7 +53,7 @@ const fallbackItems = [
   ) : (
     fallbackItems.map((item) => (
       <li>
-        <a href={item.path} class="hover:text-primary-600 transition-colors">
+        <a href={item.path} class="hover:text-sauge transition-colors">
           {item.label}
         </a>
       </li>

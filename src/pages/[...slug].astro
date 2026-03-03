@@ -54,10 +54,10 @@ if (!resolved) {
     description={`Browse all ${resolved.contentType.name.toLowerCase()}`}
   >
     <div class="archive-page">
-      <div class="page-header bg-gradient-to-br from-blue-50 to-blue-100 py-16">
+      <div class="page-header bg-gradient-to-br from-beige to-creme py-16">
         <div class="container mx-auto px-4">
-          <h1 class="text-5xl font-bold text-center mb-4">{resolved.contentType.name}</h1>
-          <p class="text-xl text-center text-gray-600 max-w-2xl mx-auto">
+          <h1 class="text-5xl font-bold text-center mb-4 text-taupe">{resolved.contentType.name}</h1>
+          <p class="text-xl text-center text-taupe/70 max-w-2xl mx-auto">
             Explore all {resolved.contentType.name.toLowerCase()}
           </p>
         </div>
@@ -72,7 +72,7 @@ if (!resolved) {
           </div>
         ) : (
           <div class="text-center py-16">
-            <p class="text-xl text-gray-600">No {resolved.contentType.name.toLowerCase()} found.</p>
+            <p class="text-xl text-taupe/70">No {resolved.contentType.name.toLowerCase()} found.</p>
           </div>
         )}
       </div>
@@ -83,9 +83,9 @@ if (!resolved) {
 {resolved.type === 'page' && (
   <Layout title={decodeWPEntities(resolved.data.title)} description={`Page: ${decodeWPEntities(resolved.data.title)}`}>
     <article class="page">
-      <div class="page-header bg-gradient-to-br from-gray-50 to-gray-100 py-16">
+      <div class="page-header bg-gradient-to-br from-beige to-creme py-16">
         <div class="container mx-auto px-4">
-          <h1 class="text-5xl font-bold text-center max-w-4xl mx-auto mb-6">
+          <h1 class="text-5xl font-bold text-center max-w-4xl mx-auto mb-6 text-taupe">
             {decodeWPEntities(resolved.data.title)}
           </h1>
         </div>
@@ -118,22 +118,22 @@ if (!resolved) {
 {resolved.type === 'post' && (
   <Layout title={decodeWPEntities(resolved.data.title)} seo={resolved.data.seo} type="article">
     <article class="blog-post">
-      <div class="post-header bg-gradient-to-br from-gray-50 to-gray-100 py-16">
+      <div class="post-header bg-gradient-to-br from-beige to-creme py-16">
         <div class="container mx-auto px-4">
           <div class="max-w-4xl mx-auto">
             {resolved.data.categories?.nodes && resolved.data.categories.nodes.length > 0 && (
               <div class="flex flex-wrap gap-2 mb-4">
                 {resolved.data.categories.nodes.slice(0, 3).map((category) => (
-                  <span class="text-sm bg-primary-100 text-primary-700 px-3 py-1 rounded-full">
+                  <span class="text-sm bg-beige text-taupe px-3 py-1 rounded-full">
                     {decodeWPEntities(category.name)}
                   </span>
                 ))}
               </div>
             )}
 
-            <h1 class="text-5xl font-bold mb-6">{decodeWPEntities(resolved.data.title)}</h1>
+            <h1 class="text-5xl font-bold mb-6 text-taupe">{decodeWPEntities(resolved.data.title)}</h1>
 
-            <div class="flex flex-wrap items-center gap-6 text-gray-600">
+            <div class="flex flex-wrap items-center gap-6 text-taupe/70">
               {resolved.data.author && (
                 <div class="flex items-center gap-2">
                   {resolved.data.author.node.avatar?.url && (
@@ -181,7 +181,7 @@ if (!resolved) {
             <div class="border-t pt-8 mt-12">
               <div class="flex flex-wrap gap-2">
                 {resolved.data.tags.nodes.map((tag) => (
-                  <span class="text-sm bg-gray-100 text-gray-700 px-3 py-1 rounded-full">
+                  <span class="text-sm bg-beige text-taupe px-3 py-1 rounded-full">
                     {decodeWPEntities(tag.name)}
                   </span>
                 ))}
@@ -197,13 +197,13 @@ if (!resolved) {
 {resolved.type === 'cpt-single' && (
   <Layout title={decodeWPEntities(resolved.data.title)} seo={resolved.data.seo} type="article">
     <article class="single-post">
-      <div class="post-header bg-gradient-to-br from-gray-50 to-gray-100 py-16">
+      <div class="post-header bg-gradient-to-br from-beige to-creme py-16">
         <div class="container mx-auto px-4">
           <div class="max-w-4xl mx-auto">
             <div class="mb-4">
               <a
                 href={getCPTArchiveUrl(resolved.contentType)}
-                class="text-sm text-blue-600 hover:text-blue-700 flex items-center gap-1 inline-flex"
+                class="text-sm text-sauge hover:text-taupe inline-flex items-center gap-1 transition-colors"
               >
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -212,9 +212,9 @@ if (!resolved) {
               </a>
             </div>
 
-            <h1 class="text-5xl font-bold mb-6">{decodeWPEntities(resolved.data.title)}</h1>
+            <h1 class="text-5xl font-bold mb-6 text-taupe">{decodeWPEntities(resolved.data.title)}</h1>
 
-            <div class="flex flex-wrap items-center gap-6 text-gray-600">
+            <div class="flex flex-wrap items-center gap-6 text-taupe/70">
               {resolved.data.author && (
                 <div class="flex items-center gap-2">
                   {resolved.data.author.node.avatar?.url && (
@@ -258,7 +258,7 @@ if (!resolved) {
             </div>
           ) : (
             <div class="text-center py-8">
-              <p class="text-gray-500">No content available</p>
+              <p class="text-taupe/60">No content available</p>
             </div>
           )}
         </div>
