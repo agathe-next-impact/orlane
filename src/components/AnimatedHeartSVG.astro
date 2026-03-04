@@ -1,5 +1,5 @@
 <div class="w-full flex items-center justify-end py-4">
-  <div class="relative w-full max-w-5xl">
+  <div class="relative w-full max-w-4xl">
     <svg
       viewBox="0 0 500 171"
       class="w-full h-auto"
@@ -92,8 +92,8 @@
         r="10"
         fill="rgba(250,248,245,0.7)"
         filter="url(#pen-glow)"
-        cx="498"
-        cy="147"
+        cx="0"
+        cy="145"
         style="display:none; pointer-events:none;"
       />
     </svg>
@@ -112,7 +112,7 @@
 
     const totalLength = sk.getTotalLength();
     sk.style.strokeDasharray  = String(totalLength);
-    sk.style.strokeDashoffset = String(totalLength);
+    sk.style.strokeDashoffset = String(-totalLength);
     if (penTip) penTip.style.display = '';
 
     /*
@@ -165,13 +165,13 @@
       const pFrac = pathFracAt(t);
       const drawn = pFrac * totalLength;
 
-      /* Masque : révélation progressive */
-      sk.style.strokeDashoffset = String(totalLength - drawn);
+      /* Masque : révélation progressive (gauche → droite) */
+      sk.style.strokeDashoffset = String(drawn - totalLength);
 
       /* Pointe du crayon : suit l'extrémité du tracé + tremblement organique */
       if (penTip) {
         if (t < 0.99) {
-          const pt = sk.getPointAtLength(Math.max(drawn - 1, 0));
+          const pt = sk.getPointAtLength(Math.min(totalLength - drawn + 1, totalLength));
           const nx = noise(t * 6, 1);
           const ny = noise(t * 6, 2);
           penTip.setAttribute('cx', String(pt.x + nx));

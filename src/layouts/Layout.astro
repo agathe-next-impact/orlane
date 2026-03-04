@@ -3,8 +3,10 @@ import SEO from '../components/SEO.astro';
 import Navigation from '../components/Navigation.astro';
 import type { WPSEO } from '../types/wp';
 import { env } from '../lib/env';
+import '../styles/global.css';
 import '../styles/prose.css';
 import '../styles/wp-blocks.css';
+import { Image } from 'astro:assets';
 
 interface Props {
   title?: string;
@@ -27,15 +29,18 @@ const wpBlockCssUrl = `${wpBaseUrl}/wp-includes/css/dist/block-library/style.min
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
 		<link rel="stylesheet" href={wpBlockCssUrl} />
 		<SEO title={title} description={description} seo={seo} type={type} />
 	</head>
 	<body class="min-h-screen bg-creme text-taupe">
-		<header class="bg-creme border-b border-beige sticky top-0 z-50">
+		<header class="bg-beige border-b border-beige sticky top-0 z-50">
 			<nav class="container mx-auto px-4 py-4">
 				<div class="flex items-center justify-between">
 					<a href="/" class="text-2xl font-bold text-taupe hover:text-sauge transition-colors">
-						WordPress + Astro
+						<Image src="/logo-orlane-transparent.png" alt="Orlane Logo" width={32} height={32} class="inline-block mr-2" /> 
 					</a>
 					<Navigation />
 				</div>

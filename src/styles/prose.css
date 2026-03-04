@@ -3,6 +3,10 @@
  * Used across blog posts, pages, projects, and custom post types
  */
 
+.prose :global(h1) {
+  @apply text-4xl font-bold mb-6 mt-8 text-taupe;
+}
+
 .prose :global(h2) {
   @apply text-3xl font-bold mb-4 mt-8 text-taupe;
 }

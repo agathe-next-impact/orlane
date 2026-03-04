@@ -22,39 +22,50 @@ const customPostTypes = contentTypes.filter(ct =>
 ---
 
 <Layout
-  title="Home"
-  description="A modern headless WordPress site powered by Astro"
+  title="Orlane P. - Education spécialisée personnalisée"
+  description="Découvrez Orlane P., une éducatrice spécialisée passionnée offrant un accompagnement personnalisé pour les enfants et adolescents en difficulté. Explorez nos articles, projets et ressources pour soutenir le développement de votre enfant."
 >
-  <section class="h-screen hero bg-gradient-to-br from-beige to-creme py-20 md:py-32">
-    <div class="container mx-auto px-4">
-      <div class="max-w-4xl mx-auto text-center">
-        <h1 class="text-5xl md:text-6xl font-bold mb-6 text-taupe">
-          Headless WordPress + Astro
-        </h1>
-        <p class="text-xl md:text-2xl mb-8 text-taupe/70">
-          A modern, fast, and scalable approach to WordPress development using Astro SSR and WPGraphQL
-        </p>
-        <div class="flex flex-wrap gap-4 justify-center">
-          <a
-            href="/blog"
-            class="inline-block bg-creme text-taupe border border-beige px-8 py-4 rounded-lg font-semibold hover:bg-beige transition-colors"
-          >
-            Read Blog
-          </a>
-          <a
-            href="/projects"
-            class="inline-block bg-sauge text-creme px-8 py-4 rounded-lg font-semibold hover:bg-taupe transition-colors"
-          >
-            View Projects
-          </a>
+  <section class="relative h-screen hero bg-gradient-to-br from-beige to-creme py-20 md:py-12 overflow-hidden">
+    <div class="absolute bottom-8 left-0 w-full max-w-4xl pointer-events-none">
+      <AnimatedHeartSVG />
+    </div>
+    <div class="container px-4 relative z-10">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div class="max-w-3xl">
+          <h1 class="text-5xl md:text-6xl font-bold mb-6 text-taupe/70">
+            <span class="text-taupe">Educatrice spécialisée</span> pour votre enfant
+          </h1>
+          <p class="text-xl md:text-2xl mb-8 text-mousse">
+            Orlane P.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a
+              href="/blog"
+              class="text-taupe underline text-xl">
+              Read Blog
+            </a>
+            <a
+              href="/projects"
+              class="inline-block bg-sauge text-creme px-8 py-4 rounded-lg font-semibold hover:bg-taupe transition-colors"
+            >
+              View Projects
+            </a>
+          </div>
+        </div>
+        <div class="columns-2 gap-3 space-y-3 content-end">
+          <img src="/dessin-enfant.jpg" alt="Dessin d'enfant" class="rounded-2xl shadow-lg w-full object-contain" />
+          <img src="/dessin-enfant-2.jpg" alt="Dessin d'enfant" class="rounded-2xl shadow-lg w-full object-contain" />
+          <img src="/dessin-enfant-5.jpg" alt="Dessin d'enfant" class="rounded-2xl shadow-lg w-full object-contain" />
+          <img src="/photo-orlane.jpg" alt="Orlane P., éducatrice spécialisée" class="rounded-2xl shadow-lg w-full object-cover" />
+          <img src="/dessin-enfant-3.jpg" alt="Dessin d'enfant" class="rounded-2xl shadow-lg w-full object-contain" />
+          <img src="/dessin-enfant-4.jpg" alt="Dessin d'enfant" class="rounded-2xl shadow-lg w-full object-contain" />
         </div>
       </div>
     </div>
-    <AnimatedHeartSVG />
   </section>
 
   <section class="py-16 md:py-24 bg-beige">
-    <div class="container mx-auto px-4">
+    <div class="container px-4">
       <div class="max-w-6xl mx-auto">
         <div class="text-center mb-12">
           <h2 class="text-4xl font-bold mb-4 text-taupe">Latest Posts</h2>
