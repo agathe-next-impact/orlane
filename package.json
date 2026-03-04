@@ -10,8 +10,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/node": "^9.5.1",
     "@astrojs/tailwind": "^6.0.2",
+    "@astrojs/vercel": "^9.0.4",
     "astro": "^5.2.5",
     "dotenv": "^17.2.3",
     "isomorphic-dompurify": "^2.35.0",
