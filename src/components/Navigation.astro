@@ -15,16 +15,10 @@ function toRelativePath(item: WPMenuItem): string {
 }
 
 const hasMenu = menuItems.length > 0;
-
-const fallbackItems = [
-  { label: 'Home', path: '/' },
-  { label: 'Blog', path: '/blog' },
-  { label: 'Projects', path: '/projects' },
-  { label: 'Content Types', path: '/content-types' },
-];
 ---
 
-<ul class="flex items-center gap-6">
+<!-- Desktop menu -->
+<ul class="hidden md:flex items-center gap-6">
   {hasMenu ? (
     menuItems.map((item) => (
       <li class="relative group">
@@ -51,12 +45,105 @@ const fallbackItems = [
       </li>
     ))
   ) : (
-    fallbackItems.map((item) => (
-      <li>
-        <a href={item.path} class="hover:text-sauge transition-colors">
-          {item.label}
-        </a>
-      </li>
-    ))
+    <></>
   )}
 </ul>
+
+<!-- Mobile burger button -->
+<button
+  id="mobile-menu-btn"
+  class="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5"
+  aria-label="Ouvrir le menu"
+  aria-expanded="false"
+>
+  <span class="block w-6 h-0.5 bg-taupe transition-all duration-300 origin-center" id="burger-top"></span>
+  <span class="block w-6 h-0.5 bg-taupe transition-all duration-300" id="burger-mid"></span>
+  <span class="block w-6 h-0.5 bg-taupe transition-all duration-300 origin-center" id="burger-bot"></span>
+</button>
+
+<!-- Mobile menu overlay -->
+<div
+  id="mobile-menu"
+  class="fixed inset-0 top-[65px] bg-beige z-40 flex flex-col items-center pt-8 translate-x-full transition-transform duration-300 ease-in-out md:hidden"
+>
+  {hasMenu && (
+    <ul class="flex flex-col items-center gap-6 text-lg">
+      {menuItems.map((item, i) => (
+        <li class="text-center menu-item opacity-0 translate-y-4" style={`transition-delay: ${i * 80}ms`}>
+          <a
+            href={toRelativePath(item)}
+            class="text-taupe hover:text-sauge transition-colors font-medium"
+          >
+            {item.label}
+          </a>
+          {item.childItems && item.childItems.nodes.length > 0 && (
+            <ul class="mt-2 flex flex-col items-center gap-2">
+              {item.childItems.nodes.map((child) => (
+                <li>
+                  <a
+                    href={toRelativePath(child)}
+                    class="text-taupe/70 hover:text-sauge transition-colors text-base"
+                  >
+                    {child.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))}
+    </ul>
+  )}
+</div>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn')!;
+  const menu = document.getElementById('mobile-menu')!;
+  const top = document.getElementById('burger-top')!;
+  const mid = document.getElementById('burger-mid')!;
+  const bot = document.getElementById('burger-bot')!;
+
+  let open = false;
+
+  btn.addEventListener('click', () => {
+    open = !open;
+    btn.setAttribute('aria-expanded', String(open));
+
+    const items = menu.querySelectorAll('.menu-item');
+
+    if (open) {
+      menu.classList.remove('translate-x-full');
+      menu.classList.add('translate-x-0');
+      top.classList.add('rotate-45', 'translate-y-[4px]');
+      mid.classList.add('opacity-0');
+      bot.classList.add('-rotate-45', '-translate-y-[4px]');
+      document.body.classList.add('overflow-hidden');
+      // Staggered fade-in + slide-up
+      requestAnimationFrame(() => {
+        items.forEach((item) => {
+          item.classList.add('transition-all', 'duration-400', 'ease-out');
+          item.classList.remove('opacity-0', 'translate-y-4');
+        });
+      });
+    } else {
+      // Reset items immediately
+      items.forEach((item) => {
+        item.classList.remove('transition-all', 'duration-400', 'ease-out');
+        item.classList.add('opacity-0', 'translate-y-4');
+      });
+      menu.classList.add('translate-x-full');
+      menu.classList.remove('translate-x-0');
+      top.classList.remove('rotate-45', 'translate-y-[4px]');
+      mid.classList.remove('opacity-0');
+      bot.classList.remove('-rotate-45', '-translate-y-[4px]');
+      document.body.classList.remove('overflow-hidden');
+    }
+  });
+
+  // Close menu on link click
+  menu.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      if (open) btn.click();
+    });
+  });
+</script>
