@@ -1,11 +1,11 @@
-import DOMPurify from 'isomorphic-dompurify';
+import sanitize from 'sanitize-html';
 
 /**
  * Configuration for HTML sanitization
  * Allows common WordPress content tags while removing potentially dangerous elements
  */
-const SANITIZE_CONFIG = {
-  ALLOWED_TAGS: [
+const SANITIZE_CONFIG: sanitize.IOptions = {
+  allowedTags: [
     // Text
     'p', 'br', 'span', 'div', 'section', 'article', 'aside', 'header', 'footer', 'nav', 'main',
     'a', 'strong', 'em', 'b', 'i', 'u', 's', 'strike', 'mark', 'small', 'sub', 'sup', 'abbr',
@@ -21,45 +21,30 @@ const SANITIZE_CONFIG = {
     'details', 'summary', 'button',
     'hr',
   ],
-  ALLOWED_ATTR: [
-    'href', 'title', 'target', 'rel',
-    'src', 'srcset', 'sizes', 'alt', 'width', 'height', 'loading', 'decoding', 'fetchpriority',
-    'class', 'id', 'style',
-    'aria-hidden', 'aria-label', 'aria-describedby', 'aria-expanded', 'role',
-    'type', 'media',
-    // Video/audio/iframe
-    'controls', 'autoplay', 'loop', 'muted', 'preload', 'poster',
-    'allow', 'allowfullscreen', 'frameborder',
-    // Table
-    'colspan', 'rowspan', 'scope',
-  ],
-  ALLOW_DATA_ATTR: true,
-  ALLOW_UNKNOWN_PROTOCOLS: false,
+  allowedAttributes: {
+    'a': ['href', 'title', 'target', 'rel'],
+    'img': ['src', 'srcset', 'sizes', 'alt', 'width', 'height', 'loading', 'decoding', 'fetchpriority'],
+    'source': ['src', 'srcset', 'sizes', 'type', 'media'],
+    'video': ['src', 'controls', 'autoplay', 'loop', 'muted', 'preload', 'poster', 'width', 'height'],
+    'audio': ['src', 'controls', 'autoplay', 'loop', 'muted', 'preload'],
+    'iframe': ['src', 'width', 'height', 'allow', 'allowfullscreen', 'frameborder', 'title'],
+    'th': ['colspan', 'rowspan', 'scope'],
+    'td': ['colspan', 'rowspan'],
+    '*': ['class', 'id', 'style', 'aria-hidden', 'aria-label', 'aria-describedby', 'aria-expanded', 'role', 'data-*'],
+  },
+  allowedIframeHostnames: ['www.youtube.com', 'youtube.com', 'player.vimeo.com', 'open.spotify.com'],
 };
 
 /**
  * Sanitizes HTML content to prevent XSS attacks
- *
- * @param html - Raw HTML string from WordPress
- * @returns Sanitized HTML safe for rendering
  */
 export function sanitizeHTML(html: string | null | undefined): string {
   if (!html) return '';
-
-  return DOMPurify.sanitize(html, SANITIZE_CONFIG);
+  return sanitize(html, SANITIZE_CONFIG);
 }
 
 /**
- * Sanitizes HTML excerpt with stricter rules
- * Removes all formatting except basic text styling
- *
- * @param excerpt - Raw excerpt HTML from WordPress
- * @returns Sanitized excerpt with minimal formatting
- */
-/**
  * Decodes HTML entities in WordPress text fields (titles, excerpts, etc.)
- * WordPress RENDERED format may return entities like &#8217; &amp; &eacute;
- * that would be double-encoded by Astro's auto-escaping.
  */
 export function decodeWPEntities(text: string | null | undefined): string {
   if (!text) return '';
@@ -83,11 +68,14 @@ export function decodeWPEntities(text: string | null | undefined): string {
     .replace(/&uuml;/g, 'ü');
 }
 
+/**
+ * Sanitizes HTML excerpt with stricter rules
+ */
 export function sanitizeExcerpt(excerpt: string | null | undefined): string {
   if (!excerpt) return '';
 
-  return DOMPurify.sanitize(excerpt, {
-    ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'a'],
-    ALLOWED_ATTR: ['href'],
+  return sanitize(excerpt, {
+    allowedTags: ['p', 'br', 'strong', 'em', 'a'],
+    allowedAttributes: { 'a': ['href'] },
   });
 }
