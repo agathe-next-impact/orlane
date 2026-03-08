@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:flowbite.com)",
+      "Bash(npx astro check)",
+      "Bash(python3 -c \"import sys,json; types=json.load\\(sys.stdin\\)[''data''][''__schema''][''types'']; [print\\(t[''name'']\\) for t in types if ''acf'' in t[''name''].lower\\(\\) or ''Acf'' in t[''name''] or ''flexible'' in t[''name''].lower\\(\\)]\")",
+      "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); print\\(json.dumps\\(data, indent=2\\)\\)\")",
+      "Bash(python3 -c \"import sys,json; print\\(json.dumps\\(json.load\\(sys.stdin\\), indent=2\\)\\)\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d, indent=2\\)\\)\")",
+      "Bash(python3 -c \"import sys,json; fields=[f[''name''] for f in json.load\\(sys.stdin\\)[''data''][''__type''][''fields'']]; print\\(''content'' in fields, ''| fields:'', [f for f in fields if f in [''content'',''title'',''slug'',''acfFields'']]\\)\")",
+      "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); t=data[''data''][''__type'']; print\\(''Project exists:'', t is not None\\); fields=[f[''name''] for f in t[''fields'']] if t else []; print\\(''content'' in fields, ''| fields:'', [f for f in fields if f in [''content'',''title'',''slug'',''acfFields'',''excerpt'']]\\)\")",
+      "Bash(python3 -c \"import sys,json; print\\(json.dumps\\(json.load\\(sys.stdin\\)[''data''], indent=2\\)\\)\")",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(''name:'', d.get\\(''name''\\)\\); print\\(''description:'', d.get\\(''description''\\)\\); print\\(''url:'', d.get\\(''url''\\)\\); print\\(''site_icon_url:'', d.get\\(''site_icon_url''\\)\\)\")",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(''site_icon_url:'', repr\\(d.get\\(''site_icon_url''\\)\\)\\)\")",
+      "Bash(xargs grep -l \"theme\\\\|color\\\\|font\\\\|setting\")",
+      "Bash(timeout 5 bash -c 'while ! curl -s http://localhost:4321/ > /dev/null 2>&1; do sleep 1; done')",
+      "Bash(taskkill //F //IM node.exe)",
+      "Bash(/tmp/gql_test2.json:*)",
+      "Bash(/tmp/gql_plans.json:*)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); t=d[''data''][''__type'']; [print\\(f'' {f[\"\"name\"\"]}: {f[\"\"type\"\"][\"\"name\"\"]}''\\) for f in t[''fields'']] if t else print\\('' NULL''\\)\" done)",
+      "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); [print\\(f[''name'']\\) for f in data[''data''][''__schema''][''queryType''][''fields'']]\")",
+      "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); fields=data[''data''][''__type''][''fields'']; [print\\(f''{f[\"\"name\"\"]}: {f[\"\"type\"\"]}''\\) for f in fields]\")",
+      "Bash(node -e \":*)",
+      "Bash(git rebase --continue)",
+      "Bash(GIT_EDITOR=true git rebase --continue)"
+    ],
+    "additionalDirectories": [
+      "\\tmp",
+      "C:\\Users\\agath\\.claude\\projects\\c--dev-orlane"
+    ]
+  }
+}

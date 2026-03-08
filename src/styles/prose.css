@@ -20,7 +20,8 @@
 }
 
 .prose :global(p) {
-  @apply mb-4 leading-relaxed text-taupe/80;
+  @apply mb-4 leading-relaxed;
+  color: rgb(var(--color-taupe-rgb) / 0.8);
 }
 
 .prose :global(ul),
@@ -41,7 +42,8 @@
 }
 
 .prose :global(blockquote) {
-  @apply border-l-4 border-sauge pl-4 italic my-6 text-taupe/70;
+  @apply border-l-4 border-sauge pl-4 italic my-6;
+  color: rgb(var(--color-taupe-rgb) / 0.7);
 }
 
 .prose :global(pre) {

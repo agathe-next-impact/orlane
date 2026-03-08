@@ -1,0 +1,85 @@
+---
+import type { WPACFFbSocialProofSection } from '../../types/wp';
+
+interface Props extends WPACFFbSocialProofSection {}
+
+const { heading, description, items = [], variant = 'cards' } = Astro.props;
+---
+
+{variant === 'cards' && (
+  <section class="bg-creme">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
+      {heading && (
+        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          {heading}
+        </h2>
+      )}
+      {description && (
+        <p class="mb-8 font-light text-taupe/70 lg:mb-12 sm:text-xl">
+          {description}
+        </p>
+      )}
+      <div class="grid gap-8 lg:gap-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {items.map((item) => (
+          <div class="text-center">
+            <div class="text-4xl font-extrabold text-mousse mb-2">{item.value}</div>
+            <h3 class="text-lg font-semibold text-taupe">{item.label}</h3>
+            {item.description && (
+              <p class="mt-1 text-sm text-taupe/60">{item.description}</p>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{variant === 'inline' && (
+  <section class="bg-beige">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-12 lg:px-6">
+      {heading && (
+        <h2 class="mb-6 text-3xl tracking-tight font-extrabold text-taupe font-heading text-center">
+          {heading}
+        </h2>
+      )}
+      <dl class="grid max-w-screen-md gap-8 mx-auto sm:grid-cols-3">
+        {items.map((item) => (
+          <div class="flex flex-col items-center justify-center">
+            <dt class="mb-2 text-3xl md:text-4xl font-extrabold text-mousse">{item.value}</dt>
+            <dd class="font-light text-taupe/70">{item.label}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+)}
+
+{variant === 'with_background' && (
+  <section class="bg-taupe">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+      <div class="mx-auto max-w-screen-sm text-center">
+        {heading && (
+          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-creme font-heading leading-tight">
+            {heading}
+          </h2>
+        )}
+        {description && (
+          <p class="mb-6 font-light text-beige/70 md:text-lg">
+            {description}
+          </p>
+        )}
+      </div>
+      <div class="grid gap-8 mt-8 sm:grid-cols-2 lg:grid-cols-4">
+        {items.map((item) => (
+          <div class="text-center">
+            <div class="text-4xl font-extrabold text-sauge mb-2">{item.value}</div>
+            <div class="text-lg font-semibold text-creme">{item.label}</div>
+            {item.description && (
+              <p class="mt-1 text-sm text-beige/60">{item.description}</p>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}

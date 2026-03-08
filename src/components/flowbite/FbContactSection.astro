@@ -1,0 +1,89 @@
+---
+import type { WPACFFbContactSection } from '../../types/wp';
+
+interface Props extends WPACFFbContactSection {}
+
+const { heading, description, email, phone, address, formAction, showMap, mapEmbed } = Astro.props;
+---
+
+<section class="bg-creme">
+  <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
+    {heading && (
+      <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-center text-taupe font-heading">
+        {heading}
+      </h2>
+    )}
+    {description && (
+      <p class="mb-8 lg:mb-16 font-light text-center text-taupe/70 sm:text-xl">
+        {description}
+      </p>
+    )}
+
+    {(email || phone || address) && (
+      <div class="grid gap-6 mb-8 md:grid-cols-3">
+        {email && (
+          <div class="text-center p-4">
+            <div class="flex justify-center items-center mx-auto mb-4 w-10 h-10 bg-sauge/10 rounded-full">
+              <svg class="w-5 h-5 text-mousse" fill="currentColor" viewBox="0 0 20 16" xmlns="http://www.w3.org/2000/svg">
+                <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"/>
+                <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/>
+              </svg>
+            </div>
+            <p class="text-sm text-taupe/60">Email</p>
+            <a href={`mailto:${email}`} class="text-taupe hover:text-mousse transition-colors">{email}</a>
+          </div>
+        )}
+        {phone && (
+          <div class="text-center p-4">
+            <div class="flex justify-center items-center mx-auto mb-4 w-10 h-10 bg-sauge/10 rounded-full">
+              <svg class="w-5 h-5 text-mousse" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+              </svg>
+            </div>
+            <p class="text-sm text-taupe/60">Téléphone</p>
+            <a href={`tel:${phone.replace(/\s/g, '')}`} class="text-taupe hover:text-mousse transition-colors">{phone}</a>
+          </div>
+        )}
+        {address && (
+          <div class="text-center p-4">
+            <div class="flex justify-center items-center mx-auto mb-4 w-10 h-10 bg-sauge/10 rounded-full">
+              <svg class="w-5 h-5 text-mousse" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <p class="text-sm text-taupe/60">Adresse</p>
+            <p class="text-taupe">{address}</p>
+          </div>
+        )}
+      </div>
+    )}
+
+    <form action={formAction || '#'} method="POST" class="space-y-6">
+      <div class="grid gap-6 sm:grid-cols-2">
+        <div>
+          <label for="contact-name" class="block mb-2 text-sm font-medium text-taupe">Nom</label>
+          <input type="text" id="contact-name" name="name" class="bg-beige/30 border border-beige text-taupe text-sm rounded-lg focus:ring-sauge focus:border-sauge block w-full p-2.5" placeholder="Votre nom" required />
+        </div>
+        <div>
+          <label for="contact-email" class="block mb-2 text-sm font-medium text-taupe">Email</label>
+          <input type="email" id="contact-email" name="email" class="bg-beige/30 border border-beige text-taupe text-sm rounded-lg focus:ring-sauge focus:border-sauge block w-full p-2.5" placeholder="votre@email.com" required />
+        </div>
+      </div>
+      <div>
+        <label for="contact-subject" class="block mb-2 text-sm font-medium text-taupe">Sujet</label>
+        <input type="text" id="contact-subject" name="subject" class="bg-beige/30 border border-beige text-taupe text-sm rounded-lg focus:ring-sauge focus:border-sauge block w-full p-2.5" placeholder="Comment pouvons-nous vous aider ?" required />
+      </div>
+      <div>
+        <label for="contact-message" class="block mb-2 text-sm font-medium text-taupe">Message</label>
+        <textarea id="contact-message" name="message" rows="6" class="bg-beige/30 border border-beige text-taupe text-sm rounded-lg focus:ring-sauge focus:border-sauge block w-full p-2.5" placeholder="Votre message..."></textarea>
+      </div>
+      <button type="submit" class="py-3 px-5 text-sm font-medium text-center text-creme rounded-lg bg-sauge hover:bg-mousse transition-colors focus:ring-4 focus:outline-none focus:ring-sauge/30 w-full sm:w-auto">
+        Envoyer le message
+      </button>
+    </form>
+
+    {showMap && mapEmbed && (
+      <div class="mt-12 rounded-lg overflow-hidden shadow-lg" set:html={mapEmbed} />
+    )}
+  </div>
+</section>

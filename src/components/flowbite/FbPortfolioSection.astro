@@ -1,0 +1,115 @@
+---
+import type { WPACFFbPortfolioSection } from '../../types/wp';
+
+interface Props extends WPACFFbPortfolioSection {}
+
+const { heading, description, projects = [], variant = 'cards', ctaText, ctaUrl } = Astro.props;
+---
+
+{variant === 'cards' && (
+  <section class="bg-creme">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+      {(heading || description) && (
+        <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-12">
+          {heading && (
+            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">{heading}</h2>
+          )}
+          {description && (
+            <p class="font-light text-taupe/70 sm:text-xl">{description}</p>
+          )}
+        </div>
+      )}
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {projects.map((project) => (
+          <div class="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow">
+            {project.image && (
+              <img class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" src={project.image.sourceUrl} alt={project.image.altText || project.title || ''} loading="lazy" />
+            )}
+            <div class="absolute inset-0 bg-gradient-to-t from-taupe/80 to-transparent flex flex-col justify-end p-6">
+              {project.category && (
+                <span class="text-xs font-medium text-sauge uppercase mb-1">{project.category}</span>
+              )}
+              {project.title && (
+                <h3 class="text-xl font-bold text-creme mb-1">
+                  {project.url ? (
+                    <a href={project.url} class="hover:text-sauge transition-colors">{project.title}</a>
+                  ) : project.title}
+                </h3>
+              )}
+              {project.description && (
+                <p class="text-sm text-beige/80 line-clamp-2">{project.description}</p>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+      {ctaText && ctaUrl && (
+        <div class="text-center mt-12">
+          <a href={ctaUrl} class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-creme rounded-lg bg-sauge hover:bg-mousse transition-colors">
+            {ctaText}
+          </a>
+        </div>
+      )}
+    </div>
+  </section>
+)}
+
+{variant === 'minimal' && (
+  <section class="bg-creme">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+      {heading && (
+        <h2 class="mb-8 text-4xl tracking-tight font-extrabold text-taupe font-heading">{heading}</h2>
+      )}
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {projects.map((project) => (
+          <a href={project.url || '#'} class="group block">
+            {project.image && (
+              <img class="w-full h-56 object-cover rounded-lg mb-4 group-hover:opacity-90 transition-opacity" src={project.image.sourceUrl} alt={project.image.altText || project.title || ''} loading="lazy" />
+            )}
+            {project.category && (
+              <span class="text-xs font-medium text-mousse uppercase">{project.category}</span>
+            )}
+            {project.title && (
+              <h3 class="text-lg font-bold text-taupe group-hover:text-mousse transition-colors">{project.title}</h3>
+            )}
+            {project.description && (
+              <p class="mt-1 text-sm text-taupe/70">{project.description}</p>
+            )}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{variant === 'masonry' && (
+  <section class="bg-creme">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+      {(heading || description) && (
+        <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-12">
+          {heading && <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">{heading}</h2>}
+          {description && <p class="font-light text-taupe/70 sm:text-xl">{description}</p>}
+        </div>
+      )}
+      <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+        {projects.map((project) => (
+          <div class="break-inside-avoid group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow">
+            {project.image && (
+              <img class="w-full object-cover" src={project.image.sourceUrl} alt={project.image.altText || project.title || ''} loading="lazy" />
+            )}
+            <div class="p-4 bg-creme border border-t-0 border-beige rounded-b-lg">
+              {project.category && (
+                <span class="text-xs font-medium text-mousse uppercase">{project.category}</span>
+              )}
+              {project.title && (
+                <h3 class="text-lg font-bold text-taupe">
+                  {project.url ? <a href={project.url} class="hover:text-mousse transition-colors">{project.title}</a> : project.title}
+                </h3>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}

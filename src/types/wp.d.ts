@@ -1,3 +1,21 @@
+export interface WPThemeSettings {
+  logo: WPImage | null;
+  logoFooter: WPImage | null;
+  colorBeige: string | null;
+  colorCreme: string | null;
+  colorTaupe: string | null;
+  colorSauge: string | null;
+  colorMousse: string | null;
+  fontBody: string | null;
+  fontHeading: string | null;
+  socialFacebook: string | null;
+  socialInstagram: string | null;
+  socialLinkedin: string | null;
+  socialTiktok: string | null;
+  socialYoutube: string | null;
+  footerText: string | null;
+}
+
 export interface WPImage {
   sourceUrl: string;
   altText: string;
@@ -39,7 +57,8 @@ export interface WPSEO {
 }
 
 export interface WPACFBase {
-  fieldGroupName: string;
+  __typename?: string;
+  fieldGroupName?: string;
 }
 
 export interface WPACFHeroSection extends WPACFBase {
@@ -58,10 +77,359 @@ export interface WPACFImageGallery extends WPACFBase {
   images?: WPImage[];
 }
 
+// --- Flowbite Block Types ---
+
+export interface WPACFFbHeroSection extends WPACFBase {
+  heading?: string;
+  highlight?: string;
+  description?: string;
+  image?: WPImage;
+  ctaText?: string;
+  ctaUrl?: string;
+  cta2Text?: string;
+  cta2Url?: string;
+  variant?: 'centered' | 'image_right' | 'image_left' | 'fullscreen';
+}
+
+export interface WPACFFbFeatureItem {
+  icon?: string;
+  title?: string;
+  description?: string;
+}
+
+export interface WPACFFbFeaturesSection extends WPACFBase {
+  heading?: string;
+  description?: string;
+  items?: WPACFFbFeatureItem[];
+  columns?: '2' | '3' | '4';
+}
+
+export interface WPACFFbCtaSection extends WPACFBase {
+  heading?: string;
+  description?: string;
+  buttonText?: string;
+  buttonUrl?: string;
+  variant?: 'centered' | 'with_image' | 'dark';
+  image?: WPImage;
+}
+
+export interface WPACFFbContentSection extends WPACFBase {
+  heading?: string;
+  body?: string;
+  image?: WPImage;
+  layout?: 'text_only' | 'image_right' | 'image_left';
+}
+
+export interface WPACFFbTestimonialItem {
+  quote?: string;
+  author?: string;
+  role?: string;
+  avatar?: WPImage;
+  rating?: number;
+}
+
+export interface WPACFFbTestimonialsSection extends WPACFBase {
+  heading?: string;
+  items?: WPACFFbTestimonialItem[];
+}
+
+export interface WPACFFbPlanFeature {
+  text?: string;
+  included?: boolean;
+}
+
+export interface WPACFFbPlan {
+  name?: string;
+  price?: string;
+  period?: string;
+  description?: string;
+  features?: WPACFFbPlanFeature[];
+  ctaText?: string;
+  ctaUrl?: string;
+  highlighted?: boolean;
+}
+
+export interface WPACFFbPricingSection extends WPACFBase {
+  heading?: string;
+  description?: string;
+  plans?: WPACFFbPlan[];
+}
+
+export interface WPACFFbFaqItem {
+  question?: string;
+  answer?: string;
+}
+
+export interface WPACFFbFaqSection extends WPACFBase {
+  heading?: string;
+  description?: string;
+  items?: WPACFFbFaqItem[];
+}
+
+export interface WPACFFbTeamMember {
+  name?: string;
+  role?: string;
+  bio?: string;
+  photo?: WPImage;
+  social?: {
+    linkedin?: string;
+    twitter?: string;
+    email?: string;
+  };
+}
+
+export interface WPACFFbTeamSection extends WPACFBase {
+  heading?: string;
+  description?: string;
+  members?: WPACFFbTeamMember[];
+}
+
+export interface WPACFFbContactSection extends WPACFBase {
+  heading?: string;
+  description?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  formAction?: string;
+  showMap?: boolean;
+  mapEmbed?: string;
+}
+
+export interface WPACFFbNewsletterSection extends WPACFBase {
+  heading?: string;
+  description?: string;
+  formAction?: string;
+  placeholder?: string;
+  buttonText?: string;
+  privacyText?: string;
+}
+
+export interface WPACFFbStatItem {
+  value?: string;
+  label?: string;
+  description?: string;
+}
+
+export interface WPACFFbStatsSection extends WPACFBase {
+  heading?: string;
+  description?: string;
+  items?: WPACFFbStatItem[];
+  variant?: 'light' | 'dark' | 'accent';
+}
+
+export interface WPACFFbGallerySection extends WPACFBase {
+  heading?: string;
+  images?: WPImage[];
+  columns?: '2' | '3' | '4';
+  style?: 'grid' | 'masonry';
+}
+
+export interface WPACFFbSocialProofItem {
+  value?: string;
+  label?: string;
+  description?: string;
+}
+
+export interface WPACFFbSocialProofSection extends WPACFBase {
+  heading?: string;
+  description?: string;
+  items?: WPACFFbSocialProofItem[];
+  variant?: 'cards' | 'inline' | 'with_background';
+}
+
+export interface WPACFFbCustomerLogo {
+  name?: string;
+  image?: WPImage;
+  url?: string;
+}
+
+export interface WPACFFbCustomerLogosSection extends WPACFBase {
+  heading?: string;
+  description?: string;
+  logos?: WPACFFbCustomerLogo[];
+  variant?: 'grid' | 'banner' | 'with_cta';
+}
+
+export interface WPACFFbBlogPost {
+  title?: string;
+  excerpt?: string;
+  image?: WPImage;
+  url?: string;
+  category?: string;
+  author?: string;
+  authorAvatar?: WPImage;
+  date?: string;
+}
+
+export interface WPACFFbBlogSection extends WPACFBase {
+  heading?: string;
+  description?: string;
+  posts?: WPACFFbBlogPost[];
+  ctaText?: string;
+  ctaUrl?: string;
+  variant?: 'cards' | 'list' | 'featured';
+}
+
+export interface WPACFFbPortfolioProject {
+  title?: string;
+  description?: string;
+  image?: WPImage;
+  url?: string;
+  category?: string;
+}
+
+export interface WPACFFbPortfolioSection extends WPACFBase {
+  heading?: string;
+  description?: string;
+  projects?: WPACFFbPortfolioProject[];
+  ctaText?: string;
+  ctaUrl?: string;
+  variant?: 'cards' | 'minimal' | 'masonry';
+}
+
+export interface WPACFFbBannerSection extends WPACFBase {
+  text?: string;
+  icon?: string;
+  ctaText?: string;
+  ctaUrl?: string;
+  dismissible?: boolean;
+  variant?: 'top' | 'bottom' | 'info';
+}
+
+export interface WPACFFbEvent {
+  title?: string;
+  date?: string;
+  time?: string;
+  description?: string;
+  location?: string;
+  ctaText?: string;
+  ctaUrl?: string;
+}
+
+export interface WPACFFbEventScheduleSection extends WPACFBase {
+  heading?: string;
+  description?: string;
+  events?: WPACFFbEvent[];
+  variant?: 'timeline' | 'cards' | 'table';
+}
+
+// --- Standalone component types (not flexible content) ---
+
+export interface WPACFFbFooterLink {
+  label?: string;
+  url?: string;
+}
+
+export interface WPACFFbFooterColumn {
+  title?: string;
+  links?: WPACFFbFooterLink[];
+}
+
+export interface WPACFFbFooterSocialLink {
+  platform?: string;
+  url?: string;
+  icon?: string;
+}
+
+export interface WPACFFbFooterSection extends WPACFBase {
+  logo?: WPImage;
+  logoAlt?: string;
+  description?: string;
+  columns?: WPACFFbFooterColumn[];
+  copyright?: string;
+  socialLinks?: WPACFFbFooterSocialLink[];
+  variant?: 'columns' | 'simple' | 'with_newsletter';
+}
+
+export interface WPACFFbCookieConsent extends WPACFBase {
+  message?: string;
+  acceptText?: string;
+  declineText?: string;
+  privacyUrl?: string;
+  variant?: 'bottom_bar' | 'modal' | 'floating';
+}
+
+export interface WPACFFbPopup extends WPACFBase {
+  heading?: string;
+  description?: string;
+  image?: WPImage;
+  ctaText?: string;
+  ctaUrl?: string;
+  cta2Text?: string;
+  cta2Url?: string;
+  variant?: 'centered' | 'with_image';
+}
+
+export interface WPACFFbErrorPage extends WPACFBase {
+  code?: string;
+  heading?: string;
+  description?: string;
+  ctaText?: string;
+  ctaUrl?: string;
+  variant?: 'centered' | 'illustration' | 'maintenance';
+}
+
+export interface WPACFFbAuthForm extends WPACFBase {
+  heading?: string;
+  description?: string;
+  formAction?: string;
+  logo?: WPImage;
+  forgotPasswordUrl?: string;
+  registerUrl?: string;
+  loginUrl?: string;
+  privacyUrl?: string;
+  termsUrl?: string;
+  variant?: 'login' | 'register' | 'reset_password';
+}
+
+export interface WPACFFbOnboardingStep {
+  icon?: string;
+  title?: string;
+  description?: string;
+}
+
+export interface WPACFFbOnboarding extends WPACFBase {
+  heading?: string;
+  description?: string;
+  steps?: WPACFFbOnboardingStep[];
+  variant?: 'horizontal' | 'vertical' | 'cards';
+}
+
+export interface WPACFFbHeroHomepage extends WPACFBase {
+  heading?: string;
+  highlight?: string;
+  subtitle?: string;
+  ctaText?: string;
+  ctaUrl?: string;
+  cta2Text?: string;
+  cta2Url?: string;
+  images?: WPImage[];
+  showHeartAnimation?: boolean;
+}
+
 export type WPFlexibleContent =
   | WPACFHeroSection
   | WPACFContentBlock
-  | WPACFImageGallery;
+  | WPACFImageGallery
+  | WPACFFbHeroSection
+  | WPACFFbHeroHomepage
+  | WPACFFbFeaturesSection
+  | WPACFFbCtaSection
+  | WPACFFbContentSection
+  | WPACFFbTestimonialsSection
+  | WPACFFbPricingSection
+  | WPACFFbFaqSection
+  | WPACFFbTeamSection
+  | WPACFFbContactSection
+  | WPACFFbNewsletterSection
+  | WPACFFbStatsSection
+  | WPACFFbGallerySection
+  | WPACFFbSocialProofSection
+  | WPACFFbCustomerLogosSection
+  | WPACFFbBlogSection
+  | WPACFFbPortfolioSection
+  | WPACFFbBannerSection
+  | WPACFFbEventScheduleSection;
 
 export interface WPPost {
   id: string;

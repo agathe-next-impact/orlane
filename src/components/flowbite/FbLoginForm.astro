@@ -1,0 +1,146 @@
+---
+import type { WPACFFbAuthForm } from '../../types/wp';
+
+interface Props extends WPACFFbAuthForm {}
+
+const { heading, description, formAction, variant = 'login', logo, forgotPasswordUrl, registerUrl, loginUrl, privacyUrl, termsUrl } = Astro.props;
+---
+
+{variant === 'login' && (
+  <section class="bg-beige/30">
+    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+      {logo && (
+        <a href="/" class="flex items-center mb-6">
+          <img class="w-8 h-8 mr-2" src={logo.sourceUrl} alt={logo.altText || ''} />
+        </a>
+      )}
+      <div class="w-full bg-creme rounded-lg shadow-md md:mt-0 sm:max-w-md xl:p-0 border border-beige">
+        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+          {heading && (
+            <h1 class="text-xl font-bold leading-tight tracking-tight text-taupe md:text-2xl font-heading">{heading}</h1>
+          )}
+          <form class="space-y-4 md:space-y-6" action={formAction || '#'} method="POST">
+            <div>
+              <label for="email" class="block mb-2 text-sm font-medium text-taupe">Email</label>
+              <input type="email" name="email" id="email" class="bg-beige/20 border border-beige text-taupe rounded-lg focus:ring-sauge focus:border-sauge block w-full p-2.5" placeholder="nom@exemple.com" required />
+            </div>
+            <div>
+              <label for="password" class="block mb-2 text-sm font-medium text-taupe">Mot de passe</label>
+              <input type="password" name="password" id="password" class="bg-beige/20 border border-beige text-taupe rounded-lg focus:ring-sauge focus:border-sauge block w-full p-2.5" placeholder="••••••••" required />
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-start">
+                <div class="flex items-center h-5">
+                  <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-beige rounded bg-beige/20 focus:ring-3 focus:ring-sauge/30 accent-sauge" />
+                </div>
+                <div class="ml-3 text-sm">
+                  <label for="remember" class="text-taupe/70">Se souvenir de moi</label>
+                </div>
+              </div>
+              {forgotPasswordUrl && (
+                <a href={forgotPasswordUrl} class="text-sm font-medium text-mousse hover:underline">Mot de passe oublié ?</a>
+              )}
+            </div>
+            <button type="submit" class="w-full text-creme bg-sauge hover:bg-mousse focus:ring-4 focus:outline-none focus:ring-sauge/30 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-colors">Se connecter</button>
+            {registerUrl && (
+              <p class="text-sm font-light text-taupe/70">
+                Pas encore de compte ? <a href={registerUrl} class="font-medium text-mousse hover:underline">S'inscrire</a>
+              </p>
+            )}
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
+{variant === 'register' && (
+  <section class="bg-beige/30">
+    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+      {logo && (
+        <a href="/" class="flex items-center mb-6">
+          <img class="w-8 h-8 mr-2" src={logo.sourceUrl} alt={logo.altText || ''} />
+        </a>
+      )}
+      <div class="w-full bg-creme rounded-lg shadow-md sm:max-w-md xl:p-0 border border-beige">
+        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+          {heading && (
+            <h1 class="text-xl font-bold leading-tight tracking-tight text-taupe md:text-2xl font-heading">{heading}</h1>
+          )}
+          <form class="space-y-4 md:space-y-6" action={formAction || '#'} method="POST">
+            <div>
+              <label for="reg-name" class="block mb-2 text-sm font-medium text-taupe">Nom complet</label>
+              <input type="text" name="name" id="reg-name" class="bg-beige/20 border border-beige text-taupe rounded-lg focus:ring-sauge focus:border-sauge block w-full p-2.5" placeholder="Votre nom" required />
+            </div>
+            <div>
+              <label for="reg-email" class="block mb-2 text-sm font-medium text-taupe">Email</label>
+              <input type="email" name="email" id="reg-email" class="bg-beige/20 border border-beige text-taupe rounded-lg focus:ring-sauge focus:border-sauge block w-full p-2.5" placeholder="nom@exemple.com" required />
+            </div>
+            <div>
+              <label for="reg-password" class="block mb-2 text-sm font-medium text-taupe">Mot de passe</label>
+              <input type="password" name="password" id="reg-password" class="bg-beige/20 border border-beige text-taupe rounded-lg focus:ring-sauge focus:border-sauge block w-full p-2.5" placeholder="••••••••" required />
+            </div>
+            <div>
+              <label for="reg-confirm" class="block mb-2 text-sm font-medium text-taupe">Confirmer le mot de passe</label>
+              <input type="password" name="confirm-password" id="reg-confirm" class="bg-beige/20 border border-beige text-taupe rounded-lg focus:ring-sauge focus:border-sauge block w-full p-2.5" placeholder="••••••••" required />
+            </div>
+            {(termsUrl || privacyUrl) && (
+              <div class="flex items-start">
+                <div class="flex items-center h-5">
+                  <input id="terms" type="checkbox" class="w-4 h-4 border border-beige rounded bg-beige/20 focus:ring-3 focus:ring-sauge/30 accent-sauge" required />
+                </div>
+                <div class="ml-3 text-sm">
+                  <label for="terms" class="font-light text-taupe/70">
+                    J'accepte les {termsUrl && <a href={termsUrl} class="font-medium text-mousse hover:underline">CGU</a>}
+                    {termsUrl && privacyUrl && ' et la '}
+                    {privacyUrl && <a href={privacyUrl} class="font-medium text-mousse hover:underline">politique de confidentialité</a>}
+                  </label>
+                </div>
+              </div>
+            )}
+            <button type="submit" class="w-full text-creme bg-sauge hover:bg-mousse focus:ring-4 focus:outline-none focus:ring-sauge/30 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-colors">Créer un compte</button>
+            {loginUrl && (
+              <p class="text-sm font-light text-taupe/70">
+                Déjà un compte ? <a href={loginUrl} class="font-medium text-mousse hover:underline">Se connecter</a>
+              </p>
+            )}
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
+{variant === 'reset_password' && (
+  <section class="bg-beige/30">
+    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+      {logo && (
+        <a href="/" class="flex items-center mb-6">
+          <img class="w-8 h-8 mr-2" src={logo.sourceUrl} alt={logo.altText || ''} />
+        </a>
+      )}
+      <div class="w-full bg-creme rounded-lg shadow-md sm:max-w-md xl:p-0 border border-beige">
+        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+          <h1 class="text-xl font-bold leading-tight tracking-tight text-taupe md:text-2xl font-heading">
+            {heading || 'Réinitialiser le mot de passe'}
+          </h1>
+          {description && (
+            <p class="text-sm text-taupe/70">{description}</p>
+          )}
+          <form class="space-y-4 md:space-y-6" action={formAction || '#'} method="POST">
+            <div>
+              <label for="reset-email" class="block mb-2 text-sm font-medium text-taupe">Votre email</label>
+              <input type="email" name="email" id="reset-email" class="bg-beige/20 border border-beige text-taupe rounded-lg focus:ring-sauge focus:border-sauge block w-full p-2.5" placeholder="nom@exemple.com" required />
+            </div>
+            <button type="submit" class="w-full text-creme bg-sauge hover:bg-mousse focus:ring-4 focus:outline-none focus:ring-sauge/30 font-medium rounded-lg text-sm px-5 py-2.5 text-center transition-colors">Envoyer le lien</button>
+            {loginUrl && (
+              <p class="text-sm font-light text-taupe/70 text-center">
+                <a href={loginUrl} class="font-medium text-mousse hover:underline">Retour à la connexion</a>
+              </p>
+            )}
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+)}

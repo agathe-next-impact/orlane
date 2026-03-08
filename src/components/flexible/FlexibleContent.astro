@@ -1,8 +1,25 @@
 ---
 import type { WPFlexibleContent } from '../../types/wp';
-import HeroSection from './HeroSection.astro';
-import ContentBlock from './ContentBlock.astro';
-import ImageGallery from './ImageGallery.astro';
+// Flowbite blocks
+import FbHeroSection from '../flowbite/FbHeroSection.astro';
+import FbFeaturesSection from '../flowbite/FbFeaturesSection.astro';
+import FbCtaSection from '../flowbite/FbCtaSection.astro';
+import FbContentSection from '../flowbite/FbContentSection.astro';
+import FbTestimonialsSection from '../flowbite/FbTestimonialsSection.astro';
+import FbPricingSection from '../flowbite/FbPricingSection.astro';
+import FbFaqSection from '../flowbite/FbFaqSection.astro';
+import FbTeamSection from '../flowbite/FbTeamSection.astro';
+import FbContactSection from '../flowbite/FbContactSection.astro';
+import FbNewsletterSection from '../flowbite/FbNewsletterSection.astro';
+import FbStatsSection from '../flowbite/FbStatsSection.astro';
+import FbGallerySection from '../flowbite/FbGallerySection.astro';
+import FbSocialProofSection from '../flowbite/FbSocialProofSection.astro';
+import FbCustomerLogosSection from '../flowbite/FbCustomerLogosSection.astro';
+import FbBlogSection from '../flowbite/FbBlogSection.astro';
+import FbPortfolioSection from '../flowbite/FbPortfolioSection.astro';
+import FbBannerSection from '../flowbite/FbBannerSection.astro';
+import FbEventScheduleSection from '../flowbite/FbEventScheduleSection.astro';
+import FbHeroHomepage from '../flowbite/FbHeroHomepage.astro';
 
 interface Props {
   blocks?: WPFlexibleContent[];
@@ -10,25 +27,100 @@ interface Props {
 
 const { blocks = [] } = Astro.props;
 
+/**
+ * Normalizes WPGraphQL for ACF v2 image data to flat WPImage format.
+ * v2 wraps single images in { node: { sourceUrl, ... } } and galleries in { nodes: [...] }.
+ * Components expect flat { sourceUrl, altText, mediaDetails } format.
+ */
+function normalizeBlock(block: any): any {
+  if (!block || typeof block !== 'object') return block;
+
+  const normalized = { ...block };
+
+  for (const [key, value] of Object.entries(normalized)) {
+    if (value && typeof value === 'object' && !Array.isArray(value)) {
+      // Single image: { node: { sourceUrl, altText, ... } } → { sourceUrl, altText, ... }
+      if ('node' in (value as any) && (value as any).node?.sourceUrl) {
+        normalized[key] = (value as any).node;
+      }
+      // Gallery: { nodes: [{ sourceUrl, ... }] } → [{ sourceUrl, ... }]
+      else if ('nodes' in (value as any) && Array.isArray((value as any).nodes)) {
+        normalized[key] = (value as any).nodes;
+      }
+    }
+
+    // ACF select fields return as single-element arrays in v2 — unwrap to string
+    // e.g. ["image_right"] → "image_right"
+    if (Array.isArray(normalized[key]) && normalized[key].length === 1 && typeof normalized[key][0] === 'string') {
+      normalized[key] = normalized[key][0];
+      continue;
+    }
+
+    // Recurse into arrays (repeater fields like items, members, plans, posts, etc.)
+    if (Array.isArray(normalized[key])) {
+      normalized[key] = normalized[key].map((item: any) =>
+        typeof item === 'object' && item !== null ? normalizeBlock(item) : item
+      );
+    }
+  }
+
+  // Remap unique repeater names back to 'items' for component compatibility.
+  // WPGraphQL for ACF v2 requires unique repeater names to avoid shared type conflicts,
+  // but components expect a uniform 'items' prop.
+  const repeaterAliases: Record<string, string> = {
+    testimonials: 'items',
+    faqs: 'items',
+    stats: 'items',
+    proofs: 'items',
+  };
+  for (const [from, to] of Object.entries(repeaterAliases)) {
+    if (from in normalized && !(to in normalized)) {
+      normalized[to] = normalized[from];
+      delete normalized[from];
+    }
+  }
+
+  return normalized;
+}
+
+/**
+ * Maps WPGraphQL for ACF v2 __typename values to Astro components.
+ * v2 uses shared type names (no Page_/Project_ prefix).
+ */
 const componentMap: Record<string, any> = {
-  'Project_Acffields_FlexibleContent_HeroSection': HeroSection,
-  'Project_Acffields_FlexibleContent_ContentBlock': ContentBlock,
-  'Project_Acffields_FlexibleContent_ImageGallery': ImageGallery,
-  'Page_Acffields_FlexibleContent_HeroSection': HeroSection,
-  'Page_Acffields_FlexibleContent_ContentBlock': ContentBlock,
-  'Page_Acffields_FlexibleContent_ImageGallery': ImageGallery,
+  'AcfFieldsFlexibleContentFbHeroSectionLayout': FbHeroSection,
+  'AcfFieldsFlexibleContentFbFeaturesSectionLayout': FbFeaturesSection,
+  'AcfFieldsFlexibleContentFbCtaSectionLayout': FbCtaSection,
+  'AcfFieldsFlexibleContentFbContentSectionLayout': FbContentSection,
+  'AcfFieldsFlexibleContentFbTestimonialsSectionLayout': FbTestimonialsSection,
+  'AcfFieldsFlexibleContentFbPricingSectionLayout': FbPricingSection,
+  'AcfFieldsFlexibleContentFbFaqSectionLayout': FbFaqSection,
+  'AcfFieldsFlexibleContentFbTeamSectionLayout': FbTeamSection,
+  'AcfFieldsFlexibleContentFbContactSectionLayout': FbContactSection,
+  'AcfFieldsFlexibleContentFbNewsletterSectionLayout': FbNewsletterSection,
+  'AcfFieldsFlexibleContentFbStatsSectionLayout': FbStatsSection,
+  'AcfFieldsFlexibleContentFbGallerySectionLayout': FbGallerySection,
+  'AcfFieldsFlexibleContentFbSocialProofSectionLayout': FbSocialProofSection,
+  'AcfFieldsFlexibleContentFbCustomerLogosSectionLayout': FbCustomerLogosSection,
+  'AcfFieldsFlexibleContentFbBlogSectionLayout': FbBlogSection,
+  'AcfFieldsFlexibleContentFbPortfolioSectionLayout': FbPortfolioSection,
+  'AcfFieldsFlexibleContentFbBannerSectionLayout': FbBannerSection,
+  'AcfFieldsFlexibleContentFbEventScheduleSectionLayout': FbEventScheduleSection,
+  'AcfFieldsFlexibleContentFbHeroHomepageLayout': FbHeroHomepage,
 };
 ---
 
 <div class="flexible-content">
   {blocks.map((block, index) => {
-    const Component = componentMap[block.fieldGroupName];
+    const typeName = (block as any).__typename || block.fieldGroupName;
+    const Component = componentMap[typeName];
 
     if (!Component) {
-      console.warn(`No component found for: ${block.fieldGroupName}`);
+      console.warn(`No component found for: ${typeName}`);
       return null;
     }
 
-    return <Component {...block} key={index} />;
+    const props = normalizeBlock(block);
+    return <Component {...props} key={index} />;
   })}
 </div>

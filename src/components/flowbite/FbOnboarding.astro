@@ -1,0 +1,113 @@
+---
+import type { WPACFFbOnboarding } from '../../types/wp';
+
+interface Props extends WPACFFbOnboarding {}
+
+const { heading, description, steps = [], variant = 'horizontal' } = Astro.props;
+---
+
+{variant === 'horizontal' && (
+  <section class="bg-creme">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+      {heading && (
+        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading text-center">{heading}</h2>
+      )}
+      {description && (
+        <p class="mb-12 font-light text-taupe/70 sm:text-xl text-center max-w-screen-sm mx-auto">{description}</p>
+      )}
+      <ol class="flex items-center w-full max-w-screen-lg mx-auto mb-12">
+        {steps.map((step, i) => (
+          <li class={`flex w-full items-center ${i < steps.length - 1 ? "after:content-[''] after:w-full after:h-1 after:border-b after:border-sauge/30 after:border-4 after:inline-block" : ''}`}>
+            <span class="flex items-center justify-center w-10 h-10 bg-sauge/10 rounded-full lg:h-12 lg:w-12 shrink-0">
+              <span class="text-sm font-bold text-mousse">{i + 1}</span>
+            </span>
+          </li>
+        ))}
+      </ol>
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-{steps.length > 4 ? '4' : steps.length}">
+        {steps.map((step, i) => (
+          <div class="text-center">
+            <div class="flex justify-center items-center mb-4 w-12 h-12 rounded-full bg-sauge/10 mx-auto">
+              {step.icon ? (
+                <Fragment set:html={step.icon} />
+              ) : (
+                <span class="text-lg font-bold text-mousse">{i + 1}</span>
+              )}
+            </div>
+            {step.title && (
+              <h3 class="mb-2 text-xl font-bold text-taupe">{step.title}</h3>
+            )}
+            {step.description && (
+              <p class="text-taupe/70">{step.description}</p>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{variant === 'vertical' && (
+  <section class="bg-creme">
+    <div class="py-8 px-4 mx-auto max-w-screen-md lg:py-16">
+      {heading && (
+        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">{heading}</h2>
+      )}
+      {description && (
+        <p class="mb-12 font-light text-taupe/70 sm:text-xl">{description}</p>
+      )}
+      <ol class="relative border-s border-sauge/30">
+        {steps.map((step, i) => (
+          <li class="mb-10 ms-8">
+            <span class="absolute flex items-center justify-center w-8 h-8 bg-sauge/10 rounded-full -start-4 ring-4 ring-creme">
+              {step.icon ? (
+                <span class="text-mousse w-4 h-4"><Fragment set:html={step.icon} /></span>
+              ) : (
+                <span class="text-sm font-bold text-mousse">{i + 1}</span>
+              )}
+            </span>
+            {step.title && (
+              <h3 class="text-lg font-semibold text-taupe mb-1">{step.title}</h3>
+            )}
+            {step.description && (
+              <p class="text-taupe/70">{step.description}</p>
+            )}
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+)}
+
+{variant === 'cards' && (
+  <section class="bg-beige/30">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+      {heading && (
+        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading text-center">{heading}</h2>
+      )}
+      {description && (
+        <p class="mb-12 font-light text-taupe/70 sm:text-xl text-center max-w-screen-sm mx-auto">{description}</p>
+      )}
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {steps.map((step, i) => (
+          <div class="bg-creme rounded-lg p-6 border border-beige shadow-sm relative">
+            <div class="absolute -top-4 left-6 flex items-center justify-center w-8 h-8 bg-sauge text-creme rounded-full text-sm font-bold">
+              {i + 1}
+            </div>
+            {step.icon && (
+              <div class="mb-4 mt-2 text-mousse">
+                <Fragment set:html={step.icon} />
+              </div>
+            )}
+            {step.title && (
+              <h3 class="mb-2 text-xl font-bold text-taupe">{step.title}</h3>
+            )}
+            {step.description && (
+              <p class="text-taupe/70">{step.description}</p>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}

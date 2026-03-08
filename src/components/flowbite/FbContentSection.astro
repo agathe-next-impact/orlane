@@ -1,0 +1,69 @@
+---
+import { sanitizeHTML } from '../../lib/utils/sanitize';
+import type { WPACFFbContentSection } from '../../types/wp';
+
+interface Props extends WPACFFbContentSection {}
+
+const { heading, body, image, layout = 'text_only' } = Astro.props;
+---
+
+{layout === 'text_only' && (
+  <section class="bg-creme">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+      <div class="max-w-screen-lg mx-auto">
+        {heading && (
+          <h2 class="mb-6 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+            {heading}
+          </h2>
+        )}
+        {body && (
+          <div class="prose prose-lg max-w-none text-taupe/80" set:html={sanitizeHTML(body)} />
+        )}
+      </div>
+    </div>
+  </section>
+)}
+
+{layout === 'image_right' && (
+  <section class="bg-creme">
+    <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
+      <div>
+        {heading && (
+          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+            {heading}
+          </h2>
+        )}
+        {body && (
+          <div class="prose prose-lg max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
+        )}
+      </div>
+      {image && (
+        <div class="mt-8 lg:mt-0">
+          <img class="w-full rounded-lg shadow-lg" src={image.sourceUrl} alt={image.altText || heading || ''} />
+        </div>
+      )}
+    </div>
+  </section>
+)}
+
+{layout === 'image_left' && (
+  <section class="bg-creme">
+    <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
+      {image && (
+        <div class="mb-8 lg:mb-0">
+          <img class="w-full rounded-lg shadow-lg" src={image.sourceUrl} alt={image.altText || heading || ''} />
+        </div>
+      )}
+      <div>
+        {heading && (
+          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+            {heading}
+          </h2>
+        )}
+        {body && (
+          <div class="prose prose-lg max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
+        )}
+      </div>
+    </div>
+  </section>
+)}

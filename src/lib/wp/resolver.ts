@@ -38,6 +38,15 @@ export async function resolveContent(slugParts: string[]): Promise<ResolvedConte
     const page = await tryPage(fullPath);
     if (page) return page;
 
+    // Try the last segment as a post slug (e.g. "/blog/mon-article" or "/2024/03/mon-article")
+    const lastSlug = slugParts[slugParts.length - 1];
+    const post = await tryPost(lastSlug);
+    if (post) return post;
+
+    // Try the last segment as a page slug
+    const pageBySlug = await tryPage(lastSlug);
+    if (pageBySlug) return pageBySlug;
+
     return null;
   }
 

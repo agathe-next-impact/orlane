@@ -1,0 +1,99 @@
+---
+import type { WPACFFbCtaSection } from '../../types/wp';
+
+interface Props extends WPACFFbCtaSection {}
+
+const { heading, description, buttonText, buttonUrl, variant = 'centered', image } = Astro.props;
+
+const bgClass: Record<string, string> = {
+  centered: 'bg-beige',
+  with_image: 'bg-creme',
+  dark: 'bg-taupe',
+};
+const textClass: Record<string, string> = {
+  centered: 'text-taupe',
+  with_image: 'text-taupe',
+  dark: 'text-creme',
+};
+const descClass: Record<string, string> = {
+  centered: 'text-taupe/70',
+  with_image: 'text-taupe/70',
+  dark: 'text-beige/80',
+};
+---
+
+{variant === 'centered' && (
+  <section class={bgClass[variant]}>
+    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+      <div class="mx-auto max-w-screen-sm text-center">
+        {heading && (
+          <h2 class={`mb-4 text-4xl tracking-tight font-extrabold leading-tight ${textClass[variant]} font-heading`}>
+            {heading}
+          </h2>
+        )}
+        {description && (
+          <p class={`mb-6 font-light ${descClass[variant]} md:text-lg`}>
+            {description}
+          </p>
+        )}
+        {buttonText && buttonUrl && (
+          <a href={buttonUrl} class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-creme rounded-lg bg-sauge hover:bg-mousse transition-colors focus:ring-4 focus:ring-sauge/30">
+            {buttonText}
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
+)}
+
+{variant === 'with_image' && (
+  <section class={bgClass[variant]}>
+    <div class="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
+      {image && (
+        <img class="w-full rounded-lg" src={image.sourceUrl} alt={image.altText || heading || ''} />
+      )}
+      <div class="mt-4 md:mt-0">
+        {heading && (
+          <h2 class={`mb-4 text-4xl tracking-tight font-extrabold ${textClass[variant]} font-heading`}>
+            {heading}
+          </h2>
+        )}
+        {description && (
+          <p class={`mb-6 font-light ${descClass[variant]} md:text-lg`}>
+            {description}
+          </p>
+        )}
+        {buttonText && buttonUrl && (
+          <a href={buttonUrl} class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-creme rounded-lg bg-sauge hover:bg-mousse transition-colors focus:ring-4 focus:ring-sauge/30">
+            {buttonText}
+            <svg class="w-5 h-5 ms-2 -me-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
+)}
+
+{variant === 'dark' && (
+  <section class={bgClass[variant]}>
+    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+      <div class="mx-auto max-w-screen-sm text-center">
+        {heading && (
+          <h2 class={`mb-4 text-4xl tracking-tight font-extrabold leading-tight ${textClass[variant]} font-heading`}>
+            {heading}
+          </h2>
+        )}
+        {description && (
+          <p class={`mb-6 font-light ${descClass[variant]} md:text-lg`}>
+            {description}
+          </p>
+        )}
+        {buttonText && buttonUrl && (
+          <a href={buttonUrl} class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-taupe bg-creme rounded-lg hover:bg-beige transition-colors focus:ring-4 focus:ring-beige/30">
+            {buttonText}
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
+)}

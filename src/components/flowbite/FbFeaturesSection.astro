@@ -1,0 +1,49 @@
+---
+import type { WPACFFbFeaturesSection } from '../../types/wp';
+
+interface Props extends WPACFFbFeaturesSection {}
+
+const { heading, description, items = [], columns = '3' } = Astro.props;
+
+const gridClass: Record<string, string> = {
+  '2': 'md:grid-cols-2',
+  '3': 'md:grid-cols-2 lg:grid-cols-3',
+  '4': 'md:grid-cols-2 lg:grid-cols-4',
+};
+---
+
+<section class="bg-creme">
+  <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+    {(heading || description) && (
+      <div class="max-w-screen-md mb-8 lg:mb-16">
+        {heading && (
+          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+            {heading}
+          </h2>
+        )}
+        {description && (
+          <p class="text-taupe/70 sm:text-xl">
+            {description}
+          </p>
+        )}
+      </div>
+    )}
+    <div class={`space-y-8 ${gridClass[columns] || gridClass['3']} grid gap-8 lg:gap-12`}>
+      {items.map((item) => (
+        <div>
+          {item.icon && (
+            <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-sauge/10 lg:h-12 lg:w-12 text-mousse">
+              <Fragment set:html={item.icon} />
+            </div>
+          )}
+          {item.title && (
+            <h3 class="mb-2 text-xl font-bold text-taupe">{item.title}</h3>
+          )}
+          {item.description && (
+            <p class="text-taupe/70">{item.description}</p>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

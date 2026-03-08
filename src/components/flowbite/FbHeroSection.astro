@@ -1,0 +1,144 @@
+---
+import type { WPACFFbHeroSection } from '../../types/wp';
+
+interface Props extends WPACFFbHeroSection {}
+
+const { heading, highlight, description, image, ctaText, ctaUrl, cta2Text, cta2Url, variant = 'centered' } = Astro.props;
+---
+
+{variant === 'centered' && (
+  <section class="bg-creme">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16">
+      {heading && (
+        <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-taupe md:text-5xl lg:text-6xl font-heading">
+          {heading} {highlight && <span class="text-mousse">{highlight}</span>}
+        </h1>
+      )}
+      {description && (
+        <p class="mb-8 text-lg font-normal text-taupe/70 lg:text-xl sm:px-16 lg:px-48">
+          {description}
+        </p>
+      )}
+      <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
+        {ctaText && ctaUrl && (
+          <a href={ctaUrl} class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-creme rounded-lg bg-sauge hover:bg-mousse transition-colors focus:ring-4 focus:ring-sauge/30">
+            {ctaText}
+            <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+            </svg>
+          </a>
+        )}
+        {cta2Text && cta2Url && (
+          <a href={cta2Url} class="sm:ms-4 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-taupe rounded-lg border border-taupe/20 hover:bg-beige transition-colors focus:ring-4 focus:ring-taupe/10">
+            {cta2Text}
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
+)}
+
+{variant === 'image_right' && (
+  <section class="bg-creme">
+    <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+      <div class="mr-auto place-self-center lg:col-span-7">
+        {heading && (
+          <h1 class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-taupe font-heading">
+            {heading} {highlight && <span class="text-mousse">{highlight}</span>}
+          </h1>
+        )}
+        {description && (
+          <p class="max-w-2xl mb-6 font-light text-taupe/70 lg:mb-8 md:text-lg lg:text-xl">
+            {description}
+          </p>
+        )}
+        <div class="flex flex-wrap gap-4">
+          {ctaText && ctaUrl && (
+            <a href={ctaUrl} class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-creme rounded-lg bg-sauge hover:bg-mousse transition-colors focus:ring-4 focus:ring-sauge/30">
+              {ctaText}
+              <svg class="w-5 h-5 ms-2 -me-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+            </a>
+          )}
+          {cta2Text && cta2Url && (
+            <a href={cta2Url} class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-taupe border border-taupe/20 rounded-lg hover:bg-beige transition-colors focus:ring-4 focus:ring-taupe/10">
+              {cta2Text}
+            </a>
+          )}
+        </div>
+      </div>
+      {image && (
+        <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
+          <img src={image.sourceUrl} alt={image.altText || heading || ''} class="rounded-lg" />
+        </div>
+      )}
+    </div>
+  </section>
+)}
+
+{variant === 'image_left' && (
+  <section class="bg-creme">
+    <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+      {image && (
+        <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
+          <img src={image.sourceUrl} alt={image.altText || heading || ''} class="rounded-lg" />
+        </div>
+      )}
+      <div class="ml-auto place-self-center lg:col-span-7 lg:pl-8">
+        {heading && (
+          <h1 class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-taupe font-heading">
+            {heading} {highlight && <span class="text-mousse">{highlight}</span>}
+          </h1>
+        )}
+        {description && (
+          <p class="max-w-2xl mb-6 font-light text-taupe/70 lg:mb-8 md:text-lg lg:text-xl">
+            {description}
+          </p>
+        )}
+        <div class="flex flex-wrap gap-4">
+          {ctaText && ctaUrl && (
+            <a href={ctaUrl} class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-creme rounded-lg bg-sauge hover:bg-mousse transition-colors focus:ring-4 focus:ring-sauge/30">
+              {ctaText}
+            </a>
+          )}
+          {cta2Text && cta2Url && (
+            <a href={cta2Url} class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-taupe border border-taupe/20 rounded-lg hover:bg-beige transition-colors focus:ring-4 focus:ring-taupe/10">
+              {cta2Text}
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
+{variant === 'fullscreen' && (
+  <section class="relative bg-center bg-no-repeat bg-cover bg-taupe/90 bg-blend-multiply" style={image ? `background-image: url('${image.sourceUrl}')` : ''}>
+    <div class="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
+      {heading && (
+        <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-creme md:text-5xl lg:text-6xl font-heading">
+          {heading} {highlight && <span class="text-sauge">{highlight}</span>}
+        </h1>
+      )}
+      {description && (
+        <p class="mb-8 text-lg font-normal text-beige/80 lg:text-xl sm:px-16 lg:px-48">
+          {description}
+        </p>
+      )}
+      <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
+        {ctaText && ctaUrl && (
+          <a href={ctaUrl} class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-creme rounded-lg bg-sauge hover:bg-mousse transition-colors focus:ring-4 focus:ring-sauge/30">
+            {ctaText}
+            <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+            </svg>
+          </a>
+        )}
+        {cta2Text && cta2Url && (
+          <a href={cta2Url} class="sm:ms-4 inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-creme rounded-lg border border-creme/30 hover:bg-creme/10 transition-colors focus:ring-4 focus:ring-creme/10">
+            {cta2Text}
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
+)}

@@ -1,0 +1,57 @@
+---
+import type { WPACFFbHeroHomepage } from '../../types/wp';
+import AnimatedHeartSVG from '../AnimatedHeartSVG.astro';
+
+interface Props extends WPACFFbHeroHomepage {}
+
+const { heading, highlight, subtitle, ctaText, ctaUrl, cta2Text, cta2Url, images = [], showHeartAnimation = true } = Astro.props;
+---
+
+<section class="relative h-screen hero bg-gradient-to-br from-beige to-creme py-20 md:py-12 overflow-hidden">
+  {showHeartAnimation && (
+    <div class="absolute bottom-8 left-0 w-full max-w-4xl pointer-events-none">
+      <AnimatedHeartSVG />
+    </div>
+  )}
+  <div class="container px-4 relative z-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <div class="max-w-3xl">
+        {heading && (
+          <h1 class="text-5xl md:text-6xl font-bold mb-6 text-taupe/70">
+            {highlight ? (
+              <>
+                <span class="text-taupe">{highlight}</span> {heading}
+              </>
+            ) : (
+              heading
+            )}
+          </h1>
+        )}
+        {subtitle && (
+          <p class="text-xl md:text-2xl mb-8 text-mousse">{subtitle}</p>
+        )}
+        <div class="flex flex-wrap gap-4">
+          {ctaText && ctaUrl && (
+            <a href={ctaUrl} class="text-taupe underline text-xl">{ctaText}</a>
+          )}
+          {cta2Text && cta2Url && (
+            <a href={cta2Url} class="inline-block bg-sauge text-creme px-8 py-4 rounded-lg font-semibold hover:bg-taupe transition-colors">{cta2Text}</a>
+          )}
+        </div>
+      </div>
+      {images.length > 0 && (
+        <div class="columns-2 gap-3 space-y-3 content-end">
+          {images.map((img) => (
+            <img
+              src={img.sourceUrl}
+              alt={img.altText || ''}
+              width={img.mediaDetails?.width}
+              height={img.mediaDetails?.height}
+              class="rounded-2xl shadow-lg w-full object-contain"
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+</section>

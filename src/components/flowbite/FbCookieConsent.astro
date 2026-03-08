@@ -1,0 +1,80 @@
+---
+import type { WPACFFbCookieConsent } from '../../types/wp';
+
+interface Props extends WPACFFbCookieConsent {}
+
+const { message, acceptText = 'Accepter', declineText = 'Refuser', privacyUrl, variant = 'bottom_bar' } = Astro.props;
+---
+
+{variant === 'bottom_bar' && (
+  <div id="fb-cookie-banner" tabindex="-1" class="fixed bottom-0 left-0 z-50 w-full p-4 bg-taupe border-t border-taupe/80 shadow-lg">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 max-w-screen-xl mx-auto">
+      <p class="text-sm text-beige/80">
+        {message}
+        {privacyUrl && (
+          <a href={privacyUrl} class="text-sauge underline hover:no-underline ms-1">En savoir plus</a>
+        )}
+      </p>
+      <div class="flex items-center gap-3 flex-shrink-0">
+        <button data-dismiss-target="#fb-cookie-banner" type="button" class="text-sm font-medium text-beige/70 hover:text-creme transition-colors px-4 py-2">
+          {declineText}
+        </button>
+        <button data-dismiss-target="#fb-cookie-banner" type="button" class="text-sm font-medium text-taupe bg-sauge hover:bg-mousse rounded-lg px-4 py-2 transition-colors">
+          {acceptText}
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
+{variant === 'modal' && (
+  <div id="fb-cookie-modal" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center bg-taupe/50 backdrop-blur-sm">
+    <div class="relative p-4 w-full max-w-md">
+      <div class="relative bg-creme rounded-lg shadow-xl p-6">
+        <div class="flex justify-center mb-4">
+          <svg class="w-10 h-10 text-mousse" fill="currentColor" viewBox="0 0 20 20"><path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/></svg>
+        </div>
+        <h3 class="text-lg font-semibold text-taupe text-center mb-2">Cookies</h3>
+        {message && (
+          <p class="text-sm text-taupe/70 text-center mb-6">{message}</p>
+        )}
+        {privacyUrl && (
+          <p class="text-xs text-taupe/60 text-center mb-4">
+            <a href={privacyUrl} class="text-mousse underline hover:no-underline">Politique de confidentialité</a>
+          </p>
+        )}
+        <div class="flex gap-3">
+          <button data-dismiss-target="#fb-cookie-modal" type="button" class="flex-1 text-sm font-medium text-taupe border border-beige rounded-lg px-4 py-2.5 hover:bg-beige transition-colors">
+            {declineText}
+          </button>
+          <button data-dismiss-target="#fb-cookie-modal" type="button" class="flex-1 text-sm font-medium text-creme bg-sauge rounded-lg px-4 py-2.5 hover:bg-mousse transition-colors">
+            {acceptText}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
+{variant === 'floating' && (
+  <div id="fb-cookie-float" class="fixed bottom-4 right-4 z-50 max-w-sm">
+    <div class="bg-creme rounded-lg shadow-xl border border-beige p-5">
+      {message && (
+        <p class="text-sm text-taupe/70 mb-4">{message}</p>
+      )}
+      {privacyUrl && (
+        <p class="text-xs text-taupe/60 mb-4">
+          <a href={privacyUrl} class="text-mousse underline hover:no-underline">Politique de confidentialité</a>
+        </p>
+      )}
+      <div class="flex gap-2">
+        <button data-dismiss-target="#fb-cookie-float" type="button" class="flex-1 text-sm text-taupe border border-beige rounded-lg px-3 py-2 hover:bg-beige transition-colors">
+          {declineText}
+        </button>
+        <button data-dismiss-target="#fb-cookie-float" type="button" class="flex-1 text-sm text-creme bg-sauge rounded-lg px-3 py-2 hover:bg-mousse transition-colors">
+          {acceptText}
+        </button>
+      </div>
+    </div>
+  </div>
+)}

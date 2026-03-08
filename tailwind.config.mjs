@@ -3,18 +3,17 @@ export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
     fontFamily: {
-      sans: ['Red Hat Display', 'sans-serif'],
-      heading: ['"Libre Baskerville"', 'serif'],
+      sans: ['var(--font-body, Montserrat)', 'sans-serif'],
+      heading: ['var(--font-heading, "Libre Baskerville")', 'serif'],
     },
     extend: {
       colors: {
-        // Couleurs principales
-        beige: '#E8DCCB',       // fonds, aplats doux
-        creme: '#FAF8F5',       // fond principal du site
-        taupe: '#6B6257',       // titres et textes importants
-        // Accent (parcimonie — max 10–15%)
-        sauge: '#A8BFA3',       // boutons, pictos, surlignage
-        mousse: '#7A9575',      // titres accentués, accent secondaire
+        // Couleurs principales — overridées par la page d'options WP via CSS custom properties
+        beige: 'var(--color-beige, #E8DCCB)',
+        creme: 'var(--color-creme, #FAF8F5)',
+        taupe: 'var(--color-taupe, #6B6257)',
+        sauge: 'var(--color-sauge, #A8BFA3)',
+        mousse: 'var(--color-mousse, #7A9575)',
       },
     },
   },

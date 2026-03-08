@@ -1,0 +1,50 @@
+---
+import type { WPACFFbTestimonialsSection } from '../../types/wp';
+
+interface Props extends WPACFFbTestimonialsSection {}
+
+const { heading, items = [] } = Astro.props;
+---
+
+<section class="bg-creme">
+  <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
+    {heading && (
+      <h2 class="mb-8 text-4xl tracking-tight font-extrabold text-taupe font-heading lg:mb-16">
+        {heading}
+      </h2>
+    )}
+    <div class="grid gap-8 lg:grid-cols-3">
+      {items.map((item) => (
+        <div class="bg-beige/30 rounded-lg p-6 border border-beige">
+          {item.rating > 0 && (
+            <div class="flex justify-center mb-4">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <svg class={`w-5 h-5 ${i < item.rating ? 'text-yellow-400' : 'text-taupe/20'}`} fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+              ))}
+            </div>
+          )}
+          {item.quote && (
+            <blockquote class="mb-4">
+              <p class="text-taupe/80 italic">"{item.quote}"</p>
+            </blockquote>
+          )}
+          <div class="flex items-center justify-center space-x-3">
+            {item.avatar && (
+              <img class="w-10 h-10 rounded-full" src={item.avatar.sourceUrl} alt={item.author || ''} />
+            )}
+            <div class="text-left">
+              {item.author && (
+                <p class="font-semibold text-taupe">{item.author}</p>
+              )}
+              {item.role && (
+                <p class="text-sm text-taupe/60">{item.role}</p>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

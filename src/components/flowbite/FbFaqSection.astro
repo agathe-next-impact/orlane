@@ -1,0 +1,56 @@
+---
+import { sanitizeHTML } from '../../lib/utils/sanitize';
+import type { WPACFFbFaqSection } from '../../types/wp';
+
+interface Props extends WPACFFbFaqSection {}
+
+const { heading, description, items = [] } = Astro.props;
+---
+
+<section class="bg-creme">
+  <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+    {(heading || description) && (
+      <div class="mx-auto max-w-screen-md text-center mb-8">
+        {heading && (
+          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+            {heading}
+          </h2>
+        )}
+        {description && (
+          <p class="text-taupe/70 sm:text-xl">
+            {description}
+          </p>
+        )}
+      </div>
+    )}
+    <div class="mx-auto max-w-screen-md">
+      <div id="accordion-flowbite" data-accordion="collapse">
+        {items.map((item, index) => (
+          <>
+            <h3 id={`accordion-heading-${index}`}>
+              <button
+                type="button"
+                class="flex items-center justify-between w-full p-5 font-medium text-left text-taupe border border-b-0 border-beige rounded-t-lg focus:ring-4 focus:ring-sauge/10 hover:bg-beige/50 transition-colors"
+                data-accordion-target={`#accordion-body-${index}`}
+                aria-expanded={index === 0 ? 'true' : 'false'}
+                aria-controls={`accordion-body-${index}`}
+              >
+                <span>{item.question}</span>
+                <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
+                </svg>
+              </button>
+            </h3>
+            <div id={`accordion-body-${index}`} class={index === 0 ? '' : 'hidden'} aria-labelledby={`accordion-heading-${index}`}>
+              <div class="p-5 border border-b-0 border-beige">
+                {item.answer && (
+                  <div class="prose prose-lg max-w-none text-taupe/70" set:html={sanitizeHTML(item.answer)} />
+                )}
+              </div>
+            </div>
+          </>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

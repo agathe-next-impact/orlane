@@ -27,14 +27,14 @@ if (secret && previewId && postType) {
 
 if (!resolved) {
   if (!slug) {
-    return Astro.redirect('/404');
+    return new Response(null, { status: 404, statusText: 'Not Found' });
   }
   const slugParts = slug.split('/').filter(Boolean);
   resolved = await resolveContent(slugParts);
 }
 
 if (!resolved) {
-  return Astro.redirect('/404');
+  return new Response(null, { status: 404, statusText: 'Not Found' });
 }
 ---
 
@@ -102,6 +102,10 @@ if (!resolved) {
             />
           </div>
         </div>
+      )}
+
+      {resolved.data.acfFields?.flexibleContent?.length > 0 && (
+        <FlexibleContent blocks={resolved.data.acfFields.flexibleContent} />
       )}
 
       {resolved.data.content && (
@@ -250,15 +254,15 @@ if (!resolved) {
         </div>
       )}
 
+      {resolved.data.acfFields?.flexibleContent?.length > 0 && (
+        <FlexibleContent blocks={resolved.data.acfFields.flexibleContent} />
+      )}
+
       <div class="container mx-auto px-4 py-8">
         <div class="max-w-4xl mx-auto">
-          {resolved.data.content ? (
+          {resolved.data.content && (
             <div class="prose prose-lg max-w-none mb-12">
               <div set:html={sanitizeHTML(resolved.data.content)} />
-            </div>
-          ) : (
-            <div class="text-center py-8">
-              <p class="text-taupe/60">No content available</p>
             </div>
           )}
         </div>

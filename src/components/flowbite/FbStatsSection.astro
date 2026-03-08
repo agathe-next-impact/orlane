@@ -1,0 +1,73 @@
+---
+import type { WPACFFbStatsSection } from '../../types/wp';
+
+interface Props extends WPACFFbStatsSection {}
+
+const { heading, description, items = [], variant = 'light' } = Astro.props;
+
+const bgClass: Record<string, string> = {
+  light: 'bg-creme',
+  dark: 'bg-taupe',
+  accent: 'bg-sauge',
+};
+const headingClass: Record<string, string> = {
+  light: 'text-taupe',
+  dark: 'text-creme',
+  accent: 'text-creme',
+};
+const descClass: Record<string, string> = {
+  light: 'text-taupe/70',
+  dark: 'text-beige/80',
+  accent: 'text-creme/80',
+};
+const valueClass: Record<string, string> = {
+  light: 'text-mousse',
+  dark: 'text-sauge',
+  accent: 'text-creme',
+};
+const labelClass: Record<string, string> = {
+  light: 'text-taupe',
+  dark: 'text-creme',
+  accent: 'text-creme',
+};
+---
+
+<section class={bgClass[variant] || bgClass.light}>
+  <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+    {(heading || description) && (
+      <div class="max-w-screen-md mx-auto text-center mb-8 lg:mb-12">
+        {heading && (
+          <h2 class={`mb-4 text-4xl tracking-tight font-extrabold font-heading ${headingClass[variant] || headingClass.light}`}>
+            {heading}
+          </h2>
+        )}
+        {description && (
+          <p class={`font-light sm:text-xl ${descClass[variant] || descClass.light}`}>
+            {description}
+          </p>
+        )}
+      </div>
+    )}
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      {items.map((item) => (
+        <div class="text-center">
+          {item.value && (
+            <div class={`text-4xl md:text-5xl font-extrabold mb-2 ${valueClass[variant] || valueClass.light}`}>
+              {item.value}
+            </div>
+          )}
+          {item.label && (
+            <div class={`text-lg font-semibold mb-1 ${labelClass[variant] || labelClass.light}`}>
+              {item.label}
+            </div>
+          )}
+          {item.description && (
+            <p class={`text-sm ${descClass[variant] || descClass.light}`}>
+              {item.description}
+            </p>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

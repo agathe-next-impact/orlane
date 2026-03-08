@@ -1,0 +1,67 @@
+---
+import type { WPACFFbPricingSection } from '../../types/wp';
+
+interface Props extends WPACFFbPricingSection {}
+
+const { heading, description, plans = [] } = Astro.props;
+---
+
+<section class="bg-creme">
+  <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+    {(heading || description) && (
+      <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
+        {heading && (
+          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+            {heading}
+          </h2>
+        )}
+        {description && (
+          <p class="mb-5 font-light text-taupe/70 sm:text-xl">
+            {description}
+          </p>
+        )}
+      </div>
+    )}
+    <div class="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-10 lg:space-y-0">
+      {plans.map((plan) => (
+        <div class={`flex flex-col p-6 mx-auto max-w-lg text-center rounded-lg border shadow-sm ${plan.highlighted ? 'border-sauge bg-beige/30 shadow-lg scale-105' : 'border-beige bg-creme'}`}>
+          {plan.name && (
+            <h3 class="mb-4 text-2xl font-semibold text-taupe">{plan.name}</h3>
+          )}
+          {plan.description && (
+            <p class="font-light text-taupe/70 sm:text-lg mb-4">{plan.description}</p>
+          )}
+          <div class="flex justify-center items-baseline my-8">
+            <span class="mr-2 text-5xl font-extrabold text-taupe">{plan.price}</span>
+            {plan.period && (
+              <span class="text-taupe/60">{plan.period}</span>
+            )}
+          </div>
+          {plan.features && plan.features.length > 0 && (
+            <ul role="list" class="mb-8 space-y-4 text-left">
+              {plan.features.map((feature) => (
+                <li class="flex items-center space-x-3">
+                  {feature.included ? (
+                    <svg class="flex-shrink-0 w-5 h-5 text-mousse" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                    </svg>
+                  ) : (
+                    <svg class="flex-shrink-0 w-5 h-5 text-taupe/30" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                  )}
+                  <span class={feature.included ? 'text-taupe' : 'text-taupe/40 line-through'}>{feature.text}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+          {plan.ctaText && plan.ctaUrl && (
+            <a href={plan.ctaUrl} class={`mt-auto inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center rounded-lg transition-colors focus:ring-4 ${plan.highlighted ? 'text-creme bg-sauge hover:bg-mousse focus:ring-sauge/30' : 'text-taupe bg-beige hover:bg-taupe hover:text-creme focus:ring-taupe/10'}`}>
+              {plan.ctaText}
+            </a>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

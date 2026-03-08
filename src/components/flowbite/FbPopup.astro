@@ -1,0 +1,78 @@
+---
+import type { WPACFFbPopup } from '../../types/wp';
+
+interface Props extends WPACFFbPopup {}
+
+const { heading, description, image, ctaText, ctaUrl, cta2Text, cta2Url, variant = 'centered' } = Astro.props;
+---
+
+{variant === 'centered' && (
+  <div id="fb-popup" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center bg-taupe/50 backdrop-blur-sm">
+    <div class="relative p-4 w-full max-w-lg">
+      <div class="relative bg-creme rounded-lg shadow-xl">
+        <button data-dismiss-target="#fb-popup" type="button" class="absolute top-3 end-3 text-taupe/40 hover:text-taupe hover:bg-beige rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center transition-colors">
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+          </svg>
+        </button>
+        <div class="p-6 md:p-8 text-center">
+          {image && (
+            <img src={image.sourceUrl} alt={image.altText || ''} class="mx-auto mb-6 rounded-lg max-h-48 object-contain" />
+          )}
+          {heading && (
+            <h3 class="mb-3 text-2xl font-bold text-taupe font-heading">{heading}</h3>
+          )}
+          {description && (
+            <p class="mb-6 text-taupe/70">{description}</p>
+          )}
+          <div class="flex justify-center gap-3">
+            {ctaText && ctaUrl && (
+              <a href={ctaUrl} class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-creme bg-sauge rounded-lg hover:bg-mousse transition-colors">
+                {ctaText}
+              </a>
+            )}
+            {cta2Text && (
+              <button data-dismiss-target="#fb-popup" type="button" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-taupe border border-beige rounded-lg hover:bg-beige transition-colors">
+                {cta2Text}
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
+{variant === 'with_image' && (
+  <div id="fb-popup" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center bg-taupe/50 backdrop-blur-sm">
+    <div class="relative p-4 w-full max-w-2xl">
+      <div class="relative bg-creme rounded-lg shadow-xl overflow-hidden">
+        <button data-dismiss-target="#fb-popup" type="button" class="absolute top-3 end-3 z-10 text-taupe/40 hover:text-taupe hover:bg-beige rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center transition-colors">
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+          </svg>
+        </button>
+        <div class="md:flex">
+          {image && (
+            <div class="md:w-1/2">
+              <img src={image.sourceUrl} alt={image.altText || ''} class="w-full h-full object-cover" />
+            </div>
+          )}
+          <div class="p-6 md:p-8 md:w-1/2 flex flex-col justify-center">
+            {heading && (
+              <h3 class="mb-3 text-2xl font-bold text-taupe font-heading">{heading}</h3>
+            )}
+            {description && (
+              <p class="mb-6 text-taupe/70">{description}</p>
+            )}
+            {ctaText && ctaUrl && (
+              <a href={ctaUrl} class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium text-creme bg-sauge rounded-lg hover:bg-mousse transition-colors">
+                {ctaText}
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
