@@ -22,7 +22,9 @@
       "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); fields=data[''data''][''__type''][''fields'']; [print\\(f''{f[\"\"name\"\"]}: {f[\"\"type\"\"]}''\\) for f in fields]\")",
       "Bash(node -e \":*)",
       "Bash(git rebase --continue)",
-      "Bash(GIT_EDITOR=true git rebase --continue)"
+      "Bash(GIT_EDITOR=true git rebase --continue)",
+      "Bash(git push origin master)",
+      "Bash(npm install @astrojs/vercel)"
     ],
     "additionalDirectories": [
       "\\tmp",

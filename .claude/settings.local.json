@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(kill %1)",
-      "Bash(python3 -m json.tool)"
+      "Bash(python3 -m json.tool)",
+      "Bash(npx tsc:*)",
+      "WebFetch(domain:indigo-heron-756040.hostingersite.com)"
     ]
   }
 }

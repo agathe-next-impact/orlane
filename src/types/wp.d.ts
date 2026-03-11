@@ -6,6 +6,16 @@ export interface WPThemeSettings {
   colorTaupe: string | null;
   colorSauge: string | null;
   colorMousse: string | null;
+  variation1Bg: string | null;
+  variation1Title: string | null;
+  variation1Text: string | null;
+  variation2Bg: string | null;
+  variation2Title: string | null;
+  variation2Text: string | null;
+  variation3Bg: string | null;
+  variation3Title: string | null;
+  variation3Text: string | null;
+  contentWidth: string;
   fontBody: string | null;
   fontHeading: string | null;
   socialFacebook: string | null;

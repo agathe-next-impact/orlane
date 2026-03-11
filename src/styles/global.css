@@ -16,3 +16,27 @@
     @apply font-heading;
   }
 }
+
+/* Color variations — applied by FlexibleContent wrapper */
+.color-variation > section,
+.color-variation > div > section {
+  background: var(--block-bg) !important;
+}
+
+.color-variation h1,
+.color-variation h2,
+.color-variation h3,
+.color-variation h4,
+.color-variation h5,
+.color-variation h6 {
+  color: var(--block-title) !important;
+}
+
+.color-variation p,
+.color-variation li,
+.color-variation span,
+.color-variation td,
+.color-variation label,
+.color-variation blockquote {
+  color: var(--block-text) !important;
+}

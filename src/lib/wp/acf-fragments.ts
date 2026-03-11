@@ -35,11 +35,13 @@ export const flexibleContentFragment = `
       cta2Text
       cta2Url
       variant
+      colorVariation
     }
     ... on AcfFieldsFlexibleContentFbFeaturesSectionLayout {
       heading
       description
       columns
+      colorVariation
       items {
         icon
         title
@@ -52,6 +54,7 @@ export const flexibleContentFragment = `
       buttonText
       buttonUrl
       variant
+      colorVariation
       image {
         node {
           ${imageNodeFields}
@@ -62,6 +65,7 @@ export const flexibleContentFragment = `
       heading
       body
       layout
+      colorVariation
       image {
         node {
           ${imageNodeFields}
@@ -70,10 +74,12 @@ export const flexibleContentFragment = `
     }
     ... on AcfFieldsFlexibleContentFbTestimonialsSectionLayout {
       heading
+      colorVariation
     }
     ... on AcfFieldsFlexibleContentFbPricingSectionLayout {
       heading
       description
+      colorVariation
       plans {
         name
         price
@@ -91,10 +97,12 @@ export const flexibleContentFragment = `
     ... on AcfFieldsFlexibleContentFbFaqSectionLayout {
       heading
       description
+      colorVariation
     }
     ... on AcfFieldsFlexibleContentFbTeamSectionLayout {
       heading
       description
+      colorVariation
       members {
         name
         role
@@ -120,6 +128,7 @@ export const flexibleContentFragment = `
       formAction
       showMap
       mapEmbed
+      colorVariation
     }
     ... on AcfFieldsFlexibleContentFbNewsletterSectionLayout {
       heading
@@ -128,16 +137,19 @@ export const flexibleContentFragment = `
       placeholder
       buttonText
       privacyText
+      colorVariation
     }
     ... on AcfFieldsFlexibleContentFbStatsSectionLayout {
       heading
       description
       variant
+      colorVariation
     }
     ... on AcfFieldsFlexibleContentFbGallerySectionLayout {
       heading
       columns
       style
+      colorVariation
       images {
         nodes {
           ${imageNodeFields}
@@ -148,11 +160,13 @@ export const flexibleContentFragment = `
       heading
       description
       variant
+      colorVariation
     }
     ... on AcfFieldsFlexibleContentFbCustomerLogosSectionLayout {
       heading
       description
       variant
+      colorVariation
       logos {
         name
         url
@@ -169,6 +183,7 @@ export const flexibleContentFragment = `
       ctaText
       ctaUrl
       variant
+      colorVariation
       posts {
         title
         excerpt
@@ -194,6 +209,7 @@ export const flexibleContentFragment = `
       ctaText
       ctaUrl
       variant
+      colorVariation
       projects {
         title
         description
@@ -213,11 +229,13 @@ export const flexibleContentFragment = `
       ctaUrl
       dismissible
       variant
+      colorVariation
     }
     ... on AcfFieldsFlexibleContentFbEventScheduleSectionLayout {
       heading
       description
       variant
+      colorVariation
       events {
         title
         date
@@ -242,6 +260,7 @@ export const flexibleContentFragment = `
         }
       }
       showHeartAnimation
+      colorVariation
     }
   }
 `;

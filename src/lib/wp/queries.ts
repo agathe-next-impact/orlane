@@ -575,7 +575,7 @@ export async function getSiteSettings(): Promise<WPSiteSettings> {
 export async function getThemeSettings(): Promise<WPThemeSettings> {
   const query = `
     query GetThemeSettings {
-      rGlagesDuThMe {
+      themeSettingsPage {
         themeSettings {
           logo {
             node {
@@ -602,6 +602,15 @@ export async function getThemeSettings(): Promise<WPThemeSettings> {
           colorTaupe
           colorSauge
           colorMousse
+          variation1Bg
+          variation1Title
+          variation1Text
+          variation2Bg
+          variation2Title
+          variation2Text
+          variation3Bg
+          variation3Title
+          variation3Text
           fontBody
           fontHeading
           socialFacebook
@@ -609,6 +618,7 @@ export async function getThemeSettings(): Promise<WPThemeSettings> {
           socialLinkedin
           socialTiktok
           socialYoutube
+          contentWidth
           footerText
         }
       }
@@ -618,11 +628,21 @@ export async function getThemeSettings(): Promise<WPThemeSettings> {
   const defaults: WPThemeSettings = {
     logo: null,
     logoFooter: null,
+    contentWidth: 'contained',
     colorBeige: null,
     colorCreme: null,
     colorTaupe: null,
     colorSauge: null,
     colorMousse: null,
+    variation1Bg: null,
+    variation1Title: null,
+    variation1Text: null,
+    variation2Bg: null,
+    variation2Title: null,
+    variation2Text: null,
+    variation3Bg: null,
+    variation3Title: null,
+    variation3Text: null,
     fontBody: null,
     fontHeading: null,
     socialFacebook: null,
@@ -635,10 +655,10 @@ export async function getThemeSettings(): Promise<WPThemeSettings> {
 
   try {
     const data = await fetchGraphQL<{
-      rGlagesDuThMe: { themeSettings: Record<string, unknown> };
+      themeSettingsPage: { themeSettings: Record<string, unknown> };
     }>(query, undefined, 0);
 
-    const raw = data.rGlagesDuThMe?.themeSettings;
+    const raw = data.themeSettingsPage?.themeSettings;
     if (!raw) return defaults;
 
     // Normalize image fields (WPGraphQL wraps in { node: ... })
@@ -658,6 +678,15 @@ export async function getThemeSettings(): Promise<WPThemeSettings> {
       colorTaupe: (raw.colorTaupe as string) || null,
       colorSauge: (raw.colorSauge as string) || null,
       colorMousse: (raw.colorMousse as string) || null,
+      variation1Bg: (raw.variation1Bg as string) || null,
+      variation1Title: (raw.variation1Title as string) || null,
+      variation1Text: (raw.variation1Text as string) || null,
+      variation2Bg: (raw.variation2Bg as string) || null,
+      variation2Title: (raw.variation2Title as string) || null,
+      variation2Text: (raw.variation2Text as string) || null,
+      variation3Bg: (raw.variation3Bg as string) || null,
+      variation3Title: (raw.variation3Title as string) || null,
+      variation3Text: (raw.variation3Text as string) || null,
       fontBody: (raw.fontBody as string) || null,
       fontHeading: (raw.fontHeading as string) || null,
       socialFacebook: (raw.socialFacebook as string) || null,
@@ -665,6 +694,7 @@ export async function getThemeSettings(): Promise<WPThemeSettings> {
       socialLinkedin: (raw.socialLinkedin as string) || null,
       socialTiktok: (raw.socialTiktok as string) || null,
       socialYoutube: (raw.socialYoutube as string) || null,
+      contentWidth: (raw.contentWidth as string) || 'contained',
       footerText: (raw.footerText as string) || null,
     };
   } catch (error) {

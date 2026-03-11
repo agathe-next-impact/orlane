@@ -121,6 +121,22 @@ const componentMap: Record<string, any> = {
     }
 
     const props = normalizeBlock(block);
+    const variation = props.colorVariation;
+
+    if (variation && ['variation-1', 'variation-2', 'variation-3'].includes(variation)) {
+      const n = variation.split('-')[1];
+      const style = [
+        `--block-bg: var(--variation-${n}-bg)`,
+        `--block-title: var(--variation-${n}-title)`,
+        `--block-text: var(--variation-${n}-text)`,
+      ].join('; ');
+      return (
+        <div class={`color-variation ${variation}`} style={style}>
+          <Component {...props} key={index} />
+        </div>
+      );
+    }
+
     return <Component {...props} key={index} />;
   })}
 </div>

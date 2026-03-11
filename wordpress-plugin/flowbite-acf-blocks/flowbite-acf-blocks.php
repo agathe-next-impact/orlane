@@ -58,6 +58,22 @@ add_action('acf/include_fields', function () {
                         'display' => 'block',
                         'sub_fields' => [
                             [
+                                'key'               => 'field_fb_hero_color_variation',
+                                'label'             => 'Variation de couleurs',
+                                'name'              => 'color_variation',
+                                'type'              => 'select',
+                                'choices'           => [
+                                    ''              => 'Par défaut',
+                                    'variation-1'   => 'Variation 1',
+                                    'variation-2'   => 'Variation 2',
+                                    'variation-3'   => 'Variation 3',
+                                ],
+                                'default_value'     => '',
+                                'instructions'      => 'Combinaison de couleurs (définie dans Réglages du thème → Variations).',
+                                'show_in_graphql'   => 1,
+                                'wrapper'           => ['width' => '30'],
+                            ],
+                            [
                                 'key' => 'field_fb_hero_heading',
                                 'label' => 'Titre principal',
                                 'name' => 'heading',
@@ -135,6 +151,22 @@ add_action('acf/include_fields', function () {
                         'display' => 'block',
                         'sub_fields' => [
                             [
+                                'key'               => 'field_fb_features_color_variation',
+                                'label'             => 'Variation de couleurs',
+                                'name'              => 'color_variation',
+                                'type'              => 'select',
+                                'choices'           => [
+                                    ''              => 'Par défaut',
+                                    'variation-1'   => 'Variation 1',
+                                    'variation-2'   => 'Variation 2',
+                                    'variation-3'   => 'Variation 3',
+                                ],
+                                'default_value'     => '',
+                                'instructions'      => 'Combinaison de couleurs (définie dans Réglages du thème → Variations).',
+                                'show_in_graphql'   => 1,
+                                'wrapper'           => ['width' => '30'],
+                            ],
+                            [
                                 'key' => 'field_fb_features_heading',
                                 'label' => 'Titre',
                                 'name' => 'heading',
@@ -205,6 +237,22 @@ add_action('acf/include_fields', function () {
                         'display' => 'block',
                         'sub_fields' => [
                             [
+                                'key'               => 'field_fb_cta_color_variation',
+                                'label'             => 'Variation de couleurs',
+                                'name'              => 'color_variation',
+                                'type'              => 'select',
+                                'choices'           => [
+                                    ''              => 'Par défaut',
+                                    'variation-1'   => 'Variation 1',
+                                    'variation-2'   => 'Variation 2',
+                                    'variation-3'   => 'Variation 3',
+                                ],
+                                'default_value'     => '',
+                                'instructions'      => 'Combinaison de couleurs (définie dans Réglages du thème → Variations).',
+                                'show_in_graphql'   => 1,
+                                'wrapper'           => ['width' => '30'],
+                            ],
+                            [
                                 'key' => 'field_fb_cta_heading',
                                 'label' => 'Titre',
                                 'name' => 'heading',
@@ -271,6 +319,22 @@ add_action('acf/include_fields', function () {
                         'display' => 'block',
                         'sub_fields' => [
                             [
+                                'key'               => 'field_fb_content_color_variation',
+                                'label'             => 'Variation de couleurs',
+                                'name'              => 'color_variation',
+                                'type'              => 'select',
+                                'choices'           => [
+                                    ''              => 'Par défaut',
+                                    'variation-1'   => 'Variation 1',
+                                    'variation-2'   => 'Variation 2',
+                                    'variation-3'   => 'Variation 3',
+                                ],
+                                'default_value'     => '',
+                                'instructions'      => 'Combinaison de couleurs (définie dans Réglages du thème → Variations).',
+                                'show_in_graphql'   => 1,
+                                'wrapper'           => ['width' => '30'],
+                            ],
+                            [
                                 'key' => 'field_fb_content_heading',
                                 'label' => 'Titre',
                                 'name' => 'heading',
@@ -314,6 +378,22 @@ add_action('acf/include_fields', function () {
                         'label' => 'Témoignages',
                         'display' => 'block',
                         'sub_fields' => [
+                            [
+                                'key'               => 'field_fb_testimonials_color_variation',
+                                'label'             => 'Variation de couleurs',
+                                'name'              => 'color_variation',
+                                'type'              => 'select',
+                                'choices'           => [
+                                    ''              => 'Par défaut',
+                                    'variation-1'   => 'Variation 1',
+                                    'variation-2'   => 'Variation 2',
+                                    'variation-3'   => 'Variation 3',
+                                ],
+                                'default_value'     => '',
+                                'instructions'      => 'Combinaison de couleurs (définie dans Réglages du thème → Variations).',
+                                'show_in_graphql'   => 1,
+                                'wrapper'           => ['width' => '30'],
+                            ],
                             [
                                 'key' => 'field_fb_testimonials_heading',
                                 'label' => 'Titre',
@@ -380,6 +460,22 @@ add_action('acf/include_fields', function () {
                         'label' => 'Tarifs',
                         'display' => 'block',
                         'sub_fields' => [
+                            [
+                                'key'               => 'field_fb_pricing_color_variation',
+                                'label'             => 'Variation de couleurs',
+                                'name'              => 'color_variation',
+                                'type'              => 'select',
+                                'choices'           => [
+                                    ''              => 'Par défaut',
+                                    'variation-1'   => 'Variation 1',
+                                    'variation-2'   => 'Variation 2',
+                                    'variation-3'   => 'Variation 3',
+                                ],
+                                'default_value'     => '',
+                                'instructions'      => 'Combinaison de couleurs (définie dans Réglages du thème → Variations).',
+                                'show_in_graphql'   => 1,
+                                'wrapper'           => ['width' => '30'],
+                            ],
                             [
                                 'key' => 'field_fb_pricing_heading',
                                 'label' => 'Titre',
@@ -489,6 +585,22 @@ add_action('acf/include_fields', function () {
                         'display' => 'block',
                         'sub_fields' => [
                             [
+                                'key'               => 'field_fb_faq_color_variation',
+                                'label'             => 'Variation de couleurs',
+                                'name'              => 'color_variation',
+                                'type'              => 'select',
+                                'choices'           => [
+                                    ''              => 'Par défaut',
+                                    'variation-1'   => 'Variation 1',
+                                    'variation-2'   => 'Variation 2',
+                                    'variation-3'   => 'Variation 3',
+                                ],
+                                'default_value'     => '',
+                                'instructions'      => 'Combinaison de couleurs (définie dans Réglages du thème → Variations).',
+                                'show_in_graphql'   => 1,
+                                'wrapper'           => ['width' => '30'],
+                            ],
+                            [
                                 'key' => 'field_fb_faq_heading',
                                 'label' => 'Titre',
                                 'name' => 'heading',
@@ -537,6 +649,22 @@ add_action('acf/include_fields', function () {
                         'label' => 'Équipe',
                         'display' => 'block',
                         'sub_fields' => [
+                            [
+                                'key'               => 'field_fb_team_color_variation',
+                                'label'             => 'Variation de couleurs',
+                                'name'              => 'color_variation',
+                                'type'              => 'select',
+                                'choices'           => [
+                                    ''              => 'Par défaut',
+                                    'variation-1'   => 'Variation 1',
+                                    'variation-2'   => 'Variation 2',
+                                    'variation-3'   => 'Variation 3',
+                                ],
+                                'default_value'     => '',
+                                'instructions'      => 'Combinaison de couleurs (définie dans Réglages du thème → Variations).',
+                                'show_in_graphql'   => 1,
+                                'wrapper'           => ['width' => '30'],
+                            ],
                             [
                                 'key' => 'field_fb_team_heading',
                                 'label' => 'Titre',
@@ -627,6 +755,22 @@ add_action('acf/include_fields', function () {
                         'display' => 'block',
                         'sub_fields' => [
                             [
+                                'key'               => 'field_fb_contact_color_variation',
+                                'label'             => 'Variation de couleurs',
+                                'name'              => 'color_variation',
+                                'type'              => 'select',
+                                'choices'           => [
+                                    ''              => 'Par défaut',
+                                    'variation-1'   => 'Variation 1',
+                                    'variation-2'   => 'Variation 2',
+                                    'variation-3'   => 'Variation 3',
+                                ],
+                                'default_value'     => '',
+                                'instructions'      => 'Combinaison de couleurs (définie dans Réglages du thème → Variations).',
+                                'show_in_graphql'   => 1,
+                                'wrapper'           => ['width' => '30'],
+                            ],
+                            [
                                 'key' => 'field_fb_contact_heading',
                                 'label' => 'Titre',
                                 'name' => 'heading',
@@ -702,6 +846,22 @@ add_action('acf/include_fields', function () {
                         'display' => 'block',
                         'sub_fields' => [
                             [
+                                'key'               => 'field_fb_newsletter_color_variation',
+                                'label'             => 'Variation de couleurs',
+                                'name'              => 'color_variation',
+                                'type'              => 'select',
+                                'choices'           => [
+                                    ''              => 'Par défaut',
+                                    'variation-1'   => 'Variation 1',
+                                    'variation-2'   => 'Variation 2',
+                                    'variation-3'   => 'Variation 3',
+                                ],
+                                'default_value'     => '',
+                                'instructions'      => 'Combinaison de couleurs (définie dans Réglages du thème → Variations).',
+                                'show_in_graphql'   => 1,
+                                'wrapper'           => ['width' => '30'],
+                            ],
+                            [
                                 'key' => 'field_fb_newsletter_heading',
                                 'label' => 'Titre',
                                 'name' => 'heading',
@@ -755,6 +915,22 @@ add_action('acf/include_fields', function () {
                         'label' => 'Chiffres clés',
                         'display' => 'block',
                         'sub_fields' => [
+                            [
+                                'key'               => 'field_fb_stats_color_variation',
+                                'label'             => 'Variation de couleurs',
+                                'name'              => 'color_variation',
+                                'type'              => 'select',
+                                'choices'           => [
+                                    ''              => 'Par défaut',
+                                    'variation-1'   => 'Variation 1',
+                                    'variation-2'   => 'Variation 2',
+                                    'variation-3'   => 'Variation 3',
+                                ],
+                                'default_value'     => '',
+                                'instructions'      => 'Combinaison de couleurs (définie dans Réglages du thème → Variations).',
+                                'show_in_graphql'   => 1,
+                                'wrapper'           => ['width' => '30'],
+                            ],
                             [
                                 'key' => 'field_fb_stats_heading',
                                 'label' => 'Titre',
@@ -825,6 +1001,22 @@ add_action('acf/include_fields', function () {
                         'display' => 'block',
                         'sub_fields' => [
                             [
+                                'key'               => 'field_fb_gallery_color_variation',
+                                'label'             => 'Variation de couleurs',
+                                'name'              => 'color_variation',
+                                'type'              => 'select',
+                                'choices'           => [
+                                    ''              => 'Par défaut',
+                                    'variation-1'   => 'Variation 1',
+                                    'variation-2'   => 'Variation 2',
+                                    'variation-3'   => 'Variation 3',
+                                ],
+                                'default_value'     => '',
+                                'instructions'      => 'Combinaison de couleurs (définie dans Réglages du thème → Variations).',
+                                'show_in_graphql'   => 1,
+                                'wrapper'           => ['width' => '30'],
+                            ],
+                            [
                                 'key' => 'field_fb_gallery_heading',
                                 'label' => 'Titre',
                                 'name' => 'heading',
@@ -873,6 +1065,22 @@ add_action('acf/include_fields', function () {
                         'label' => 'Preuve sociale',
                         'display' => 'block',
                         'sub_fields' => [
+                            [
+                                'key'               => 'field_fb_social_proof_color_variation',
+                                'label'             => 'Variation de couleurs',
+                                'name'              => 'color_variation',
+                                'type'              => 'select',
+                                'choices'           => [
+                                    ''              => 'Par défaut',
+                                    'variation-1'   => 'Variation 1',
+                                    'variation-2'   => 'Variation 2',
+                                    'variation-3'   => 'Variation 3',
+                                ],
+                                'default_value'     => '',
+                                'instructions'      => 'Combinaison de couleurs (définie dans Réglages du thème → Variations).',
+                                'show_in_graphql'   => 1,
+                                'wrapper'           => ['width' => '30'],
+                            ],
                             [
                                 'key' => 'field_fb_sp_heading',
                                 'label' => 'Titre',
@@ -942,6 +1150,22 @@ add_action('acf/include_fields', function () {
                         'display' => 'block',
                         'sub_fields' => [
                             [
+                                'key'               => 'field_fb_logos_color_variation',
+                                'label'             => 'Variation de couleurs',
+                                'name'              => 'color_variation',
+                                'type'              => 'select',
+                                'choices'           => [
+                                    ''              => 'Par défaut',
+                                    'variation-1'   => 'Variation 1',
+                                    'variation-2'   => 'Variation 2',
+                                    'variation-3'   => 'Variation 3',
+                                ],
+                                'default_value'     => '',
+                                'instructions'      => 'Combinaison de couleurs (définie dans Réglages du thème → Variations).',
+                                'show_in_graphql'   => 1,
+                                'wrapper'           => ['width' => '30'],
+                            ],
+                            [
                                 'key' => 'field_fb_logos_heading',
                                 'label' => 'Titre',
                                 'name' => 'heading',
@@ -1008,6 +1232,22 @@ add_action('acf/include_fields', function () {
                         'label' => 'Section Blog',
                         'display' => 'block',
                         'sub_fields' => [
+                            [
+                                'key'               => 'field_fb_blog_color_variation',
+                                'label'             => 'Variation de couleurs',
+                                'name'              => 'color_variation',
+                                'type'              => 'select',
+                                'choices'           => [
+                                    ''              => 'Par défaut',
+                                    'variation-1'   => 'Variation 1',
+                                    'variation-2'   => 'Variation 2',
+                                    'variation-3'   => 'Variation 3',
+                                ],
+                                'default_value'     => '',
+                                'instructions'      => 'Combinaison de couleurs (définie dans Réglages du thème → Variations).',
+                                'show_in_graphql'   => 1,
+                                'wrapper'           => ['width' => '30'],
+                            ],
                             [
                                 'key' => 'field_fb_blog_heading',
                                 'label' => 'Titre',
@@ -1121,6 +1361,22 @@ add_action('acf/include_fields', function () {
                         'display' => 'block',
                         'sub_fields' => [
                             [
+                                'key'               => 'field_fb_portfolio_color_variation',
+                                'label'             => 'Variation de couleurs',
+                                'name'              => 'color_variation',
+                                'type'              => 'select',
+                                'choices'           => [
+                                    ''              => 'Par défaut',
+                                    'variation-1'   => 'Variation 1',
+                                    'variation-2'   => 'Variation 2',
+                                    'variation-3'   => 'Variation 3',
+                                ],
+                                'default_value'     => '',
+                                'instructions'      => 'Combinaison de couleurs (définie dans Réglages du thème → Variations).',
+                                'show_in_graphql'   => 1,
+                                'wrapper'           => ['width' => '30'],
+                            ],
+                            [
                                 'key' => 'field_fb_portfolio_heading',
                                 'label' => 'Titre',
                                 'name' => 'heading',
@@ -1214,6 +1470,22 @@ add_action('acf/include_fields', function () {
                         'display' => 'block',
                         'sub_fields' => [
                             [
+                                'key'               => 'field_fb_banner_color_variation',
+                                'label'             => 'Variation de couleurs',
+                                'name'              => 'color_variation',
+                                'type'              => 'select',
+                                'choices'           => [
+                                    ''              => 'Par défaut',
+                                    'variation-1'   => 'Variation 1',
+                                    'variation-2'   => 'Variation 2',
+                                    'variation-3'   => 'Variation 3',
+                                ],
+                                'default_value'     => '',
+                                'instructions'      => 'Combinaison de couleurs (définie dans Réglages du thème → Variations).',
+                                'show_in_graphql'   => 1,
+                                'wrapper'           => ['width' => '30'],
+                            ],
+                            [
                                 'key' => 'field_fb_banner_text',
                                 'label' => 'Texte',
                                 'name' => 'text',
@@ -1270,6 +1542,22 @@ add_action('acf/include_fields', function () {
                         'label' => 'Planning / Événements',
                         'display' => 'block',
                         'sub_fields' => [
+                            [
+                                'key'               => 'field_fb_events_color_variation',
+                                'label'             => 'Variation de couleurs',
+                                'name'              => 'color_variation',
+                                'type'              => 'select',
+                                'choices'           => [
+                                    ''              => 'Par défaut',
+                                    'variation-1'   => 'Variation 1',
+                                    'variation-2'   => 'Variation 2',
+                                    'variation-3'   => 'Variation 3',
+                                ],
+                                'default_value'     => '',
+                                'instructions'      => 'Combinaison de couleurs (définie dans Réglages du thème → Variations).',
+                                'show_in_graphql'   => 1,
+                                'wrapper'           => ['width' => '30'],
+                            ],
                             [
                                 'key' => 'field_fb_events_heading',
                                 'label' => 'Titre',
@@ -1363,6 +1651,22 @@ add_action('acf/include_fields', function () {
                         'label' => 'Hero Homepage',
                         'display' => 'block',
                         'sub_fields' => [
+                            [
+                                'key'               => 'field_fb_hero_homepage_color_variation',
+                                'label'             => 'Variation de couleurs',
+                                'name'              => 'color_variation',
+                                'type'              => 'select',
+                                'choices'           => [
+                                    ''              => 'Par défaut',
+                                    'variation-1'   => 'Variation 1',
+                                    'variation-2'   => 'Variation 2',
+                                    'variation-3'   => 'Variation 3',
+                                ],
+                                'default_value'     => '',
+                                'instructions'      => 'Combinaison de couleurs (définie dans Réglages du thème → Variations).',
+                                'show_in_graphql'   => 1,
+                                'wrapper'           => ['width' => '30'],
+                            ],
                             [
                                 'key' => 'field_fb_hero_hp_heading',
                                 'label' => 'Titre principal',
@@ -1533,6 +1837,26 @@ add_action('acf/include_fields', function (): void {
         'title'                 => 'Réglages du thème',
         'fields'                => [
 
+            // ── Mise en page ─────────────────────────────────────
+            [
+                'key'               => 'field_ts_tab_layout',
+                'label'             => 'Mise en page',
+                'type'              => 'tab',
+            ],
+            [
+                'key'               => 'field_ts_content_width',
+                'label'             => 'Largeur du contenu',
+                'name'              => 'content_width',
+                'type'              => 'select',
+                'choices'           => [
+                    'contained'     => 'Contenu (largeur limitée)',
+                    'full_width'    => 'Pleine largeur',
+                ],
+                'default_value'     => 'contained',
+                'return_format'     => 'value',
+                'instructions'      => 'Définit la largeur par défaut du contenu des pages.',
+            ],
+
             // ── Logo ─────────────────────────────────────────────
             [
                 'key'               => 'field_ts_tab_logo',
@@ -1598,6 +1922,110 @@ add_action('acf/include_fields', function (): void {
                 'name'              => 'color_mousse',
                 'type'              => 'color_picker',
                 'default_value'     => '#7A9575',
+            ],
+
+            // ── Variations de couleurs ─────────────────────────────
+            [
+                'key'               => 'field_ts_tab_variations',
+                'label'             => 'Variations de couleurs',
+                'type'              => 'tab',
+                'instructions'      => 'Définissez 3 combinaisons de couleurs applicables à chaque bloc.',
+            ],
+
+            // Variation 1
+            [
+                'key'               => 'field_ts_variation_1_message',
+                'label'             => 'Variation 1',
+                'type'              => 'message',
+                'message'           => '<strong>Combinaison de couleurs n°1</strong>',
+            ],
+            [
+                'key'               => 'field_ts_variation_1_bg',
+                'label'             => 'Variation 1 — Arrière-plan',
+                'name'              => 'variation_1_bg',
+                'type'              => 'color_picker',
+                'default_value'     => '#FAF8F5',
+                'instructions'      => 'Couleur de fond de la section.',
+            ],
+            [
+                'key'               => 'field_ts_variation_1_title',
+                'label'             => 'Variation 1 — Titre',
+                'name'              => 'variation_1_title',
+                'type'              => 'color_picker',
+                'default_value'     => '#6B6257',
+                'instructions'      => 'Couleur des titres (h2, h3…).',
+            ],
+            [
+                'key'               => 'field_ts_variation_1_text',
+                'label'             => 'Variation 1 — Texte',
+                'name'              => 'variation_1_text',
+                'type'              => 'color_picker',
+                'default_value'     => '#6B6257',
+                'instructions'      => 'Couleur du texte courant.',
+            ],
+
+            // Variation 2
+            [
+                'key'               => 'field_ts_variation_2_message',
+                'label'             => 'Variation 2',
+                'type'              => 'message',
+                'message'           => '<strong>Combinaison de couleurs n°2</strong>',
+            ],
+            [
+                'key'               => 'field_ts_variation_2_bg',
+                'label'             => 'Variation 2 — Arrière-plan',
+                'name'              => 'variation_2_bg',
+                'type'              => 'color_picker',
+                'default_value'     => '#E8DCCB',
+                'instructions'      => 'Couleur de fond de la section.',
+            ],
+            [
+                'key'               => 'field_ts_variation_2_title',
+                'label'             => 'Variation 2 — Titre',
+                'name'              => 'variation_2_title',
+                'type'              => 'color_picker',
+                'default_value'     => '#6B6257',
+                'instructions'      => 'Couleur des titres (h2, h3…).',
+            ],
+            [
+                'key'               => 'field_ts_variation_2_text',
+                'label'             => 'Variation 2 — Texte',
+                'name'              => 'variation_2_text',
+                'type'              => 'color_picker',
+                'default_value'     => '#6B6257',
+                'instructions'      => 'Couleur du texte courant.',
+            ],
+
+            // Variation 3
+            [
+                'key'               => 'field_ts_variation_3_message',
+                'label'             => 'Variation 3',
+                'type'              => 'message',
+                'message'           => '<strong>Combinaison de couleurs n°3</strong>',
+            ],
+            [
+                'key'               => 'field_ts_variation_3_bg',
+                'label'             => 'Variation 3 — Arrière-plan',
+                'name'              => 'variation_3_bg',
+                'type'              => 'color_picker',
+                'default_value'     => '#6B6257',
+                'instructions'      => 'Couleur de fond de la section.',
+            ],
+            [
+                'key'               => 'field_ts_variation_3_title',
+                'label'             => 'Variation 3 — Titre',
+                'name'              => 'variation_3_title',
+                'type'              => 'color_picker',
+                'default_value'     => '#FAF8F5',
+                'instructions'      => 'Couleur des titres (h2, h3…).',
+            ],
+            [
+                'key'               => 'field_ts_variation_3_text',
+                'label'             => 'Variation 3 — Texte',
+                'name'              => 'variation_3_text',
+                'type'              => 'color_picker',
+                'default_value'     => '#FAF8F5',
+                'instructions'      => 'Couleur du texte courant.',
             ],
 
             // ── Typographie ──────────────────────────────────────
