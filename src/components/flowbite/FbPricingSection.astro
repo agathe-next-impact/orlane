@@ -11,20 +11,20 @@ const { heading, description, plans = [] } = Astro.props;
     {(heading || description) && (
       <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
         {heading && (
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
             {heading}
           </h2>
         )}
         {description && (
-          <p class="mb-5 font-light text-taupe/70 sm:text-xl">
+          <p class="mb-5 font-light text-taupe/70 sm:text-lg">
             {description}
           </p>
         )}
       </div>
     )}
-    <div class="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-10 lg:space-y-0">
+    <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-6 xl:gap-10 md:space-y-0">
       {plans.map((plan) => (
-        <div class={`flex flex-col p-6 mx-auto max-w-lg text-center rounded-lg border shadow-sm ${plan.highlighted ? 'border-sauge bg-beige/30 shadow-lg scale-105' : 'border-beige bg-creme'}`}>
+        <div class={`flex flex-col p-6 mx-auto max-w-lg text-center rounded-lg border shadow-sm ${plan.highlighted ? 'border-sauge bg-beige/30 shadow-lg ring-2 ring-sauge relative z-10' : 'border-beige bg-creme'}`}>
           {plan.name && (
             <h3 class="mb-4 text-2xl font-semibold text-taupe">{plan.name}</h3>
           )}
@@ -32,7 +32,7 @@ const { heading, description, plans = [] } = Astro.props;
             <p class="font-light text-taupe/70 sm:text-lg mb-4">{plan.description}</p>
           )}
           <div class="flex justify-center items-baseline my-8">
-            <span class="mr-2 text-5xl font-extrabold text-taupe">{plan.price}</span>
+            <span class="mr-2 text-4xl font-extrabold text-taupe">{plan.price}</span>
             {plan.period && (
               <span class="text-taupe/60">{plan.period}</span>
             )}

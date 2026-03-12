@@ -9,14 +9,14 @@ const { heading, description, members = [], variant = 'default' } = Astro.props;
 <section class="bg-creme">
   <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
     {(heading || description) && (
-      <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-16">
+      <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-12">
         {heading && (
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
             {heading}
           </h2>
         )}
         {description && (
-          <p class="font-light text-taupe/70 lg:mb-16 sm:text-xl">
+          <p class="font-light text-taupe/70 sm:text-lg">
             {description}
           </p>
         )}
@@ -83,7 +83,7 @@ const { heading, description, members = [], variant = 'default' } = Astro.props;
       </div>
     ) : (
       <!-- Default: horizontal cards, 2 columns -->
-      <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-2">
+      <div class="grid gap-8 mb-6 lg:mb-12 md:grid-cols-2">
         {members.map((member) => (
           <div class="items-center bg-beige/30 rounded-lg shadow-sm sm:flex border border-beige">
             {member.photo && (

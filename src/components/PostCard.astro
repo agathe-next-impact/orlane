@@ -17,7 +17,7 @@ const { post, basePath = '/blog' } = Astro.props;
     <a href={`${basePath}/${post.slug}`} class="block">
       <WPImage
         image={post.featuredImage}
-        class="w-full h-64 object-cover"
+        class="w-full h-48 object-cover"
         loading="lazy"
         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
         context={`Featured image for ${decodeWPEntities(post.title)}`}
@@ -25,25 +25,25 @@ const { post, basePath = '/blog' } = Astro.props;
     </a>
   )}
 
-  <div class="p-6">
+  <div class="p-5">
     {post.categories?.nodes && post.categories.nodes.length > 0 && (
-      <div class="flex flex-wrap gap-2 mb-3">
+      <div class="flex flex-wrap gap-2 mb-2">
         {post.categories.nodes.slice(0, 2).map((category) => (
-          <span class="text-xs bg-beige text-taupe px-3 py-1 rounded-full">
+          <span class="text-xs bg-beige text-taupe px-2.5 py-0.5 rounded-full">
             {decodeWPEntities(category.name)}
           </span>
         ))}
       </div>
     )}
 
-    <h2 class="text-2xl font-bold mb-3">
+    <h2 class="text-xl font-bold mb-2">
       <a href={`${basePath}/${post.slug}`} class="hover:text-sauge transition-colors">
         {decodeWPEntities(post.title)}
       </a>
     </h2>
 
     {post.excerpt && (
-      <div class="text-taupe/70 mb-4 line-clamp-3" set:html={sanitizeExcerpt(post.excerpt)} />
+      <div class="text-sm text-taupe/70 mb-3 line-clamp-3" set:html={sanitizeExcerpt(post.excerpt)} />
     )}
 
     <div class="flex items-center gap-4 text-sm text-taupe/60">

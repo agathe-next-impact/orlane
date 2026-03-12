@@ -10,10 +10,10 @@ const { heading, description, steps = [], variant = 'horizontal' } = Astro.props
   <section class="bg-creme">
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       {heading && (
-        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading text-center">{heading}</h2>
+        <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading text-center">{heading}</h2>
       )}
       {description && (
-        <p class="mb-12 font-light text-taupe/70 sm:text-xl text-center max-w-screen-sm mx-auto">{description}</p>
+        <p class="mb-12 font-light text-taupe/70 sm:text-lg text-center max-w-screen-sm mx-auto">{description}</p>
       )}
       <ol class="flex items-center w-full max-w-screen-lg mx-auto mb-12">
         {steps.map((step, i) => (
@@ -24,7 +24,7 @@ const { heading, description, steps = [], variant = 'horizontal' } = Astro.props
           </li>
         ))}
       </ol>
-      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-{steps.length > 4 ? '4' : steps.length}">
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {steps.map((step, i) => (
           <div class="text-center">
             <div class="flex justify-center items-center mb-4 w-12 h-12 rounded-full bg-sauge/10 mx-auto">
@@ -51,10 +51,10 @@ const { heading, description, steps = [], variant = 'horizontal' } = Astro.props
   <section class="bg-creme">
     <div class="py-8 px-4 mx-auto max-w-screen-md lg:py-16">
       {heading && (
-        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">{heading}</h2>
+        <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">{heading}</h2>
       )}
       {description && (
-        <p class="mb-12 font-light text-taupe/70 sm:text-xl">{description}</p>
+        <p class="mb-12 font-light text-taupe/70 sm:text-lg">{description}</p>
       )}
       <ol class="relative border-s border-sauge/30">
         {steps.map((step, i) => (
@@ -83,10 +83,10 @@ const { heading, description, steps = [], variant = 'horizontal' } = Astro.props
   <section class="bg-beige/30">
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       {heading && (
-        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading text-center">{heading}</h2>
+        <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading text-center">{heading}</h2>
       )}
       {description && (
-        <p class="mb-12 font-light text-taupe/70 sm:text-xl text-center max-w-screen-sm mx-auto">{description}</p>
+        <p class="mb-12 font-light text-taupe/70 sm:text-lg text-center max-w-screen-sm mx-auto">{description}</p>
       )}
       <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {steps.map((step, i) => (

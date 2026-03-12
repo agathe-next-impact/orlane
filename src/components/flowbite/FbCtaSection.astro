@@ -24,7 +24,7 @@ const tabs = rawTabs?.map((tab) => ({
     <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
       <div class="mx-auto max-w-screen-sm text-center">
         {heading && (
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-taupe font-heading">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold leading-tight text-taupe font-heading">
             {heading}
           </h2>
         )}
@@ -56,11 +56,11 @@ const tabs = rawTabs?.map((tab) => ({
   <section class="bg-creme">
     <div class="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
       {image && (
-        <img class="w-full rounded-lg" src={image.sourceUrl} alt={image.altText || heading || ''} />
+        <img class="w-full rounded-lg object-cover aspect-video" src={image.sourceUrl} alt={image.altText || heading || ''} />
       )}
       <div class="mt-4 md:mt-0">
         {heading && (
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
             {heading}
           </h2>
         )}
@@ -86,7 +86,7 @@ const tabs = rawTabs?.map((tab) => ({
     <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
       <div class="mx-auto max-w-screen-sm text-center">
         {heading && (
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-taupe font-heading">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold leading-tight text-taupe font-heading">
             {heading}
           </h2>
         )}
@@ -111,7 +111,7 @@ const tabs = rawTabs?.map((tab) => ({
     <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
       <div class="mx-auto max-w-screen-sm text-center">
         {heading && (
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-taupe font-heading">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold leading-tight text-taupe font-heading">
             {heading}
           </h2>
         )}
@@ -135,7 +135,7 @@ const tabs = rawTabs?.map((tab) => ({
   <section class="bg-creme">
     <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
       {heading && (
-        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-center text-taupe font-heading">
+        <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-center text-taupe font-heading">
           {heading}
         </h2>
       )}
@@ -149,7 +149,7 @@ const tabs = rawTabs?.map((tab) => ({
           {iconItems.map((item) => (
             <div class="p-6 bg-beige rounded-lg shadow-sm hover:shadow-md transition-shadow">
               {item.icon && (
-                <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-sauge/10 text-sauge">
+                <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-sauge/20 text-sauge">
                   <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1 11H9v-2h2v2zm0-4H9V5h2v4z"/>
                   </svg>
@@ -181,7 +181,7 @@ const tabs = rawTabs?.map((tab) => ({
     <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
       <div class="mx-auto max-w-screen-md mb-8 text-center">
         {heading && (
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
             {heading}
           </h2>
         )}
@@ -236,7 +236,7 @@ const tabs = rawTabs?.map((tab) => ({
           </h2>
         )}
         {description && (
-          <p class="mx-auto mb-8 max-w-2xl font-light text-taupe/70 md:mb-12 sm:text-xl">
+          <p class="mx-auto mb-8 max-w-2xl font-light text-taupe/70 md:mb-12 sm:text-lg">
             {description}
           </p>
         )}
@@ -268,7 +268,7 @@ const tabs = rawTabs?.map((tab) => ({
     <div class="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
       <div>
         {heading && (
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
             {heading}
           </h2>
         )}
@@ -310,7 +310,7 @@ const tabs = rawTabs?.map((tab) => ({
   <section class="bg-creme">
     <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
       {heading && (
-        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-center text-taupe font-heading">
+        <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-center text-taupe font-heading">
           {heading}
         </h2>
       )}
@@ -356,7 +356,7 @@ const tabs = rawTabs?.map((tab) => ({
     <div class="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
       <div>
         {heading && (
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
             {heading}
           </h2>
         )}
@@ -409,7 +409,7 @@ const tabs = rawTabs?.map((tab) => ({
     <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
       <div class="mx-auto max-w-screen-sm text-center">
         {heading && (
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold leading-tight text-creme font-heading">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold leading-tight text-creme font-heading">
             {heading}
           </h2>
         )}

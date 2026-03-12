@@ -30,16 +30,7 @@ try {
   description="Browse all available content types from WordPress"
 >
   <div class="content-types-page">
-    <div class="page-header bg-gradient-to-br from-beige to-creme py-16">
-      <div class="container mx-auto px-4">
-        <h1 class="text-5xl font-bold text-center mb-4 text-taupe">Content Types</h1>
-        <p class="text-xl text-center text-taupe/70 max-w-2xl mx-auto">
-          Explore all available content types from your WordPress site
-        </p>
-      </div>
-    </div>
-
-    <div class="container mx-auto px-4 py-16">
+    <div class="container mx-auto px-4 py-8 lg:py-12">
       {contentTypes.length > 0 ? (
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {contentTypes.map((type) => (
@@ -48,7 +39,7 @@ try {
               class="content-type-card bg-creme rounded-lg border border-beige p-6 hover:shadow-md transition-shadow"
             >
               <div class="flex items-start justify-between mb-4">
-                <h2 class="text-2xl font-bold text-taupe">{type.name}</h2>
+                <h2 class="text-xl font-bold text-taupe">{type.name}</h2>
                 <span class="bg-beige text-taupe px-3 py-1 rounded-full text-sm font-semibold">
                   {contentCounts[type.graphqlSingleName] || 0}
                 </span>

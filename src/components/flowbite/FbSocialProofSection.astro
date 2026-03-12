@@ -27,19 +27,19 @@ const carouselImages = (images?.nodes || images || []).map((img: any) => ({
   <section class="bg-creme">
     <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
       {heading && (
-        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+        <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
           {heading}
         </h2>
       )}
       {description && (
-        <p class="mb-8 font-light text-taupe/70 lg:mb-12 sm:text-xl">
+        <p class="mb-8 font-light text-taupe/70 lg:mb-12 sm:text-lg">
           {description}
         </p>
       )}
       <div class="grid gap-8 lg:gap-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {items.map((item) => (
           <div class="text-center">
-            <div class="text-4xl font-extrabold text-mousse mb-2">{item.value}</div>
+            <div class="text-3xl md:text-4xl font-extrabold text-mousse mb-2">{item.value}</div>
             <h3 class="text-lg font-semibold text-taupe">{item.label}</h3>
             {item.description && (
               <p class="mt-1 text-sm text-taupe/60">{item.description}</p>
@@ -76,7 +76,7 @@ const carouselImages = (images?.nodes || images || []).map((img: any) => ({
     <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
       <div class="mx-auto max-w-screen-sm text-center">
         {heading && (
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-creme font-heading leading-tight">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-creme font-heading leading-tight">
             {heading}
           </h2>
         )}
@@ -89,7 +89,7 @@ const carouselImages = (images?.nodes || images || []).map((img: any) => ({
       <div class="grid gap-8 mt-8 sm:grid-cols-2 lg:grid-cols-4">
         {items.map((item) => (
           <div class="text-center">
-            <div class="text-4xl font-extrabold text-sauge mb-2">{item.value}</div>
+            <div class="text-3xl md:text-4xl font-extrabold text-sauge mb-2">{item.value}</div>
             <div class="text-lg font-semibold text-creme">{item.label}</div>
             {item.description && (
               <p class="mt-1 text-sm text-beige/60">{item.description}</p>
@@ -107,7 +107,7 @@ const carouselImages = (images?.nodes || images || []).map((img: any) => ({
     <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
       <div class="font-light text-taupe/70 sm:text-lg">
         {heading && (
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
             {heading}
           </h2>
         )}
@@ -135,7 +135,7 @@ const carouselImages = (images?.nodes || images || []).map((img: any) => ({
       </div>
       {imgSrc && (
         <img
-          class="hidden lg:block w-full rounded-lg mt-8 lg:mt-0"
+          class="hidden md:block w-full rounded-lg mt-8 lg:mt-0 object-cover aspect-[4/3]"
           src={imgSrc}
           alt={imgAlt}
         />
@@ -155,7 +155,7 @@ const carouselImages = (images?.nodes || images || []).map((img: any) => ({
           </h2>
         )}
         {description && (
-          <p class="mt-4 text-base font-normal text-taupe/70 sm:text-xl">
+          <p class="mt-4 text-base font-normal text-taupe/70 sm:text-lg">
             {description}
           </p>
         )}
@@ -210,12 +210,12 @@ const carouselImages = (images?.nodes || images || []).map((img: any) => ({
           <p class="mb-2 font-semibold text-mousse uppercase tracking-wide text-sm">{subtitle}</p>
         )}
         {heading && (
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
             {heading}
           </h2>
         )}
         {description && (
-          <p class="mb-6 font-light text-taupe/70 sm:text-xl">{description}</p>
+          <p class="mb-6 font-light text-taupe/70 sm:text-lg">{description}</p>
         )}
         {ctaText && ctaUrl && (
           <div class="flex flex-col sm:flex-row gap-4">

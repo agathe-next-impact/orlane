@@ -19,7 +19,7 @@ const rightItems = items.slice(half);
   <section class="bg-[var(--block-bg,transparent)]">
     <div class="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-16 lg:px-6">
       {heading && (
-        <h2 class="mb-8 text-4xl tracking-tight font-extrabold text-[var(--block-title)] text-taupe font-heading lg:mb-12">
+        <h2 class="mb-8 text-3xl lg:text-4xl tracking-tight font-extrabold text-[var(--block-title)] text-taupe font-heading lg:mb-12">
           {heading}
         </h2>
       )}
@@ -32,7 +32,7 @@ const rightItems = items.slice(half);
         </blockquote>
         <figcaption class="flex items-center justify-center mt-6 space-x-3">
           {items[0].avatar && (
-            <img class="w-6 h-6 rounded-full" src={items[0].avatar.sourceUrl} alt={items[0].author || ''} />
+            <img class="w-6 h-6 rounded-full object-cover" src={items[0].avatar.sourceUrl} alt={items[0].author || ''} />
           )}
           <div class="flex items-center divide-x-2 divide-taupe/30">
             {items[0].author && (
@@ -55,12 +55,12 @@ const rightItems = items.slice(half);
       {(heading || description) && (
         <div class="mx-auto max-w-screen-sm">
           {heading && (
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-[var(--block-title)] text-taupe font-heading">
+            <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-[var(--block-title)] text-taupe font-heading">
               {heading}
             </h2>
           )}
           {description && (
-            <p class="mb-8 font-light text-[var(--block-text)] text-taupe/70 lg:mb-16 sm:text-xl">
+            <p class="mb-8 font-light text-[var(--block-text)] text-taupe/70 lg:mb-12 sm:text-lg">
               {description}
             </p>
           )}
@@ -87,7 +87,7 @@ const rightItems = items.slice(half);
               </blockquote>
               <figcaption class="flex justify-center items-center space-x-3">
                 {item.avatar && (
-                  <img class="w-9 h-9 rounded-full" src={item.avatar.sourceUrl} alt={item.author || ''} />
+                  <img class="w-9 h-9 rounded-full object-cover" src={item.avatar.sourceUrl} alt={item.author || ''} />
                 )}
                 <div class="space-y-0.5 font-medium text-left">
                   {item.author && (
@@ -111,7 +111,7 @@ const rightItems = items.slice(half);
   <section class="bg-[var(--block-bg,transparent)]">
     <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
       {heading && (
-        <h2 class="mb-8 text-4xl tracking-tight font-extrabold text-[var(--block-title)] text-taupe font-heading lg:mb-12">
+        <h2 class="mb-8 text-3xl lg:text-4xl tracking-tight font-extrabold text-[var(--block-title)] text-taupe font-heading lg:mb-12">
           {heading}
         </h2>
       )}
@@ -125,7 +125,7 @@ const rightItems = items.slice(half);
               id={`testimonial-tab-${index}`}
               aria-controls={`testimonial-panel-${index}`}
               aria-selected={index === 0 ? 'true' : 'false'}
-              class={`flex items-center gap-3 p-3 rounded-lg text-left whitespace-nowrap transition-colors ${index === 0 ? 'bg-beige text-taupe' : 'text-taupe/60 hover:bg-beige/50'}`}
+              class={`flex items-center gap-3 p-3 rounded-lg text-left whitespace-nowrap transition-colors focus:outline-none focus:ring-2 focus:ring-sauge/50 ${index === 0 ? 'bg-beige text-taupe' : 'text-taupe/60 hover:bg-beige/50'}`}
               data-tabs-target={`#testimonial-panel-${index}`}
             >
               {item.avatar && (
@@ -162,7 +162,7 @@ const rightItems = items.slice(half);
               )}
               <div class="flex items-center justify-center lg:justify-start gap-3 mt-4">
                 {item.avatar && (
-                  <img class="w-10 h-10 rounded-full" src={item.avatar.sourceUrl} alt={item.author || ''} />
+                  <img class="w-10 h-10 rounded-full object-cover" src={item.avatar.sourceUrl} alt={item.author || ''} />
                 )}
                 <div>
                   {item.author && <p class="font-semibold text-[var(--block-title)] text-taupe">{item.author}</p>}
@@ -211,7 +211,7 @@ const rightItems = items.slice(half);
   <section class="bg-[var(--block-bg,transparent)]">
     <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
       {heading && (
-        <h2 class="mb-8 text-4xl tracking-tight font-extrabold text-[var(--block-title)] text-taupe font-heading lg:mb-12">
+        <h2 class="mb-8 text-3xl lg:text-4xl tracking-tight font-extrabold text-[var(--block-title)] text-taupe font-heading lg:mb-12">
           {heading}
         </h2>
       )}
@@ -235,7 +235,7 @@ const rightItems = items.slice(half);
                 )}
                 <figcaption class="flex items-center justify-center mt-6 space-x-3">
                   {item.avatar && (
-                    <img class="w-8 h-8 rounded-full" src={item.avatar.sourceUrl} alt={item.author || ''} />
+                    <img class="w-8 h-8 rounded-full object-cover" src={item.avatar.sourceUrl} alt={item.author || ''} />
                   )}
                   <div class="flex items-center divide-x-2 divide-taupe/30">
                     {item.author && (
@@ -253,7 +253,7 @@ const rightItems = items.slice(half);
         {/* Navigation */}
         {items.length > 1 && (
           <>
-            <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group" data-carousel-prev>
+            <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
               <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-beige group-hover:bg-taupe/10 transition-colors">
                 <svg class="w-4 h-4 text-taupe" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
@@ -261,7 +261,7 @@ const rightItems = items.slice(half);
                 <span class="sr-only">Précédent</span>
               </span>
             </button>
-            <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group" data-carousel-next>
+            <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
               <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-beige group-hover:bg-taupe/10 transition-colors">
                 <svg class="w-4 h-4 text-taupe" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
@@ -281,12 +281,12 @@ const rightItems = items.slice(half);
   <section class="bg-[var(--block-bg,theme(colors.creme))]">
     <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
       {heading && (
-        <h2 class="mb-8 text-4xl tracking-tight font-extrabold text-[var(--block-title)] text-taupe font-heading lg:mb-16">
+        <h2 class="mb-8 text-3xl lg:text-4xl tracking-tight font-extrabold text-[var(--block-title)] text-taupe font-heading lg:mb-12">
           {heading}
         </h2>
       )}
       {description && (
-        <p class="mb-8 font-light text-[var(--block-text)] text-taupe/70 lg:mb-16 sm:text-xl max-w-screen-sm mx-auto">
+        <p class="mb-8 font-light text-[var(--block-text)] text-taupe/70 lg:mb-12 sm:text-lg max-w-screen-sm mx-auto">
           {description}
         </p>
       )}
@@ -307,7 +307,7 @@ const rightItems = items.slice(half);
             )}
             <div class="flex items-center justify-center space-x-3">
               {item.avatar && (
-                <img class="w-10 h-10 rounded-full" src={item.avatar.sourceUrl} alt={item.author || ''} />
+                <img class="w-10 h-10 rounded-full object-cover" src={item.avatar.sourceUrl} alt={item.author || ''} />
               )}
               <div class="text-left">
                 {item.author && (

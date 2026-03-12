@@ -23,7 +23,7 @@ const col3 = items.slice(third * 2);
   <section class="bg-[var(--block-bg,transparent)]">
     <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
       {heading && (
-        <h2 class="mb-8 text-4xl tracking-tight font-extrabold text-[var(--block-title,var(--tw-text-taupe))] text-taupe font-heading">
+        <h2 class="mb-8 text-3xl lg:text-4xl tracking-tight font-extrabold text-[var(--block-title,var(--tw-text-taupe))] text-taupe font-heading">
           {heading}
         </h2>
       )}
@@ -67,14 +67,14 @@ const col3 = items.slice(third * 2);
 {variant === 'search_links' && (
   <section class="bg-[var(--block-bg,transparent)]">
     <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
-      <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-16">
+      <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
         {heading && (
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-[var(--block-title,var(--tw-text-taupe))] text-taupe font-heading">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-[var(--block-title,var(--tw-text-taupe))] text-taupe font-heading">
             {heading}
           </h2>
         )}
         {description && (
-          <p class="mb-4 text-[var(--block-text,var(--tw-text-taupe-70))] text-taupe/70 sm:text-xl">
+          <p class="mb-4 text-[var(--block-text,var(--tw-text-taupe-70))] text-taupe/70 sm:text-lg">
             {description}
           </p>
         )}
@@ -112,12 +112,12 @@ const col3 = items.slice(third * 2);
       <div class="grid gap-8 lg:grid-cols-3">
         <div class="lg:col-span-1">
           {heading && (
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-[var(--block-title,var(--tw-text-taupe))] text-taupe font-heading">
+            <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-[var(--block-title,var(--tw-text-taupe))] text-taupe font-heading">
               {heading}
             </h2>
           )}
           {description && (
-            <p class="text-[var(--block-text,var(--tw-text-taupe-70))] text-taupe/70 sm:text-xl">
+            <p class="text-[var(--block-text,var(--tw-text-taupe-70))] text-taupe/70 sm:text-lg">
               {description}
             </p>
           )}
@@ -143,7 +143,7 @@ const col3 = items.slice(third * 2);
                 <div id={`accordion-side-body-${index}`} class={index === 0 ? '' : 'hidden'} aria-labelledby={`accordion-side-heading-${index}`}>
                   <div class="p-5 border border-b-0 border-beige">
                     {item.answer && (
-                      <div class="prose prose-lg max-w-none text-taupe/70" set:html={sanitizeHTML(item.answer)} />
+                      <div class="prose max-w-none text-taupe/70" set:html={sanitizeHTML(item.answer)} />
                     )}
                   </div>
                 </div>
@@ -163,12 +163,12 @@ const col3 = items.slice(third * 2);
       {(heading || description) && (
         <div class="mx-auto max-w-screen-md text-center mb-8">
           {heading && (
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-[var(--block-title,var(--tw-text-taupe))] text-taupe font-heading">
+            <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-[var(--block-title,var(--tw-text-taupe))] text-taupe font-heading">
               {heading}
             </h2>
           )}
           {description && (
-            <p class="text-[var(--block-text,var(--tw-text-taupe-70))] text-taupe/70 sm:text-xl">
+            <p class="text-[var(--block-text,var(--tw-text-taupe-70))] text-taupe/70 sm:text-lg">
               {description}
             </p>
           )}
@@ -181,7 +181,7 @@ const col3 = items.slice(third * 2);
               <h3 id={`accordion-heading-${index}`}>
                 <button
                   type="button"
-                  class="flex items-center justify-between w-full p-5 font-medium text-left text-taupe border border-b-0 border-beige rounded-t-lg focus:ring-4 focus:ring-sauge/10 hover:bg-beige/50 transition-colors"
+                  class={`flex items-center justify-between w-full p-5 font-medium text-left text-taupe border border-b-0 border-beige focus:ring-4 focus:ring-sauge/10 hover:bg-beige/50 transition-colors ${index === 0 ? 'rounded-t-lg' : ''} ${index === items.length - 1 ? 'border-b rounded-b-lg' : ''}`}
                   data-accordion-target={`#accordion-body-${index}`}
                   aria-expanded={index === 0 ? 'true' : 'false'}
                   aria-controls={`accordion-body-${index}`}
@@ -193,9 +193,9 @@ const col3 = items.slice(third * 2);
                 </button>
               </h3>
               <div id={`accordion-body-${index}`} class={index === 0 ? '' : 'hidden'} aria-labelledby={`accordion-heading-${index}`}>
-                <div class="p-5 border border-b-0 border-beige">
+                <div class={`p-5 border border-b-0 border-beige ${index === items.length - 1 ? 'border-b rounded-b-lg' : ''}`}>
                   {item.answer && (
-                    <div class="prose prose-lg max-w-none text-taupe/70" set:html={sanitizeHTML(item.answer)} />
+                    <div class="prose max-w-none text-taupe/70" set:html={sanitizeHTML(item.answer)} />
                   )}
                 </div>
               </div>
@@ -212,14 +212,14 @@ const col3 = items.slice(third * 2);
   <section class="bg-[var(--block-bg,transparent)]">
     <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
       {(heading || description) && (
-        <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-16">
+        <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
           {heading && (
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-[var(--block-title,var(--tw-text-taupe))] text-taupe font-heading">
+            <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-[var(--block-title,var(--tw-text-taupe))] text-taupe font-heading">
               {heading}
             </h2>
           )}
           {description && (
-            <p class="text-[var(--block-text,var(--tw-text-taupe-70))] text-taupe/70 sm:text-xl">
+            <p class="text-[var(--block-text,var(--tw-text-taupe-70))] text-taupe/70 sm:text-lg">
               {description}
             </p>
           )}
@@ -277,14 +277,14 @@ const col3 = items.slice(third * 2);
 {variant === 'help_center' && (
   <section class="bg-[var(--block-bg,transparent)]">
     <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
-      <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-16">
+      <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
         {heading && (
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-[var(--block-title,var(--tw-text-taupe))] text-taupe font-heading">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-[var(--block-title,var(--tw-text-taupe))] text-taupe font-heading">
             {heading}
           </h2>
         )}
         {description && (
-          <p class="mb-4 text-[var(--block-text,var(--tw-text-taupe-70))] text-taupe/70 sm:text-xl">
+          <p class="mb-4 text-[var(--block-text,var(--tw-text-taupe-70))] text-taupe/70 sm:text-lg">
             {description}
           </p>
         )}
@@ -299,7 +299,7 @@ const col3 = items.slice(third * 2);
       <div class="grid gap-6 sm:grid-cols-2">
         {items.map((item) => (
           <div class="p-6 bg-creme rounded-lg border border-beige">
-            <div class="flex items-center justify-center w-10 h-10 mb-4 rounded-full bg-sauge/10">
+            <div class="flex items-center justify-center w-10 h-10 mb-4 rounded-full bg-sauge/20">
               <svg class="w-5 h-5 text-sauge" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"></path></svg>
             </div>
             {item.question && (
@@ -322,14 +322,14 @@ const col3 = items.slice(third * 2);
   <section class="bg-[var(--block-bg,transparent)]">
     <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
       {(heading || description) && (
-        <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-16">
+        <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
           {heading && (
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-[var(--block-title,var(--tw-text-taupe))] text-taupe font-heading">
+            <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-[var(--block-title,var(--tw-text-taupe))] text-taupe font-heading">
               {heading}
             </h2>
           )}
           {description && (
-            <p class="text-[var(--block-text,var(--tw-text-taupe-70))] text-taupe/70 sm:text-xl">
+            <p class="text-[var(--block-text,var(--tw-text-taupe-70))] text-taupe/70 sm:text-lg">
               {description}
             </p>
           )}
@@ -339,7 +339,7 @@ const col3 = items.slice(third * 2);
         {items.map((item) => (
           <div class="p-6 bg-creme rounded-lg border border-beige shadow-sm hover:shadow-md transition-shadow">
             <div class="flex items-start gap-3 mb-3">
-              <div class="flex-shrink-0 flex justify-center items-center w-8 h-8 rounded-full bg-sauge/10">
+              <div class="flex-shrink-0 flex justify-center items-center w-8 h-8 rounded-full bg-sauge/20">
                 <Fragment set:html={questionIcon} />
               </div>
               {item.question && (

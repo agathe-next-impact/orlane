@@ -54,16 +54,7 @@ if (!resolved) {
     description={`Browse all ${resolved.contentType.name.toLowerCase()}`}
   >
     <div class="archive-page">
-      <div class="page-header bg-gradient-to-br from-beige to-creme py-16">
-        <div class="container mx-auto px-4">
-          <h1 class="text-5xl font-bold text-center mb-4 text-taupe">{resolved.contentType.name}</h1>
-          <p class="text-xl text-center text-taupe/70 max-w-2xl mx-auto">
-            Explore all {resolved.contentType.name.toLowerCase()}
-          </p>
-        </div>
-      </div>
-
-      <div class="container mx-auto px-4 py-16">
+      <div class="container mx-auto px-4 py-8 lg:py-12">
         {resolved.data.length > 0 ? (
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {resolved.data.map((item) => (
@@ -83,21 +74,14 @@ if (!resolved) {
 {resolved.type === 'page' && (
   <Layout title={decodeWPEntities(resolved.data.title)} description={`Page: ${decodeWPEntities(resolved.data.title)}`}>
     <article class="page">
-      <div class="page-header bg-gradient-to-br from-beige to-creme py-16">
-        <div class="container mx-auto px-4">
-          <h1 class="text-5xl font-bold text-center max-w-4xl mx-auto mb-6 text-taupe">
-            {decodeWPEntities(resolved.data.title)}
-          </h1>
-        </div>
-      </div>
-
       {resolved.data.featuredImage && (
-        <div class="container mx-auto px-4 py-8">
+        <div class="container mx-auto px-4 py-6">
           <div class="max-w-4xl mx-auto">
             <WPImage
               image={resolved.data.featuredImage}
-              class="rounded-lg shadow-xl"
+              class="w-full rounded-lg shadow-lg aspect-[16/9] object-cover"
               priority={true}
+              sizes="(max-width: 1024px) 100vw, 896px"
               context={`Featured image for page: ${decodeWPEntities(resolved.data.title)}`}
             />
           </div>
@@ -109,8 +93,8 @@ if (!resolved) {
       )}
 
       {resolved.data.content && (
-        <div class="container mx-auto px-4 py-16">
-          <div class="prose prose-lg max-w-4xl mx-auto">
+        <div class="container mx-auto px-4 py-8 lg:py-12">
+          <div class="prose max-w-4xl mx-auto">
             <div set:html={sanitizeHTML(resolved.data.content)} />
           </div>
         </div>
@@ -122,29 +106,29 @@ if (!resolved) {
 {resolved.type === 'post' && (
   <Layout title={decodeWPEntities(resolved.data.title)} seo={resolved.data.seo} type="article">
     <article class="blog-post">
-      <div class="post-header bg-gradient-to-br from-beige to-creme py-16">
+      <div class="post-header bg-gradient-to-br from-beige to-creme py-8 lg:py-12">
         <div class="container mx-auto px-4">
           <div class="max-w-4xl mx-auto">
             {resolved.data.categories?.nodes && resolved.data.categories.nodes.length > 0 && (
-              <div class="flex flex-wrap gap-2 mb-4">
+              <div class="flex flex-wrap gap-2 mb-3">
                 {resolved.data.categories.nodes.slice(0, 3).map((category) => (
-                  <span class="text-sm bg-beige text-taupe px-3 py-1 rounded-full">
+                  <span class="text-xs bg-beige text-taupe px-3 py-1 rounded-full">
                     {decodeWPEntities(category.name)}
                   </span>
                 ))}
               </div>
             )}
 
-            <h1 class="text-5xl font-bold mb-6 text-taupe">{decodeWPEntities(resolved.data.title)}</h1>
+            <h1 class="text-3xl lg:text-4xl font-bold mb-4 text-taupe font-heading">{decodeWPEntities(resolved.data.title)}</h1>
 
-            <div class="flex flex-wrap items-center gap-6 text-taupe/70">
+            <div class="flex flex-wrap items-center gap-4 text-sm text-taupe/70">
               {resolved.data.author && (
                 <div class="flex items-center gap-2">
                   {resolved.data.author.node.avatar?.url && (
                     <img
                       src={resolved.data.author.node.avatar.url}
                       alt={decodeWPEntities(resolved.data.author.node.name)}
-                      class="w-10 h-10 rounded-full"
+                      class="w-8 h-8 rounded-full object-cover"
                     />
                   )}
                   <span>{decodeWPEntities(resolved.data.author.node.name)}</span>
@@ -160,13 +144,13 @@ if (!resolved) {
       </div>
 
       {resolved.data.featuredImage && (
-        <div class="container mx-auto px-4 -mt-8 mb-12">
-          <div class="max-w-5xl mx-auto">
+        <div class="container mx-auto px-4 -mt-6 mb-8">
+          <div class="max-w-4xl mx-auto">
             <WPImage
               image={resolved.data.featuredImage}
-              class="w-full rounded-lg shadow-2xl"
+              class="w-full rounded-lg shadow-xl aspect-[16/9] object-cover"
               priority={true}
-              sizes="(max-width: 1280px) 100vw, 1280px"
+              sizes="(max-width: 1024px) 100vw, 896px"
               context={`Featured image for article: ${decodeWPEntities(resolved.data.title)}`}
             />
           </div>
@@ -176,7 +160,7 @@ if (!resolved) {
       <div class="container mx-auto px-4 py-8">
         <div class="max-w-4xl mx-auto">
           {resolved.data.content && (
-            <div class="prose prose-lg max-w-none mb-12">
+            <div class="prose max-w-none mb-12">
               <div set:html={sanitizeHTML(resolved.data.content)} />
             </div>
           )}
@@ -201,10 +185,10 @@ if (!resolved) {
 {resolved.type === 'cpt-single' && (
   <Layout title={decodeWPEntities(resolved.data.title)} seo={resolved.data.seo} type="article">
     <article class="single-post">
-      <div class="post-header bg-gradient-to-br from-beige to-creme py-16">
+      <div class="post-header bg-gradient-to-br from-beige to-creme py-8 lg:py-12">
         <div class="container mx-auto px-4">
           <div class="max-w-4xl mx-auto">
-            <div class="mb-4">
+            <div class="mb-3">
               <a
                 href={getCPTArchiveUrl(resolved.contentType)}
                 class="text-sm text-sauge hover:text-taupe inline-flex items-center gap-1 transition-colors"
@@ -216,16 +200,16 @@ if (!resolved) {
               </a>
             </div>
 
-            <h1 class="text-5xl font-bold mb-6 text-taupe">{decodeWPEntities(resolved.data.title)}</h1>
+            <h1 class="text-3xl lg:text-4xl font-bold mb-4 text-taupe font-heading">{decodeWPEntities(resolved.data.title)}</h1>
 
-            <div class="flex flex-wrap items-center gap-6 text-taupe/70">
+            <div class="flex flex-wrap items-center gap-4 text-sm text-taupe/70">
               {resolved.data.author && (
                 <div class="flex items-center gap-2">
                   {resolved.data.author.node.avatar?.url && (
                     <img
                       src={resolved.data.author.node.avatar.url}
                       alt={decodeWPEntities(resolved.data.author.node.name)}
-                      class="w-10 h-10 rounded-full"
+                      class="w-8 h-8 rounded-full object-cover"
                     />
                   )}
                   <span>{decodeWPEntities(resolved.data.author.node.name)}</span>
@@ -241,13 +225,13 @@ if (!resolved) {
       </div>
 
       {resolved.data.featuredImage && (
-        <div class="container mx-auto px-4 -mt-8 mb-12">
-          <div class="max-w-5xl mx-auto">
+        <div class="container mx-auto px-4 -mt-6 mb-8">
+          <div class="max-w-4xl mx-auto">
             <WPImage
               image={resolved.data.featuredImage}
-              class="w-full rounded-lg shadow-2xl"
+              class="w-full rounded-lg shadow-xl aspect-[16/9] object-cover"
               priority={true}
-              sizes="(max-width: 1280px) 100vw, 1280px"
+              sizes="(max-width: 1024px) 100vw, 896px"
               context={`Featured image for ${decodeWPEntities(resolved.data.title)}`}
             />
           </div>
@@ -261,7 +245,7 @@ if (!resolved) {
       <div class="container mx-auto px-4 py-8">
         <div class="max-w-4xl mx-auto">
           {resolved.data.content && (
-            <div class="prose prose-lg max-w-none mb-12">
+            <div class="prose max-w-none mb-12">
               <div set:html={sanitizeHTML(resolved.data.content)} />
             </div>
           )}

@@ -29,12 +29,12 @@ function toEmbedUrl(url: string): string {
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       <div class="max-w-screen-lg mx-auto">
         {heading && (
-          <h2 class="mb-6 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          <h2 class="mb-6 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
             {heading}
           </h2>
         )}
         {body && (
-          <div class="prose prose-lg max-w-none text-taupe/80" set:html={sanitizeHTML(body)} />
+          <div class="prose max-w-none text-taupe/80" set:html={sanitizeHTML(body)} />
         )}
       </div>
     </div>
@@ -44,20 +44,20 @@ function toEmbedUrl(url: string): string {
 {/* 2. Images with heading and description (image right) */}
 {layout === 'image_right' && (
   <section class="bg-creme">
-    <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
+    <div class="items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 lg:py-16 lg:px-6">
       <div>
         {heading && (
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
             {heading}
           </h2>
         )}
         {body && (
-          <div class="prose prose-lg max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
+          <div class="prose max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
         )}
       </div>
       {image && (
         <div class="mt-8 lg:mt-0">
-          <img class="w-full rounded-lg shadow-lg" src={image.sourceUrl} alt={image.altText || heading || ''} />
+          <img class="w-full rounded-lg shadow-lg object-cover aspect-[4/3]" src={image.sourceUrl} alt={image.altText || heading || ''} />
         </div>
       )}
     </div>
@@ -67,20 +67,20 @@ function toEmbedUrl(url: string): string {
 {/* 3. Images with heading and description (image left) */}
 {layout === 'image_left' && (
   <section class="bg-creme">
-    <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
+    <div class="items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 lg:py-16 lg:px-6">
       {image && (
         <div class="mb-8 lg:mb-0">
-          <img class="w-full rounded-lg shadow-lg" src={image.sourceUrl} alt={image.altText || heading || ''} />
+          <img class="w-full rounded-lg shadow-lg object-cover aspect-[4/3]" src={image.sourceUrl} alt={image.altText || heading || ''} />
         </div>
       )}
       <div>
         {heading && (
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
             {heading}
           </h2>
         )}
         {body && (
-          <div class="prose prose-lg max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
+          <div class="prose max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
         )}
       </div>
     </div>
@@ -90,15 +90,15 @@ function toEmbedUrl(url: string): string {
 {/* 4. Video embed content */}
 {layout === 'video' && (
   <section class="bg-creme">
-    <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
+    <div class="items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 lg:py-16 lg:px-6">
       <div>
         {heading && (
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
             {heading}
           </h2>
         )}
         {body && (
-          <div class="prose prose-lg max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
+          <div class="prose max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
         )}
       </div>
       {videoUrl && (
@@ -123,19 +123,19 @@ function toEmbedUrl(url: string): string {
   <section class="bg-creme">
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       {heading && (
-        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+        <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
           {heading}
         </h2>
       )}
       {body && (
-        <div class="mb-8 prose prose-lg max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
+        <div class="mb-8 prose max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
       )}
       {images && images.length > 0 && (
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
           {images.map((img, i) => (
             <img
               class:list={[
-                'w-full rounded-lg shadow-md',
+                'w-full rounded-lg shadow-md object-cover aspect-[4/3]',
                 i === 0 && images.length > 3 ? 'md:col-span-2 md:row-span-2' : '',
               ]}
               src={img.sourceUrl}
@@ -154,16 +154,16 @@ function toEmbedUrl(url: string): string {
   <section class="bg-creme">
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       {heading && (
-        <h2 class="mb-8 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+        <h2 class="mb-8 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
           {heading}
         </h2>
       )}
-      <div class="grid gap-12 lg:grid-cols-2">
+      <div class={`grid gap-12 ${bodyRight ? 'lg:grid-cols-2' : ''}`}>
         {body && (
-          <div class="prose prose-lg max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
+          <div class="prose max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
         )}
         {bodyRight && (
-          <div class="prose prose-lg max-w-none text-taupe/70" set:html={sanitizeHTML(bodyRight)} />
+          <div class="prose max-w-none text-taupe/70" set:html={sanitizeHTML(bodyRight)} />
         )}
       </div>
     </div>
@@ -176,12 +176,12 @@ function toEmbedUrl(url: string): string {
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       <div class="max-w-screen-lg mx-auto mb-8">
         {heading && (
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
             {heading}
           </h2>
         )}
         {body && (
-          <div class="prose prose-lg max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
+          <div class="prose max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
         )}
       </div>
       {contentStats && contentStats.length > 0 && (
@@ -204,7 +204,7 @@ function toEmbedUrl(url: string): string {
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       <div class="flex flex-wrap items-center justify-between mb-8">
         {heading && (
-          <h2 class="text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          <h2 class="text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
             {heading}
           </h2>
         )}
@@ -218,7 +218,7 @@ function toEmbedUrl(url: string): string {
       {contentCards && contentCards.length > 0 && (
         <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {contentCards.map((card) => (
-            <article class="rounded-lg overflow-hidden shadow-md bg-white">
+            <article class="rounded-lg overflow-hidden shadow-md bg-creme">
               {card.image && (
                 <img class="w-full h-48 object-cover" src={card.image.sourceUrl} alt={card.image.altText || card.title || ''} loading="lazy" />
               )}
@@ -241,15 +241,15 @@ function toEmbedUrl(url: string): string {
 {/* 9. Content section with image and feature list */}
 {layout === 'features_list' && (
   <section class="bg-creme">
-    <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
+    <div class="items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 lg:py-16 lg:px-6">
       <div>
         {heading && (
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
             {heading}
           </h2>
         )}
         {body && (
-          <div class="mb-6 prose prose-lg max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
+          <div class="mb-6 prose max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
         )}
         {contentFeatures && contentFeatures.length > 0 && (
           <ul class="space-y-3 mb-6">
@@ -264,7 +264,7 @@ function toEmbedUrl(url: string): string {
           </ul>
         )}
         {ctaText && ctaUrl && (
-          <a href={ctaUrl} class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-white bg-sauge rounded-lg hover:bg-sauge/90 transition-colors">
+          <a href={ctaUrl} class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-creme bg-sauge rounded-lg hover:bg-mousse transition-colors">
             {ctaText}
             <svg class="ml-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
           </a>
@@ -272,7 +272,7 @@ function toEmbedUrl(url: string): string {
       </div>
       {image && (
         <div class="mt-8 lg:mt-0">
-          <img class="w-full rounded-lg shadow-lg" src={image.sourceUrl} alt={image.altText || heading || ''} />
+          <img class="w-full rounded-lg shadow-lg object-cover aspect-[4/3]" src={image.sourceUrl} alt={image.altText || heading || ''} />
         </div>
       )}
     </div>

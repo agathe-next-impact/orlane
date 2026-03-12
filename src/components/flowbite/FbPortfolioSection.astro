@@ -12,10 +12,10 @@ const { heading, description, projects = [], variant = 'cards', ctaText, ctaUrl 
       {(heading || description) && (
         <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-12">
           {heading && (
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">{heading}</h2>
+            <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">{heading}</h2>
           )}
           {description && (
-            <p class="font-light text-taupe/70 sm:text-xl">{description}</p>
+            <p class="font-light text-taupe/70 sm:text-lg">{description}</p>
           )}
         </div>
       )}
@@ -23,7 +23,7 @@ const { heading, description, projects = [], variant = 'cards', ctaText, ctaUrl 
         {projects.map((project) => (
           <div class="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow">
             {project.image && (
-              <img class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" src={project.image.sourceUrl} alt={project.image.altText || project.title || ''} loading="lazy" />
+              <img class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" src={project.image.sourceUrl} alt={project.image.altText || project.title || ''} loading="lazy" />
             )}
             <div class="absolute inset-0 bg-gradient-to-t from-taupe/80 to-transparent flex flex-col justify-end p-6">
               {project.category && (
@@ -45,7 +45,7 @@ const { heading, description, projects = [], variant = 'cards', ctaText, ctaUrl 
       </div>
       {ctaText && ctaUrl && (
         <div class="text-center mt-12">
-          <a href={ctaUrl} class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-creme rounded-lg bg-sauge hover:bg-mousse transition-colors">
+          <a href={ctaUrl} class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-creme rounded-lg bg-sauge hover:bg-mousse transition-colors focus:ring-4 focus:outline-none focus:ring-sauge/30">
             {ctaText}
           </a>
         </div>
@@ -58,13 +58,13 @@ const { heading, description, projects = [], variant = 'cards', ctaText, ctaUrl 
   <section class="bg-creme">
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       {heading && (
-        <h2 class="mb-8 text-4xl tracking-tight font-extrabold text-taupe font-heading">{heading}</h2>
+        <h2 class="mb-8 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">{heading}</h2>
       )}
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map((project) => (
           <a href={project.url || '#'} class="group block">
             {project.image && (
-              <img class="w-full h-56 object-cover rounded-lg mb-4 group-hover:opacity-90 transition-opacity" src={project.image.sourceUrl} alt={project.image.altText || project.title || ''} loading="lazy" />
+              <img class="w-full h-48 object-cover rounded-lg mb-4 group-hover:opacity-90 transition-opacity" src={project.image.sourceUrl} alt={project.image.altText || project.title || ''} loading="lazy" />
             )}
             {project.category && (
               <span class="text-xs font-medium text-mousse uppercase">{project.category}</span>
@@ -87,8 +87,8 @@ const { heading, description, projects = [], variant = 'cards', ctaText, ctaUrl 
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       {(heading || description) && (
         <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-12">
-          {heading && <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">{heading}</h2>}
-          {description && <p class="font-light text-taupe/70 sm:text-xl">{description}</p>}
+          {heading && <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">{heading}</h2>}
+          {description && <p class="font-light text-taupe/70 sm:text-lg">{description}</p>}
         </div>
       )}
       <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">

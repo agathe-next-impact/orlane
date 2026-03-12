@@ -15,7 +15,7 @@ const { heading, description, logos = [], variant = 'grid' } = Astro.props;
         </h2>
       )}
       {description && (
-        <p class="mb-8 font-light text-taupe/70 text-center sm:text-xl">
+        <p class="mb-8 font-light text-taupe/70 text-center sm:text-lg">
           {description}
         </p>
       )}
@@ -26,7 +26,7 @@ const { heading, description, logos = [], variant = 'grid' } = Astro.props;
               <img
                 src={logo.image.sourceUrl}
                 alt={logo.name || logo.image.altText || ''}
-                class="h-9 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all"
+                class="h-9 object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all"
               />
             ) : (
               <span class="text-lg font-semibold text-taupe/40 group-hover:text-taupe transition-colors">{logo.name}</span>
@@ -53,7 +53,7 @@ const { heading, description, logos = [], variant = 'grid' } = Astro.props;
               <img
                 src={logo.image.sourceUrl}
                 alt={logo.name || logo.image.altText || ''}
-                class="h-8 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all"
+                class="h-8 object-contain grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all"
               />
             ) : (
               <span class="text-lg font-semibold text-taupe/40 group-hover:text-taupe transition-colors">{logo.name}</span>
@@ -74,7 +74,7 @@ const { heading, description, logos = [], variant = 'grid' } = Astro.props;
         </h2>
       )}
       {description && (
-        <p class="mb-8 font-light text-taupe/70 text-center sm:text-xl">
+        <p class="mb-8 font-light text-taupe/70 text-center sm:text-lg">
           {description}
         </p>
       )}
@@ -90,7 +90,7 @@ const { heading, description, logos = [], variant = 'grid' } = Astro.props;
               <img
                 src={logo.image.sourceUrl}
                 alt={logo.name || logo.image.altText || ''}
-                class="h-12 mb-4 grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all"
+                class="h-12 object-contain mb-4 grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all"
               />
             ) : (
               <span class="text-xl font-bold text-taupe/50 mb-4 group-hover:text-taupe transition-colors">{logo.name}</span>
@@ -135,7 +135,7 @@ const { heading, description, logos = [], variant = 'grid' } = Astro.props;
                   <img
                     src={logo.image.sourceUrl}
                     alt={logo.name || logo.image.altText || ''}
-                    class="h-9 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all"
+                    class="h-9 object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all"
                   />
                 ) : (
                   <span class="text-lg font-semibold text-taupe/40 group-hover:text-taupe transition-colors">{logo.name}</span>

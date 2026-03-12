@@ -12,10 +12,10 @@ const { heading, description, events = [], variant = 'timeline' } = Astro.props;
       {(heading || description) && (
         <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-12">
           {heading && (
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">{heading}</h2>
+            <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">{heading}</h2>
           )}
           {description && (
-            <p class="font-light text-taupe/70 sm:text-xl">{description}</p>
+            <p class="font-light text-taupe/70 sm:text-lg">{description}</p>
           )}
         </div>
       )}
@@ -68,10 +68,10 @@ const { heading, description, events = [], variant = 'timeline' } = Astro.props;
   <section class="bg-creme">
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       {heading && (
-        <h2 class="mb-8 text-4xl tracking-tight font-extrabold text-taupe font-heading text-center">{heading}</h2>
+        <h2 class="mb-8 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading text-center">{heading}</h2>
       )}
       {description && (
-        <p class="mb-12 font-light text-taupe/70 sm:text-xl text-center max-w-screen-sm mx-auto">{description}</p>
+        <p class="mb-12 font-light text-taupe/70 sm:text-lg text-center max-w-screen-sm mx-auto">{description}</p>
       )}
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {events.map((event) => (
@@ -118,16 +118,16 @@ const { heading, description, events = [], variant = 'timeline' } = Astro.props;
   <section class="bg-creme">
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       {heading && (
-        <h2 class="mb-8 text-4xl tracking-tight font-extrabold text-taupe font-heading">{heading}</h2>
+        <h2 class="mb-8 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">{heading}</h2>
       )}
       <div class="overflow-x-auto rounded-lg border border-beige">
         <table class="w-full text-sm text-left text-taupe">
           <thead class="text-xs text-taupe uppercase bg-beige/50">
             <tr>
               <th scope="col" class="px-6 py-3">Date</th>
-              <th scope="col" class="px-6 py-3">Heure</th>
+              <th scope="col" class="px-6 py-3 hidden sm:table-cell">Heure</th>
               <th scope="col" class="px-6 py-3">Événement</th>
-              <th scope="col" class="px-6 py-3">Lieu</th>
+              <th scope="col" class="px-6 py-3 hidden md:table-cell">Lieu</th>
               <th scope="col" class="px-6 py-3"></th>
             </tr>
           </thead>
@@ -135,12 +135,13 @@ const { heading, description, events = [], variant = 'timeline' } = Astro.props;
             {events.map((event, i) => (
               <tr class={i % 2 === 0 ? 'bg-creme' : 'bg-beige/10'}>
                 <td class="px-6 py-4 whitespace-nowrap font-medium">{event.date}</td>
-                <td class="px-6 py-4 whitespace-nowrap">{event.time}</td>
+                <td class="px-6 py-4 whitespace-nowrap hidden sm:table-cell">{event.time}</td>
                 <td class="px-6 py-4">
                   <div class="font-semibold">{event.title}</div>
                   {event.description && <p class="text-taupe/60 text-xs mt-1">{event.description}</p>}
+                  <p class="text-taupe/60 text-xs mt-1 sm:hidden">{event.time}</p>
                 </td>
-                <td class="px-6 py-4">{event.location}</td>
+                <td class="px-6 py-4 hidden md:table-cell">{event.location}</td>
                 <td class="px-6 py-4">
                   {event.ctaText && event.ctaUrl && (
                     <a href={event.ctaUrl} class="font-medium text-mousse hover:text-sauge transition-colors">{event.ctaText}</a>

@@ -37,12 +37,12 @@ const labelClass: Record<string, string> = {
     {(heading || description) && (
       <div class="max-w-screen-md mx-auto text-center mb-8 lg:mb-12">
         {heading && (
-          <h2 class={`mb-4 text-4xl tracking-tight font-extrabold font-heading ${headingClass[variant] || headingClass.light}`}>
+          <h2 class={`mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold font-heading ${headingClass[variant] || headingClass.light}`}>
             {heading}
           </h2>
         )}
         {description && (
-          <p class={`font-light sm:text-xl ${descClass[variant] || descClass.light}`}>
+          <p class={`font-light sm:text-lg ${descClass[variant] || descClass.light}`}>
             {description}
           </p>
         )}
@@ -52,7 +52,7 @@ const labelClass: Record<string, string> = {
       {items.map((item) => (
         <div class="text-center">
           {item.value && (
-            <div class={`text-4xl md:text-5xl font-extrabold mb-2 ${valueClass[variant] || valueClass.light}`}>
+            <div class={`text-3xl md:text-4xl font-extrabold mb-2 ${valueClass[variant] || valueClass.light}`}>
               {item.value}
             </div>
           )}
