@@ -24,6 +24,24 @@ export interface WPThemeSettings {
   socialTiktok: string | null;
   socialYoutube: string | null;
   footerText: string | null;
+  footerVariant: string | null;
+  footerColorScheme: string | null;
+  footerDescription: string | null;
+  footerCtaText: string | null;
+  footerCtaButtonText: string | null;
+  footerCtaButtonUrl: string | null;
+  footerCtaButton2Text: string | null;
+  footerCtaButton2Url: string | null;
+  footerNewsletterHeading: string | null;
+  footerNewsletterDescription: string | null;
+  footerAddresses: WPACFFbFooterAddress[] | null;
+  footerNavLinks: WPACFFbFooterLink[] | null;
+  navbarVariant: string | null;
+  navbarColorScheme: string | null;
+  navbarSticky: boolean;
+  navbarCtaText: string | null;
+  navbarCtaUrl: string | null;
+  navbarSearchPlaceholder: string | null;
 }
 
 export interface WPImage {
@@ -104,7 +122,7 @@ export interface WPACFFbHeroSection extends WPACFBase {
 }
 
 export interface WPACFFbFeatureItem {
-  icon?: string;
+  image?: WPImage;
   title?: string;
   description?: string;
   link?: string;

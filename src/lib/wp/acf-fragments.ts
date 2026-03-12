@@ -53,7 +53,11 @@ export const flexibleContentFragment = `
       ctaText
       ctaUrl
       items {
-        icon
+        image {
+          node {
+            ${imageNodeFields}
+          }
+        }
         title
         description
         link

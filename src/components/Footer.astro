@@ -1,0 +1,440 @@
+---
+import { getFooterMenus } from '../lib/wp';
+import { getSiteSettings, getThemeSettings } from '../lib/wp/queries';
+import type { WPMenuItem } from '../types/wp';
+import { env } from '../lib/env';
+
+const siteSettings = await getSiteSettings();
+const theme = await getThemeSettings();
+const footerMenus = await getFooterMenus();
+
+const variant = theme.footerVariant || 'columns';
+const colorScheme = theme.footerColorScheme || 'dark';
+
+// Logo (footer-specific or fallback to main)
+const logo = theme.logoFooter || theme.logo;
+const logoAlt = logo?.altText || siteSettings.title;
+
+// Data from theme settings
+const description = theme.footerDescription || '';
+const copyright = theme.footerText || `\u00A9 ${new Date().getFullYear()} ${siteSettings.title}`;
+const navLinks = theme.footerNavLinks || [];
+const addresses = theme.footerAddresses || [];
+const newsletterHeading = theme.footerNewsletterHeading || 'Newsletter';
+const newsletterDescription = theme.footerNewsletterDescription || '';
+const ctaText = theme.footerCtaText || '';
+const ctaButtonText = theme.footerCtaButtonText || '';
+const ctaButtonUrl = theme.footerCtaButtonUrl || '#';
+const cta2ButtonText = theme.footerCtaButton2Text || '';
+const cta2ButtonUrl = theme.footerCtaButton2Url || '#';
+
+// Social links from theme settings
+const socials = [
+  { platform: 'Facebook', url: theme.socialFacebook, icon: '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/></svg>' },
+  { platform: 'Instagram', url: theme.socialInstagram, icon: '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>' },
+  { platform: 'LinkedIn', url: theme.socialLinkedin, icon: '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>' },
+  { platform: 'TikTok', url: theme.socialTiktok, icon: '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>' },
+  { platform: 'YouTube', url: theme.socialYoutube, icon: '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>' },
+].filter(s => s.url);
+
+// URL helper — convert WP absolute URLs to relative paths
+function toRelativePath(url: string): string {
+  if (!url || url === '#') return url || '#';
+  try {
+    const parsed = new URL(url, 'http://placeholder.local');
+    const wpHost = new URL(env.WORDPRESS_API_URL).host;
+    if (parsed.host === wpHost) {
+      let path = parsed.pathname + parsed.hash;
+      if (path.length > 1 && path.endsWith('/')) path = path.slice(0, -1);
+      return path;
+    }
+  } catch { /* use as-is */ }
+  return url;
+}
+
+// ── Color scheme classes ────────────────────────────────────────
+const colorMap: Record<string, { bg: string; text: string; textMuted: string; textFaint: string; heading: string; linkHover: string; border: string; input: string; btnPrimary: string; btnSecondary: string }> = {
+  dark: {
+    bg: 'bg-taupe',
+    text: 'text-creme',
+    textMuted: 'text-beige/70',
+    textFaint: 'text-beige/60',
+    heading: 'text-creme',
+    linkHover: 'hover:text-sauge',
+    border: 'border-taupe/50',
+    input: 'bg-taupe/50 border-taupe/30 text-creme placeholder-beige/40 focus:ring-sauge focus:border-sauge',
+    btnPrimary: 'text-taupe bg-sauge hover:bg-sauge/80',
+    btnSecondary: 'text-creme border border-creme/30 hover:bg-creme/10',
+  },
+  light: {
+    bg: 'bg-beige',
+    text: 'text-taupe',
+    textMuted: 'text-taupe/70',
+    textFaint: 'text-taupe/60',
+    heading: 'text-taupe',
+    linkHover: 'hover:text-mousse',
+    border: 'border-taupe/20',
+    input: 'bg-creme border-taupe/20 text-taupe placeholder-taupe/40 focus:ring-sauge focus:border-sauge',
+    btnPrimary: 'text-creme bg-mousse hover:bg-sauge',
+    btnSecondary: 'text-taupe border border-taupe/30 hover:bg-taupe/10',
+  },
+  white: {
+    bg: 'bg-creme',
+    text: 'text-taupe',
+    textMuted: 'text-taupe/70',
+    textFaint: 'text-taupe/60',
+    heading: 'text-taupe',
+    linkHover: 'hover:text-mousse',
+    border: 'border-beige',
+    input: 'bg-white border-beige text-taupe placeholder-taupe/40 focus:ring-sauge focus:border-sauge',
+    btnPrimary: 'text-creme bg-mousse hover:bg-sauge',
+    btnSecondary: 'text-taupe border border-taupe/30 hover:bg-beige',
+  },
+  sauge: {
+    bg: 'bg-sauge',
+    text: 'text-white',
+    textMuted: 'text-white/70',
+    textFaint: 'text-white/60',
+    heading: 'text-white',
+    linkHover: 'hover:text-creme',
+    border: 'border-white/20',
+    input: 'bg-white/10 border-white/20 text-white placeholder-white/40 focus:ring-white focus:border-white',
+    btnPrimary: 'text-sauge bg-white hover:bg-creme',
+    btnSecondary: 'text-white border border-white/30 hover:bg-white/10',
+  },
+  mousse: {
+    bg: 'bg-mousse',
+    text: 'text-white',
+    textMuted: 'text-white/70',
+    textFaint: 'text-white/60',
+    heading: 'text-white',
+    linkHover: 'hover:text-creme',
+    border: 'border-white/20',
+    input: 'bg-white/10 border-white/20 text-white placeholder-white/40 focus:ring-white focus:border-white',
+    btnPrimary: 'text-mousse bg-white hover:bg-creme',
+    btnSecondary: 'text-white border border-white/30 hover:bg-white/10',
+  },
+};
+
+const c = colorMap[colorScheme] || colorMap.dark;
+const columns = footerMenus.map(col => ({
+  ...col,
+  links: col.links.map(link => ({
+    ...link,
+    url: toRelativePath(link.url),
+  })),
+}));
+---
+
+{/* Variant 1 — Default: horizontal nav links + copyright */}
+{variant === 'default' && (
+  <footer class:list={[c.bg, c.text, 'py-12 mt-20']}>
+    <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+      <div class="flex flex-col items-center">
+        {logo && (
+          <a href="/" class="flex items-center mb-4">
+            <img src={logo.sourceUrl} alt={logoAlt} class="h-10 w-auto brightness-0 invert opacity-80" />
+          </a>
+        )}
+        {description && (
+          <p class:list={[c.textMuted, 'text-sm mb-6 text-center max-w-lg']}>{description}</p>
+        )}
+        {navLinks.length > 0 && (
+          <ul class:list={['flex flex-wrap items-center mb-6 text-sm font-medium', c.textMuted]}>
+            {navLinks.map((link) => (
+              <li>
+                <a href={link.url || '#'} class:list={[c.linkHover, 'transition-colors me-4 md:me-6']}>{link.label}</a>
+              </li>
+            ))}
+          </ul>
+        )}
+        <span class:list={['text-sm text-center', c.textFaint]} set:html={copyright} />
+      </div>
+    </div>
+  </footer>
+)}
+
+{/* Variant 2 — Columns: sitemap with logo and social media */}
+{variant === 'columns' && (
+  <footer class:list={[c.bg, c.text, 'py-12 mt-20']}>
+    <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+      <div class="md:flex md:justify-between">
+        <div class="mb-6 md:mb-0 md:max-w-xs">
+          {logo && (
+            <a href="/" class="flex items-center mb-4">
+              <img src={logo.sourceUrl} alt={logoAlt} class="h-10 w-auto brightness-0 invert opacity-80" />
+            </a>
+          )}
+          {description && (
+            <p class:list={[c.textMuted, 'text-sm']}>{description}</p>
+          )}
+        </div>
+        {columns.length > 0 && (
+          <div class:list={['grid grid-cols-2 gap-8 sm:gap-6', columns.length <= 2 ? 'sm:grid-cols-2' : columns.length === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-4']}>
+            {columns.map((col) => (
+              <div>
+                {col.title && (
+                  <h3 class:list={['mb-4 text-sm font-semibold uppercase', c.heading]}>{col.title}</h3>
+                )}
+                <ul class:list={[c.textMuted, 'font-medium space-y-3']}>
+                  {col.links.map((link) => (
+                    <li>
+                      <a href={link.url || '#'} class:list={[c.linkHover, 'transition-colors text-sm']}>{link.label}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      <hr class:list={['my-6 sm:mx-auto lg:my-8', c.border]} />
+      <div class="sm:flex sm:items-center sm:justify-between">
+        <span class:list={['text-sm sm:text-center', c.textFaint]} set:html={copyright} />
+        {socials.length > 0 && (
+          <div class="flex mt-4 sm:justify-center sm:mt-0 space-x-5">
+            {socials.map((social) => (
+              <a href={social.url} class:list={[c.textFaint, c.linkHover, 'transition-colors']} target="_blank" rel="noopener noreferrer" aria-label={social.platform}>
+                <Fragment set:html={social.icon} />
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  </footer>
+)}
+
+{/* Variant 3 — Simple: logo + copyright only */}
+{variant === 'simple' && (
+  <footer class:list={[c.bg, c.text, 'py-12 mt-20']}>
+    <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+      <div class="sm:flex sm:items-center sm:justify-between">
+        {logo && (
+          <a href="/" class="flex items-center mb-4 sm:mb-0">
+            <img src={logo.sourceUrl} alt={logoAlt} class="h-10 w-auto brightness-0 invert opacity-80" />
+          </a>
+        )}
+        <span class:list={['text-sm', c.textFaint]} set:html={copyright} />
+      </div>
+    </div>
+  </footer>
+)}
+
+{/* Variant 4 — With newsletter: columns + newsletter form */}
+{variant === 'with_newsletter' && (
+  <footer class:list={[c.bg, c.text, 'py-12 mt-20']}>
+    <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+      <div class="lg:flex lg:justify-between lg:gap-16">
+        <div class="mb-8 lg:mb-0 lg:max-w-sm">
+          {logo && (
+            <a href="/" class="flex items-center mb-4">
+              <img src={logo.sourceUrl} alt={logoAlt} class="h-10 w-auto brightness-0 invert opacity-80" />
+            </a>
+          )}
+          {description && (
+            <p class:list={[c.textMuted, 'text-sm mb-4']}>{description}</p>
+          )}
+          {(newsletterHeading || newsletterDescription) && (
+            <div class="mt-6">
+              {newsletterHeading && (
+                <h3 class:list={['mb-2 text-sm font-semibold uppercase', c.heading]}>{newsletterHeading}</h3>
+              )}
+              {newsletterDescription && (
+                <p class:list={[c.textMuted, 'text-sm mb-4']}>{newsletterDescription}</p>
+              )}
+              <form class="flex gap-2">
+                <input type="email" placeholder="Votre email" class:list={[c.input, 'text-sm rounded-lg block w-full p-2.5']} required />
+                <button type="submit" class:list={[c.btnPrimary, 'px-4 py-2.5 text-sm font-medium rounded-lg transition-colors whitespace-nowrap']}>S'inscrire</button>
+              </form>
+            </div>
+          )}
+        </div>
+        {columns.length > 0 && (
+          <div class:list={['grid grid-cols-2 gap-8', columns.length <= 2 ? 'sm:grid-cols-2' : 'sm:grid-cols-3']}>
+            {columns.map((col) => (
+              <div>
+                {col.title && (
+                  <h3 class:list={['mb-4 text-sm font-semibold uppercase', c.heading]}>{col.title}</h3>
+                )}
+                <ul class:list={[c.textMuted, 'font-medium space-y-3']}>
+                  {col.links.map((link) => (
+                    <li>
+                      <a href={link.url || '#'} class:list={[c.linkHover, 'transition-colors text-sm']}>{link.label}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      <hr class:list={['my-6 lg:my-8', c.border]} />
+      <div class="sm:flex sm:items-center sm:justify-between">
+        <span class:list={['text-sm', c.textFaint]} set:html={copyright} />
+        {socials.length > 0 && (
+          <div class="flex mt-4 sm:mt-0 space-x-5">
+            {socials.map((social) => (
+              <a href={social.url} class:list={[c.textFaint, c.linkHover, 'transition-colors']} target="_blank" rel="noopener noreferrer" aria-label={social.platform}>
+                <Fragment set:html={social.icon} />
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  </footer>
+)}
+
+{/* Variant 5 — Addresses: newsletter + address blocks */}
+{variant === 'addresses' && (
+  <footer class:list={[c.bg, c.text, 'py-12 mt-20']}>
+    <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+      <div class:list={['grid gap-8', addresses.length > 0 ? `lg:grid-cols-${Math.min(addresses.length + 1, 4)}` : 'lg:grid-cols-1']}>
+        {addresses.map((addr) => (
+          <div>
+            {addr.city && (
+              <h3 class:list={['mb-2 text-sm font-semibold uppercase', c.heading]}>{addr.city}</h3>
+            )}
+            {addr.address && (
+              <p class:list={[c.textMuted, 'text-sm mb-2']}>{addr.address}</p>
+            )}
+            {addr.phone && (
+              <p class:list={[c.textMuted, 'text-sm']}>
+                <a href={`tel:${addr.phone.replace(/\s/g, '')}`} class:list={[c.linkHover, 'transition-colors']}>{addr.phone}</a>
+              </p>
+            )}
+            {addr.email && (
+              <p class:list={[c.textMuted, 'text-sm']}>
+                <a href={`mailto:${addr.email}`} class:list={[c.linkHover, 'transition-colors']}>{addr.email}</a>
+              </p>
+            )}
+          </div>
+        ))}
+        <div>
+          {newsletterHeading && (
+            <h3 class:list={['mb-2 text-sm font-semibold uppercase', c.heading]}>{newsletterHeading}</h3>
+          )}
+          {newsletterDescription && (
+            <p class:list={[c.textMuted, 'text-sm mb-4']}>{newsletterDescription}</p>
+          )}
+          <form class="flex gap-2">
+            <input type="email" placeholder="Votre email" class:list={[c.input, 'text-sm rounded-lg block w-full p-2.5']} required />
+            <button type="submit" class:list={[c.btnPrimary, 'px-4 py-2.5 text-sm font-medium rounded-lg transition-colors whitespace-nowrap']}>S'inscrire</button>
+          </form>
+        </div>
+      </div>
+      <hr class:list={['my-6 lg:my-8', c.border]} />
+      <div class="sm:flex sm:items-center sm:justify-between">
+        <span class:list={['text-sm', c.textFaint]} set:html={copyright} />
+        {navLinks.length > 0 && (
+          <ul class:list={['flex flex-wrap items-center mt-4 sm:mt-0 text-sm font-medium', c.textMuted]}>
+            {navLinks.map((link) => (
+              <li>
+                <a href={link.url || '#'} class:list={[c.linkHover, 'transition-colors me-4 md:me-6']}>{link.label}</a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  </footer>
+)}
+
+{/* Variant 6 — Pre-footer CTA: CTA section + sitemap columns */}
+{variant === 'pre_footer_cta' && (
+  <footer class:list={[c.bg, c.text, 'py-12 mt-20']}>
+    <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+      {(ctaText || ctaButtonText) && (
+        <div class="bg-mousse/10 rounded-lg p-8 md:p-12 mb-8 text-center">
+          {ctaText && (
+            <p class:list={['text-lg md:text-xl font-semibold mb-6', c.heading]}>{ctaText}</p>
+          )}
+          <div class="flex flex-wrap justify-center gap-4">
+            {ctaButtonText && (
+              <a href={ctaButtonUrl} class:list={[c.btnPrimary, 'inline-flex items-center px-5 py-2.5 text-sm font-medium rounded-lg transition-colors']}>{ctaButtonText}</a>
+            )}
+            {cta2ButtonText && (
+              <a href={cta2ButtonUrl} class:list={[c.btnSecondary, 'inline-flex items-center px-5 py-2.5 text-sm font-medium rounded-lg transition-colors']}>{cta2ButtonText}</a>
+            )}
+          </div>
+        </div>
+      )}
+      {columns.length > 0 && (
+        <div class:list={['grid grid-cols-2 gap-8 sm:grid-cols-3', columns.length >= 5 ? 'md:grid-cols-5' : columns.length === 4 ? 'md:grid-cols-4' : `md:grid-cols-${columns.length}`]}>
+          {columns.map((col) => (
+            <div>
+              {col.title && (
+                <h3 class:list={['mb-4 text-sm font-semibold uppercase', c.heading]}>{col.title}</h3>
+              )}
+              <ul class:list={[c.textMuted, 'font-medium space-y-3']}>
+                {col.links.map((link) => (
+                  <li>
+                    <a href={link.url || '#'} class:list={[c.linkHover, 'transition-colors text-sm']}>{link.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      )}
+      <hr class:list={['my-6 lg:my-8', c.border]} />
+      <div class="sm:flex sm:items-center sm:justify-between">
+        <span class:list={['text-sm', c.textFaint]} set:html={copyright} />
+        {socials.length > 0 && (
+          <div class="flex mt-4 sm:mt-0 space-x-5">
+            {socials.map((social) => (
+              <a href={social.url} class:list={[c.textFaint, c.linkHover, 'transition-colors']} target="_blank" rel="noopener noreferrer" aria-label={social.platform}>
+                <Fragment set:html={social.icon} />
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  </footer>
+)}
+
+{/* Variant 7 — Sitemap centered: columns grid, centered logo + social below */}
+{variant === 'sitemap_centered' && (
+  <footer class:list={[c.bg, c.text, 'py-12 mt-20']}>
+    <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+      {columns.length > 0 && (
+        <div class:list={['grid grid-cols-2 gap-8 sm:grid-cols-3', columns.length >= 5 ? 'md:grid-cols-5' : columns.length === 4 ? 'md:grid-cols-4' : `md:grid-cols-${columns.length}`]}>
+          {columns.map((col) => (
+            <div>
+              {col.title && (
+                <h3 class:list={['mb-4 text-sm font-semibold uppercase', c.heading]}>{col.title}</h3>
+              )}
+              <ul class:list={[c.textMuted, 'font-medium space-y-3']}>
+                {col.links.map((link) => (
+                  <li>
+                    <a href={link.url || '#'} class:list={[c.linkHover, 'transition-colors text-sm']}>{link.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      )}
+      <hr class:list={['my-6 lg:my-8', c.border]} />
+      <div class="flex flex-col items-center">
+        {logo && (
+          <a href="/" class="flex items-center mb-4">
+            <img src={logo.sourceUrl} alt={logoAlt} class="h-10 w-auto brightness-0 invert opacity-80" />
+          </a>
+        )}
+        <span class:list={['text-sm mb-4 text-center', c.textFaint]} set:html={copyright} />
+        {socials.length > 0 && (
+          <div class="flex space-x-5">
+            {socials.map((social) => (
+              <a href={social.url} class:list={[c.textFaint, c.linkHover, 'transition-colors']} target="_blank" rel="noopener noreferrer" aria-label={social.platform}>
+                <Fragment set:html={social.icon} />
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  </footer>
+)}

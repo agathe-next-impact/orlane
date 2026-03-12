@@ -510,6 +510,43 @@ export async function getMenuByLocation(location?: string): Promise<WPMenuItem[]
   }
 }
 
+/**
+ * Fetch footer menu columns from WordPress.
+ * Tries locations FOOTER_1 through FOOTER_4 and returns columns with title + links.
+ */
+export async function getFooterMenus(): Promise<{ title: string; links: { label: string; url: string }[] }[]> {
+  const locations = ['FOOTER_1', 'FOOTER_2', 'FOOTER_3', 'FOOTER_4'];
+  const columns: { title: string; links: { label: string; url: string }[] }[] = [];
+
+  try {
+    const menus = await getAvailableMenus();
+
+    for (const loc of locations) {
+      const menu = menus.find(m =>
+        m.locations.some(l => l.toUpperCase() === loc)
+      );
+      if (!menu) continue;
+
+      const items = await fetchMenuItems(loc);
+      if (items.length > 0) {
+        columns.push({
+          title: menu.name,
+          links: items.map(item => ({
+            label: item.label,
+            url: item.path || item.url,
+          })),
+        });
+      }
+    }
+  } catch (error) {
+    if (import.meta.env.DEV) {
+      console.warn('Failed to fetch footer menus:', error);
+    }
+  }
+
+  return columns;
+}
+
 export interface WPSiteSettings {
   title: string;
   description: string;
@@ -620,6 +657,32 @@ export async function getThemeSettings(): Promise<WPThemeSettings> {
           socialYoutube
           contentWidth
           footerText
+          footerVariant
+          footerColorScheme
+          footerDescription
+          footerCtaText
+          footerCtaButtonText
+          footerCtaButtonUrl
+          footerCtaButton2Text
+          footerCtaButton2Url
+          footerNewsletterHeading
+          footerNewsletterDescription
+          footerAddresses {
+            city
+            address
+            phone
+            email
+          }
+          footerNavLinks {
+            label
+            url
+          }
+          navbarVariant
+          navbarColorScheme
+          navbarSticky
+          navbarCtaText
+          navbarCtaUrl
+          navbarSearchPlaceholder
         }
       }
     }
@@ -651,6 +714,24 @@ export async function getThemeSettings(): Promise<WPThemeSettings> {
     socialTiktok: null,
     socialYoutube: null,
     footerText: null,
+    footerVariant: null,
+    footerColorScheme: null,
+    footerDescription: null,
+    footerCtaText: null,
+    footerCtaButtonText: null,
+    footerCtaButtonUrl: null,
+    footerCtaButton2Text: null,
+    footerCtaButton2Url: null,
+    footerNewsletterHeading: null,
+    footerNewsletterDescription: null,
+    footerAddresses: null,
+    footerNavLinks: null,
+    navbarVariant: null,
+    navbarColorScheme: null,
+    navbarSticky: true,
+    navbarCtaText: null,
+    navbarCtaUrl: null,
+    navbarSearchPlaceholder: null,
   };
 
   try {
@@ -660,6 +741,14 @@ export async function getThemeSettings(): Promise<WPThemeSettings> {
 
     const raw = data.themeSettingsPage?.themeSettings;
     if (!raw) return defaults;
+
+    // ACF v2 select fields return as single-element arrays — unwrap to string
+    const unwrapSelect = (val: unknown): string | null => {
+      if (Array.isArray(val) && val.length === 1 && typeof val[0] === 'string') {
+        return val[0];
+      }
+      return (typeof val === 'string' ? val : null) || null;
+    };
 
     // Normalize image fields (WPGraphQL wraps in { node: ... })
     const normalizeImage = (img: unknown) => {
@@ -694,8 +783,26 @@ export async function getThemeSettings(): Promise<WPThemeSettings> {
       socialLinkedin: (raw.socialLinkedin as string) || null,
       socialTiktok: (raw.socialTiktok as string) || null,
       socialYoutube: (raw.socialYoutube as string) || null,
-      contentWidth: (raw.contentWidth as string) || 'contained',
+      contentWidth: unwrapSelect(raw.contentWidth) || 'contained',
       footerText: (raw.footerText as string) || null,
+      footerVariant: unwrapSelect(raw.footerVariant),
+      footerColorScheme: unwrapSelect(raw.footerColorScheme),
+      footerDescription: (raw.footerDescription as string) || null,
+      footerCtaText: (raw.footerCtaText as string) || null,
+      footerCtaButtonText: (raw.footerCtaButtonText as string) || null,
+      footerCtaButtonUrl: (raw.footerCtaButtonUrl as string) || null,
+      footerCtaButton2Text: (raw.footerCtaButton2Text as string) || null,
+      footerCtaButton2Url: (raw.footerCtaButton2Url as string) || null,
+      footerNewsletterHeading: (raw.footerNewsletterHeading as string) || null,
+      footerNewsletterDescription: (raw.footerNewsletterDescription as string) || null,
+      footerAddresses: (raw.footerAddresses as WPThemeSettings['footerAddresses']) || null,
+      footerNavLinks: (raw.footerNavLinks as WPThemeSettings['footerNavLinks']) || null,
+      navbarVariant: unwrapSelect(raw.navbarVariant),
+      navbarColorScheme: unwrapSelect(raw.navbarColorScheme),
+      navbarSticky: raw.navbarSticky !== false,
+      navbarCtaText: (raw.navbarCtaText as string) || null,
+      navbarCtaUrl: (raw.navbarCtaUrl as string) || null,
+      navbarSearchPlaceholder: (raw.navbarSearchPlaceholder as string) || null,
     };
   } catch (error) {
     if (import.meta.env.DEV) {

@@ -24,16 +24,11 @@ const isDark = variant === 'dark';
 const bgClass = isDark ? 'bg-taupe text-creme' : 'bg-[var(--block-bg,transparent)]';
 const titleClass = isDark ? 'text-creme' : 'text-[var(--block-title,var(--tw-text-taupe))] text-taupe';
 const textClass = isDark ? 'text-creme/70' : 'text-[var(--block-text,var(--tw-text-taupe-70))] text-taupe/70';
-const iconBgClass = isDark ? 'bg-creme/10' : 'bg-sauge/20';
-const iconTextClass = isDark ? 'text-sauge' : 'text-mousse';
-
-/** Default icon for items without SVG */
-const defaultIcon = `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>`;
 
 const checkIcon = `<svg class="w-5 h-5 text-sauge" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>`;
 ---
 
-{/* ── Variant 1: Default – Grid with icon circles ── */}
+{/* ── Variant 1: Default – Grid with illustrations ── */}
 {variant === 'default' && (
   <section class={bgClass}>
     <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
@@ -46,10 +41,8 @@ const checkIcon = `<svg class="w-5 h-5 text-sauge" fill="currentColor" viewBox="
       <div class={`space-y-8 md:grid ${gridClass[columns] || gridClass['3']} md:gap-12 md:space-y-0`}>
         {items.map((item) => (
           <div>
-            {item.icon && (
-              <div class={`flex justify-center items-center mb-4 w-10 h-10 rounded-full ${iconBgClass} ${iconTextClass}`}>
-                <Fragment set:html={item.icon} />
-              </div>
+            {item.image && (
+              <img src={item.image.sourceUrl} alt={item.image.altText || ''} class="w-full aspect-[4/3] object-cover rounded-lg mb-5" />
             )}
             {item.title && <h3 class={`mb-2 text-xl font-bold ${titleClass}`}>{item.title}</h3>}
             {item.description && <p class={textClass}>{item.description}</p>}
@@ -70,10 +63,8 @@ const checkIcon = `<svg class="w-5 h-5 text-sauge" fill="currentColor" viewBox="
         <div class="space-y-6">
           {items.map((item) => (
             <div class="flex gap-4">
-              {item.icon && (
-                <div class={`flex-shrink-0 flex justify-center items-center w-10 h-10 rounded-full ${iconBgClass} ${iconTextClass}`}>
-                  <Fragment set:html={item.icon} />
-                </div>
+              {item.image && (
+                <img src={item.image.sourceUrl} alt={item.image.altText || ''} class="flex-shrink-0 w-14 h-14 object-cover rounded-lg" />
               )}
               <div>
                 {item.title && <h3 class={`mb-1 text-lg font-bold ${titleClass}`}>{item.title}</h3>}
@@ -103,10 +94,8 @@ const checkIcon = `<svg class="w-5 h-5 text-sauge" fill="currentColor" viewBox="
         <div class="space-y-6">
           {items.map((item) => (
             <div class="flex gap-4">
-              {item.icon && (
-                <div class={`flex-shrink-0 flex justify-center items-center w-10 h-10 rounded-full ${iconBgClass} ${iconTextClass}`}>
-                  <Fragment set:html={item.icon} />
-                </div>
+              {item.image && (
+                <img src={item.image.sourceUrl} alt={item.image.altText || ''} class="flex-shrink-0 w-14 h-14 object-cover rounded-lg" />
               )}
               <div>
                 {item.title && <h3 class={`mb-1 text-lg font-bold ${titleClass}`}>{item.title}</h3>}
@@ -133,10 +122,8 @@ const checkIcon = `<svg class="w-5 h-5 text-sauge" fill="currentColor" viewBox="
       <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
         {items.map((item) => (
           <div>
-            {item.icon && (
-              <div class={`flex justify-center items-center mb-4 w-10 h-10 rounded-full ${iconBgClass} ${iconTextClass}`}>
-                <Fragment set:html={item.icon} />
-              </div>
+            {item.image && (
+              <img src={item.image.sourceUrl} alt={item.image.altText || ''} class="w-full aspect-[4/3] object-cover rounded-lg mb-5" />
             )}
             {item.title && <h3 class={`mb-2 text-xl font-bold ${titleClass}`}>{item.title}</h3>}
             {item.description && <p class={`mb-3 ${textClass}`}>{item.description}</p>}
@@ -166,10 +153,8 @@ const checkIcon = `<svg class="w-5 h-5 text-sauge" fill="currentColor" viewBox="
       <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
         {items.map((item) => (
           <div>
-            {item.icon && (
-              <div class={`flex justify-center items-center mb-4 w-10 h-10 rounded-full ${iconBgClass} ${iconTextClass}`}>
-                <Fragment set:html={item.icon} />
-              </div>
+            {item.image && (
+              <img src={item.image.sourceUrl} alt={item.image.altText || ''} class="w-full aspect-[4/3] object-cover rounded-lg mb-5" />
             )}
             {item.title && <h3 class={`mb-2 text-xl font-bold ${titleClass}`}>{item.title}</h3>}
             {item.description && (
@@ -202,10 +187,8 @@ const checkIcon = `<svg class="w-5 h-5 text-sauge" fill="currentColor" viewBox="
       <div class="space-y-8 md:grid md:grid-cols-2 md:gap-16 md:space-y-0">
         {items.map((item) => (
           <div class="flex flex-col items-start">
-            {item.icon && (
-              <div class={`flex justify-center items-center mb-4 w-14 h-14 rounded-full ${iconBgClass} ${iconTextClass}`}>
-                <Fragment set:html={item.icon} />
-              </div>
+            {item.image && (
+              <img src={item.image.sourceUrl} alt={item.image.altText || ''} class="w-full aspect-[3/2] object-cover rounded-lg mb-5" />
             )}
             {item.title && <h3 class={`mb-2 text-2xl font-bold ${titleClass}`}>{item.title}</h3>}
             {item.description && <p class={`mb-4 ${textClass}`}>{item.description}</p>}
@@ -240,10 +223,8 @@ const checkIcon = `<svg class="w-5 h-5 text-sauge" fill="currentColor" viewBox="
       <div class="grid gap-8 mt-8 md:mt-0">
         {items.map((item) => (
           <div class="flex gap-4">
-            {item.icon && (
-              <div class={`flex-shrink-0 flex justify-center items-center w-10 h-10 rounded-full ${iconBgClass} ${iconTextClass}`}>
-                <Fragment set:html={item.icon} />
-              </div>
+            {item.image && (
+              <img src={item.image.sourceUrl} alt={item.image.altText || ''} class="flex-shrink-0 w-14 h-14 object-cover rounded-lg" />
             )}
             <div>
               {item.title && <h3 class={`mb-1 text-lg font-bold ${titleClass}`}>{item.title}</h3>}
@@ -266,13 +247,11 @@ const checkIcon = `<svg class="w-5 h-5 text-sauge" fill="currentColor" viewBox="
           {description && <p class={`sm:text-lg ${textClass}`}>{description}</p>}
         </div>
       )}
-      <div class={`space-y-8 md:grid ${gridClass[columns] || gridClass['3']} md:gap-6 md:space-y-0`}>
+      <div class={`space-y-8 md:grid ${gridClass[columns] || gridClass['3']} md:gap-6 md:space-y-0 max-w-[90%] mx-auto`}>
         {items.map((item) => (
           <div class="p-6 bg-creme rounded-lg border border-beige shadow-sm hover:shadow-md transition-shadow">
-            {item.icon && (
-              <div class={`flex justify-center items-center mb-4 w-10 h-10 rounded-full ${iconBgClass} ${iconTextClass}`}>
-                <Fragment set:html={item.icon} />
-              </div>
+            {item.image && (
+              <img src={item.image.sourceUrl} alt={item.image.altText || ''} class="w-full aspect-[4/3] object-cover rounded-lg mb-5" />
             )}
             {item.title && <h3 class={`mb-2 text-xl font-bold ${titleClass}`}>{item.title}</h3>}
             {item.description && <p class={textClass}>{item.description}</p>}
@@ -301,10 +280,8 @@ const checkIcon = `<svg class="w-5 h-5 text-sauge" fill="currentColor" viewBox="
             <div class="mt-8 md:mt-0 space-y-6">
               {items.slice(0, Math.ceil(items.length / 2)).map((item) => (
                 <div class="flex gap-4">
-                  {item.icon && (
-                    <div class={`flex-shrink-0 flex justify-center items-center w-10 h-10 rounded-full ${iconBgClass} ${iconTextClass}`}>
-                      <Fragment set:html={item.icon} />
-                    </div>
+                  {item.image && (
+                    <img src={item.image.sourceUrl} alt={item.image.altText || ''} class="flex-shrink-0 w-14 h-14 object-cover rounded-lg" />
                   )}
                   <div>
                     {item.title && <h3 class={`mb-1 text-lg font-bold ${titleClass}`}>{item.title}</h3>}
@@ -321,10 +298,8 @@ const checkIcon = `<svg class="w-5 h-5 text-sauge" fill="currentColor" viewBox="
             <div class="space-y-6 md:order-1">
               {items.slice(Math.ceil(items.length / 2)).map((item) => (
                 <div class="flex gap-4">
-                  {item.icon && (
-                    <div class={`flex-shrink-0 flex justify-center items-center w-10 h-10 rounded-full ${iconBgClass} ${iconTextClass}`}>
-                      <Fragment set:html={item.icon} />
-                    </div>
+                  {item.image && (
+                    <img src={item.image.sourceUrl} alt={item.image.altText || ''} class="flex-shrink-0 w-14 h-14 object-cover rounded-lg" />
                   )}
                   <div>
                     {item.title && <h3 class={`mb-1 text-lg font-bold ${titleClass}`}>{item.title}</h3>}
@@ -341,10 +316,8 @@ const checkIcon = `<svg class="w-5 h-5 text-sauge" fill="currentColor" viewBox="
           <div class="space-y-8 md:grid md:grid-cols-2 md:gap-12 md:space-y-0">
             {items.map((item) => (
               <div class="flex gap-4">
-                {item.icon && (
-                  <div class={`flex-shrink-0 flex justify-center items-center w-10 h-10 rounded-full ${iconBgClass} ${iconTextClass}`}>
-                    <Fragment set:html={item.icon} />
-                  </div>
+                {item.image && (
+                  <img src={item.image.sourceUrl} alt={item.image.altText || ''} class="flex-shrink-0 w-14 h-14 object-cover rounded-lg" />
                 )}
                 <div>
                   {item.title && <h3 class={`mb-1 text-lg font-bold ${titleClass}`}>{item.title}</h3>}
@@ -372,9 +345,9 @@ const checkIcon = `<svg class="w-5 h-5 text-sauge" fill="currentColor" viewBox="
       <div class={`space-y-8 md:grid ${gridClass[columns] || gridClass['3']} md:gap-12 md:space-y-0`}>
         {items.map((item) => (
           <div class="text-center">
-            <div class={`flex justify-center items-center mx-auto mb-4 w-16 h-16 rounded-full bg-sauge/20 ${iconTextClass}`}>
-              {item.icon ? <Fragment set:html={item.icon} /> : <Fragment set:html={defaultIcon} />}
-            </div>
+            {item.image && (
+              <img src={item.image.sourceUrl} alt={item.image.altText || ''} class="w-full aspect-square object-cover rounded-full mx-auto mb-5 max-w-[8rem]" />
+            )}
             {item.title && <h3 class={`mb-2 text-xl font-bold ${titleClass}`}>{item.title}</h3>}
             {item.description && <p class={textClass}>{item.description}</p>}
           </div>
@@ -397,10 +370,8 @@ const checkIcon = `<svg class="w-5 h-5 text-sauge" fill="currentColor" viewBox="
       <div class={`space-y-8 md:grid ${gridClass[columns] || gridClass['3']} md:gap-12 md:space-y-0`}>
         {items.map((item) => (
           <div class="text-center">
-            {item.icon && (
-              <div class={`flex justify-center items-center mx-auto mb-4 w-10 h-10 rounded-full ${iconBgClass} ${iconTextClass}`}>
-                <Fragment set:html={item.icon} />
-              </div>
+            {item.image && (
+              <img src={item.image.sourceUrl} alt={item.image.altText || ''} class="w-full aspect-[4/3] object-cover rounded-lg mx-auto mb-5" />
             )}
             {item.title && <h3 class={`mb-2 text-xl font-bold ${titleClass}`}>{item.title}</h3>}
             {item.description && <p class={`mx-auto max-w-sm ${textClass}`}>{item.description}</p>}
@@ -449,10 +420,8 @@ const checkIcon = `<svg class="w-5 h-5 text-sauge" fill="currentColor" viewBox="
       <div class="space-y-8 md:grid md:grid-cols-2 md:gap-16 md:space-y-0">
         {items.map((item) => (
           <div class="mb-8">
-            {item.icon && (
-              <div class={`flex justify-center items-center mb-4 w-12 h-12 rounded-lg ${iconBgClass} ${iconTextClass}`}>
-                <Fragment set:html={item.icon} />
-              </div>
+            {item.image && (
+              <img src={item.image.sourceUrl} alt={item.image.altText || ''} class="w-full aspect-[3/2] object-cover rounded-lg mb-5" />
             )}
             {item.title && <h3 class={`mb-3 text-2xl font-bold ${titleClass}`}>{item.title}</h3>}
             {item.description && <p class={`text-lg ${textClass}`}>{item.description}</p>}
@@ -482,10 +451,8 @@ const checkIcon = `<svg class="w-5 h-5 text-sauge" fill="currentColor" viewBox="
       <div class={`space-y-8 md:grid ${gridClass[columns] || gridClass['3']} md:gap-12 md:space-y-0`}>
         {items.map((item) => (
           <div>
-            {item.icon && (
-              <div class={`flex justify-center items-center mb-4 w-10 h-10 rounded-full ${iconBgClass} text-sauge`}>
-                <Fragment set:html={item.icon} />
-              </div>
+            {item.image && (
+              <img src={item.image.sourceUrl} alt={item.image.altText || ''} class="w-full aspect-[4/3] object-cover rounded-lg mb-5" />
             )}
             {item.title && <h3 class={`mb-2 text-xl font-bold ${titleClass}`}>{item.title}</h3>}
             {item.description && <p class={textClass}>{item.description}</p>}
@@ -509,10 +476,8 @@ const checkIcon = `<svg class="w-5 h-5 text-sauge" fill="currentColor" viewBox="
       <div class="space-y-6 max-w-screen-md">
         {items.map((item) => (
           <div class="flex items-start gap-5 p-4 rounded-lg hover:bg-beige/50 transition-colors">
-            {item.icon && (
-              <div class={`flex-shrink-0 flex justify-center items-center w-12 h-12 rounded-lg ${iconBgClass} ${iconTextClass}`}>
-                <Fragment set:html={item.icon} />
-              </div>
+            {item.image && (
+              <img src={item.image.sourceUrl} alt={item.image.altText || ''} class="flex-shrink-0 w-16 h-16 object-cover rounded-lg" />
             )}
             <div class="flex-1">
               <div class="flex items-center gap-3">
@@ -545,10 +510,8 @@ const checkIcon = `<svg class="w-5 h-5 text-sauge" fill="currentColor" viewBox="
       <div class={`space-y-8 md:grid ${gridClass[columns] || gridClass['3']} md:gap-6 md:space-y-0`}>
         {items.map((item) => (
           <div class="group p-8 text-center bg-creme rounded-xl border border-beige shadow-sm hover:shadow-lg hover:border-sauge/30 transition-all">
-            {item.icon && (
-              <div class="flex justify-center items-center mx-auto mb-5 w-16 h-16 rounded-2xl bg-sauge/10 text-mousse group-hover:bg-sauge/20 transition-colors">
-                <Fragment set:html={item.icon} />
-              </div>
+            {item.image && (
+              <img src={item.image.sourceUrl} alt={item.image.altText || ''} class="w-full aspect-[4/3] object-cover rounded-lg mb-5" />
             )}
             {item.title && <h3 class={`mb-2 text-xl font-bold ${titleClass}`}>{item.title}</h3>}
             {item.description && <p class={textClass}>{item.description}</p>}

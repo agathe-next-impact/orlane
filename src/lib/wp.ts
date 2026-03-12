@@ -18,6 +18,7 @@ export {
   getItemsCountByType,
   getAvailableMenus,
   getMenuByLocation,
+  getFooterMenus,
 } from './wp/queries';
 
 export {

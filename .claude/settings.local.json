@@ -13,7 +13,10 @@
       "Bash(npm install:*)",
       "Bash(node -e \"const p=require\\(''''fs''''\\).readFileSync\\(''''/dev/stdin'''',''''utf8''''\\);const j=JSON.parse\\(p\\);console.log\\(''''version:'''',j.version\\);console.log\\(''''exports:'''',JSON.stringify\\(j.exports,null,2\\)\\)\")",
       "Bash(node -e \"const p=require\\(''flowbite/package.json''\\); console.log\\(''version:'', p.version\\)\")",
-      "Bash(php -l wordpress-plugin/flowbite-acf-blocks/flowbite-acf-blocks.php)"
+      "Bash(php -l wordpress-plugin/flowbite-acf-blocks/flowbite-acf-blocks.php)",
+      "Bash(zip -r ../flowbite-acf-blocks.zip . -x \".*\")",
+      "Bash(powershell -Command \"Remove-Item -Force flowbite-acf-blocks.zip -ErrorAction SilentlyContinue; Compress-Archive -Path flowbite-acf-blocks -DestinationPath flowbite-acf-blocks.zip -Force\")",
+      "Read(//tmp/**)"
     ]
   }
 }

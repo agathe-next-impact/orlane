@@ -18,6 +18,16 @@ if (!defined('ABSPATH')) {
 add_filter('use_block_editor_for_post', '__return_false');
 add_filter('use_widgets_block_editor', '__return_false');
 
+// ── Enregistre les emplacements de menus (footer) ─────────────────────
+add_action('after_setup_theme', function (): void {
+    register_nav_menus([
+        'footer_1' => 'Footer — Colonne 1',
+        'footer_2' => 'Footer — Colonne 2',
+        'footer_3' => 'Footer — Colonne 3',
+        'footer_4' => 'Footer — Colonne 4',
+    ]);
+});
+
 // ── Icônes SVG Flowbite pour les layouts ACF Flexible Content ──────────
 add_action('admin_head', function (): void {
     $screen = get_current_screen();
@@ -339,11 +349,12 @@ add_action('acf/include_fields', function () {
                                 'sub_fields' => [
                                     [
                                         'key' => 'field_fb_feature_icon',
-                                        'label' => 'Icône SVG',
-                                        'name' => 'icon',
-                                        'type' => 'textarea',
-                                        'rows' => 2,
-                                        'instructions' => 'Code SVG de l\'icône (ex: copier depuis heroicons.com).',
+                                        'label' => 'Image / Icône',
+                                        'name' => 'image',
+                                        'type' => 'image',
+                                        'return_format' => 'id',
+                                        'preview_size' => 'thumbnail',
+                                        'instructions' => 'Image ou icône pour cette fonctionnalité.',
                                     ],
                                     [
                                         'key' => 'field_fb_feature_title',
@@ -2703,6 +2714,103 @@ add_action('acf/include_fields', function (): void {
                 'type'              => 'url',
             ],
 
+            // ── Navigation ────────────────────────────────────────
+            [
+                'key'               => 'field_ts_tab_navbar',
+                'label'             => 'Navigation',
+                'type'              => 'tab',
+            ],
+            [
+                'key'               => 'field_ts_navbar_variant',
+                'label'             => 'Style de navigation',
+                'name'              => 'navbar_variant',
+                'type'              => 'select',
+                'choices'           => [
+                    'default'       => 'Par défaut (logo + liens)',
+                    'with_cta'      => 'Avec bouton CTA',
+                    'with_search'   => 'Avec recherche',
+                    'centered'      => 'Logo centré',
+                    'transparent'   => 'Transparent (pour hero)',
+                ],
+                'default_value'     => 'default',
+                'return_format'     => 'value',
+                'instructions'      => 'Choisissez le style de barre de navigation.',
+            ],
+            [
+                'key'               => 'field_ts_navbar_color_scheme',
+                'label'             => 'Couleurs de la navigation',
+                'name'              => 'navbar_color_scheme',
+                'type'              => 'select',
+                'choices'           => [
+                    'light'         => 'Clair (fond beige, texte taupe)',
+                    'dark'          => 'Sombre (fond taupe, texte crème)',
+                    'white'         => 'Blanc (fond crème, texte taupe)',
+                    'sauge'         => 'Sauge (fond sauge, texte blanc)',
+                    'transparent'   => 'Transparent (texte blanc)',
+                ],
+                'default_value'     => 'light',
+                'return_format'     => 'value',
+                'instructions'      => 'Palette de couleurs de la barre de navigation.',
+            ],
+            [
+                'key'               => 'field_ts_navbar_sticky',
+                'label'             => 'Navigation fixe (sticky)',
+                'name'              => 'navbar_sticky',
+                'type'              => 'true_false',
+                'default_value'     => 1,
+                'ui'                => 1,
+                'instructions'      => 'La barre de navigation reste visible au scroll.',
+            ],
+            [
+                'key'               => 'field_ts_navbar_cta_text',
+                'label'             => 'Texte du bouton CTA',
+                'name'              => 'navbar_cta_text',
+                'type'              => 'text',
+                'instructions'      => 'Texte affiché dans le bouton d\'appel à l\'action (variante "Avec bouton CTA").',
+                'conditional_logic' => [
+                    [
+                        [
+                            'field'     => 'field_ts_navbar_variant',
+                            'operator'  => '==',
+                            'value'     => 'with_cta',
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'key'               => 'field_ts_navbar_cta_url',
+                'label'             => 'Lien du bouton CTA',
+                'name'              => 'navbar_cta_url',
+                'type'              => 'url',
+                'instructions'      => 'URL du bouton d\'appel à l\'action.',
+                'conditional_logic' => [
+                    [
+                        [
+                            'field'     => 'field_ts_navbar_variant',
+                            'operator'  => '==',
+                            'value'     => 'with_cta',
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'key'               => 'field_ts_navbar_search_placeholder',
+                'label'             => 'Placeholder du champ recherche',
+                'name'              => 'navbar_search_placeholder',
+                'type'              => 'text',
+                'default_value'     => 'Rechercher…',
+                'instructions'      => 'Texte indicatif dans le champ de recherche.',
+                'conditional_logic' => [
+                    [
+                        [
+                            'field'     => 'field_ts_navbar_variant',
+                            'operator'  => '==',
+                            'value'     => 'with_search',
+                        ],
+                    ],
+                ],
+            ],
+
             // ── Footer ──────────────────────────────────────────
             [
                 'key'               => 'field_ts_tab_footer',
@@ -2710,12 +2818,323 @@ add_action('acf/include_fields', function (): void {
                 'type'              => 'tab',
             ],
             [
+                'key'               => 'field_ts_footer_variant',
+                'label'             => 'Style du footer',
+                'name'              => 'footer_variant',
+                'type'              => 'select',
+                'choices'           => [
+                    'columns'           => 'Colonnes avec logo et réseaux sociaux',
+                    'default'           => 'Liens horizontaux + copyright',
+                    'simple'            => 'Simple (logo + copyright)',
+                    'with_newsletter'   => 'Colonnes + newsletter',
+                    'addresses'         => 'Newsletter + adresses',
+                    'pre_footer_cta'    => 'CTA + plan du site',
+                    'sitemap_centered'  => 'Plan du site centré',
+                ],
+                'default_value'     => 'columns',
+                'return_format'     => 'value',
+                'instructions'      => 'Choisissez le style de pied de page.',
+            ],
+            [
+                'key'               => 'field_ts_footer_color_scheme',
+                'label'             => 'Couleurs du footer',
+                'name'              => 'footer_color_scheme',
+                'type'              => 'select',
+                'choices'           => [
+                    'dark'          => 'Sombre (fond taupe, texte crème)',
+                    'light'         => 'Clair (fond beige, texte taupe)',
+                    'white'         => 'Blanc (fond crème, texte taupe)',
+                    'sauge'         => 'Sauge (fond sauge, texte blanc)',
+                    'mousse'        => 'Mousse (fond mousse, texte blanc)',
+                ],
+                'default_value'     => 'dark',
+                'return_format'     => 'value',
+                'instructions'      => 'Palette de couleurs du pied de page.',
+            ],
+            [
+                'key'               => 'field_ts_footer_description',
+                'label'             => 'Description',
+                'name'              => 'footer_description',
+                'type'              => 'textarea',
+                'rows'              => 3,
+                'instructions'      => 'Courte description affichée sous le logo (ex: slogan, activité).',
+            ],
+            [
                 'key'               => 'field_ts_footer_text',
-                'label'             => 'Texte du footer',
+                'label'             => 'Texte du footer (copyright)',
                 'name'              => 'footer_text',
                 'type'              => 'textarea',
                 'rows'              => 3,
-                'instructions'      => 'Texte affiché en bas du footer (ex: copyright, mentions).',
+                'instructions'      => 'Texte affiché en bas du footer (ex: copyright, mentions légales). Laissez vide pour un copyright automatique.',
+            ],
+            [
+                'key'               => 'field_ts_footer_menu_message',
+                'label'             => '',
+                'type'              => 'message',
+                'message'           => '<strong>Menus du footer</strong><br>Les menus du footer sont gérés dans <em>Apparence → Menus</em>. Créez des menus et assignez-les aux emplacements <code>Footer 1</code>, <code>Footer 2</code>, <code>Footer 3</code>, <code>Footer 4</code>. Le titre du menu sera utilisé comme titre de colonne.',
+            ],
+
+            // ── Footer — CTA (variante pre_footer_cta) ──────────
+            [
+                'key'               => 'field_ts_footer_cta_message',
+                'label'             => '',
+                'type'              => 'message',
+                'message'           => '<strong>Bloc CTA du footer</strong> (variante « CTA + plan du site » uniquement)',
+                'conditional_logic' => [
+                    [
+                        [
+                            'field'     => 'field_ts_footer_variant',
+                            'operator'  => '==',
+                            'value'     => 'pre_footer_cta',
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'key'               => 'field_ts_footer_cta_text',
+                'label'             => 'Texte du CTA',
+                'name'              => 'footer_cta_text',
+                'type'              => 'text',
+                'instructions'      => 'Texte descriptif au-dessus des boutons.',
+                'conditional_logic' => [
+                    [
+                        [
+                            'field'     => 'field_ts_footer_variant',
+                            'operator'  => '==',
+                            'value'     => 'pre_footer_cta',
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'key'               => 'field_ts_footer_cta_button_text',
+                'label'             => 'Bouton principal — Texte',
+                'name'              => 'footer_cta_button_text',
+                'type'              => 'text',
+                'conditional_logic' => [
+                    [
+                        [
+                            'field'     => 'field_ts_footer_variant',
+                            'operator'  => '==',
+                            'value'     => 'pre_footer_cta',
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'key'               => 'field_ts_footer_cta_button_url',
+                'label'             => 'Bouton principal — URL',
+                'name'              => 'footer_cta_button_url',
+                'type'              => 'url',
+                'conditional_logic' => [
+                    [
+                        [
+                            'field'     => 'field_ts_footer_variant',
+                            'operator'  => '==',
+                            'value'     => 'pre_footer_cta',
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'key'               => 'field_ts_footer_cta_button2_text',
+                'label'             => 'Bouton secondaire — Texte',
+                'name'              => 'footer_cta_button2_text',
+                'type'              => 'text',
+                'conditional_logic' => [
+                    [
+                        [
+                            'field'     => 'field_ts_footer_variant',
+                            'operator'  => '==',
+                            'value'     => 'pre_footer_cta',
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'key'               => 'field_ts_footer_cta_button2_url',
+                'label'             => 'Bouton secondaire — URL',
+                'name'              => 'footer_cta_button2_url',
+                'type'              => 'url',
+                'conditional_logic' => [
+                    [
+                        [
+                            'field'     => 'field_ts_footer_variant',
+                            'operator'  => '==',
+                            'value'     => 'pre_footer_cta',
+                        ],
+                    ],
+                ],
+            ],
+
+            // ── Footer — Newsletter (variantes with_newsletter + addresses) ──
+            [
+                'key'               => 'field_ts_footer_newsletter_message',
+                'label'             => '',
+                'type'              => 'message',
+                'message'           => '<strong>Newsletter du footer</strong> (variantes « Colonnes + newsletter » et « Newsletter + adresses »)',
+                'conditional_logic' => [
+                    [
+                        [
+                            'field'     => 'field_ts_footer_variant',
+                            'operator'  => '==',
+                            'value'     => 'with_newsletter',
+                        ],
+                    ],
+                    [
+                        [
+                            'field'     => 'field_ts_footer_variant',
+                            'operator'  => '==',
+                            'value'     => 'addresses',
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'key'               => 'field_ts_footer_newsletter_heading',
+                'label'             => 'Newsletter — Titre',
+                'name'              => 'footer_newsletter_heading',
+                'type'              => 'text',
+                'default_value'     => 'Newsletter',
+                'conditional_logic' => [
+                    [
+                        [
+                            'field'     => 'field_ts_footer_variant',
+                            'operator'  => '==',
+                            'value'     => 'with_newsletter',
+                        ],
+                    ],
+                    [
+                        [
+                            'field'     => 'field_ts_footer_variant',
+                            'operator'  => '==',
+                            'value'     => 'addresses',
+                        ],
+                    ],
+                ],
+            ],
+            [
+                'key'               => 'field_ts_footer_newsletter_desc',
+                'label'             => 'Newsletter — Description',
+                'name'              => 'footer_newsletter_description',
+                'type'              => 'textarea',
+                'rows'              => 2,
+                'conditional_logic' => [
+                    [
+                        [
+                            'field'     => 'field_ts_footer_variant',
+                            'operator'  => '==',
+                            'value'     => 'with_newsletter',
+                        ],
+                    ],
+                    [
+                        [
+                            'field'     => 'field_ts_footer_variant',
+                            'operator'  => '==',
+                            'value'     => 'addresses',
+                        ],
+                    ],
+                ],
+            ],
+
+            // ── Footer — Adresses (variante addresses) ──────────
+            [
+                'key'               => 'field_ts_footer_addresses',
+                'label'             => 'Adresses',
+                'name'              => 'footer_addresses',
+                'type'              => 'repeater',
+                'layout'            => 'block',
+                'min'               => 0,
+                'max'               => 6,
+                'button_label'      => 'Ajouter une adresse',
+                'show_in_graphql'   => true,
+                'instructions'      => 'Adresses affichées dans le footer (variante « Newsletter + adresses »).',
+                'conditional_logic' => [
+                    [
+                        [
+                            'field'     => 'field_ts_footer_variant',
+                            'operator'  => '==',
+                            'value'     => 'addresses',
+                        ],
+                    ],
+                ],
+                'sub_fields'        => [
+                    [
+                        'key'           => 'field_ts_footer_addr_city',
+                        'label'         => 'Ville',
+                        'name'          => 'city',
+                        'type'          => 'text',
+                        'show_in_graphql' => true,
+                    ],
+                    [
+                        'key'           => 'field_ts_footer_addr_address',
+                        'label'         => 'Adresse',
+                        'name'          => 'address',
+                        'type'          => 'textarea',
+                        'rows'          => 2,
+                        'show_in_graphql' => true,
+                    ],
+                    [
+                        'key'           => 'field_ts_footer_addr_phone',
+                        'label'         => 'Téléphone',
+                        'name'          => 'phone',
+                        'type'          => 'text',
+                        'show_in_graphql' => true,
+                    ],
+                    [
+                        'key'           => 'field_ts_footer_addr_email',
+                        'label'         => 'Email',
+                        'name'          => 'email',
+                        'type'          => 'email',
+                        'show_in_graphql' => true,
+                    ],
+                ],
+            ],
+
+            // ── Footer — Liens de navigation (variante default) ──
+            [
+                'key'               => 'field_ts_footer_nav_links',
+                'label'             => 'Liens rapides',
+                'name'              => 'footer_nav_links',
+                'type'              => 'repeater',
+                'layout'            => 'table',
+                'min'               => 0,
+                'max'               => 10,
+                'button_label'      => 'Ajouter un lien',
+                'show_in_graphql'   => true,
+                'instructions'      => 'Liens horizontaux affichés dans le footer (variantes « Liens horizontaux » et « Newsletter + adresses »).',
+                'conditional_logic' => [
+                    [
+                        [
+                            'field'     => 'field_ts_footer_variant',
+                            'operator'  => '==',
+                            'value'     => 'default',
+                        ],
+                    ],
+                    [
+                        [
+                            'field'     => 'field_ts_footer_variant',
+                            'operator'  => '==',
+                            'value'     => 'addresses',
+                        ],
+                    ],
+                ],
+                'sub_fields'        => [
+                    [
+                        'key'           => 'field_ts_footer_nav_label',
+                        'label'         => 'Libellé',
+                        'name'          => 'label',
+                        'type'          => 'text',
+                        'show_in_graphql' => true,
+                    ],
+                    [
+                        'key'           => 'field_ts_footer_nav_url',
+                        'label'         => 'URL',
+                        'name'          => 'url',
+                        'type'          => 'url',
+                        'show_in_graphql' => true,
+                    ],
+                ],
             ],
         ],
         'location'              => [
