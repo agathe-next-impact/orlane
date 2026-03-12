@@ -3,48 +3,324 @@ import type { WPACFFbTestimonialsSection } from '../../types/wp';
 
 interface Props extends WPACFFbTestimonialsSection {}
 
-const { heading, items = [] } = Astro.props;
+const { heading, description, items = [], variant = 'grid' } = Astro.props;
+
+const quoteSvg = `<svg class="h-12 mx-auto mb-3 text-taupe/30" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z" fill="currentColor"/></svg>`;
+
+const starSvg = (filled: boolean) => `<svg class="w-5 h-5 ${filled ? 'text-yellow-400' : 'text-taupe/20'}" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>`;
+
+const half = Math.ceil(items.length / 2);
+const leftItems = items.slice(0, half);
+const rightItems = items.slice(half);
 ---
 
-<section class="bg-creme">
-  <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
-    {heading && (
-      <h2 class="mb-8 text-4xl tracking-tight font-extrabold text-taupe font-heading lg:mb-16">
-        {heading}
-      </h2>
-    )}
-    <div class="grid gap-8 lg:grid-cols-3">
-      {items.map((item) => (
-        <div class="bg-beige/30 rounded-lg p-6 border border-beige">
-          {item.rating > 0 && (
-            <div class="flex justify-center mb-4">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <svg class={`w-5 h-5 ${i < item.rating ? 'text-yellow-400' : 'text-taupe/20'}`} fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
-              ))}
-            </div>
+{/* -- Variant 1: Blockquote – Single centered testimonial with quote icon -- */}
+{variant === 'blockquote' && items.length > 0 && (
+  <section class="bg-[var(--block-bg,transparent)]">
+    <div class="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-16 lg:px-6">
+      {heading && (
+        <h2 class="mb-8 text-4xl tracking-tight font-extrabold text-[var(--block-title)] text-taupe font-heading lg:mb-12">
+          {heading}
+        </h2>
+      )}
+      <figure class="max-w-screen-md mx-auto">
+        <Fragment set:html={quoteSvg} />
+        <blockquote>
+          <p class="text-2xl font-medium text-[var(--block-title)] text-taupe">
+            "{items[0].quote}"
+          </p>
+        </blockquote>
+        <figcaption class="flex items-center justify-center mt-6 space-x-3">
+          {items[0].avatar && (
+            <img class="w-6 h-6 rounded-full" src={items[0].avatar.sourceUrl} alt={items[0].author || ''} />
           )}
-          {item.quote && (
-            <blockquote class="mb-4">
-              <p class="text-taupe/80 italic">"{item.quote}"</p>
-            </blockquote>
-          )}
-          <div class="flex items-center justify-center space-x-3">
-            {item.avatar && (
-              <img class="w-10 h-10 rounded-full" src={item.avatar.sourceUrl} alt={item.author || ''} />
+          <div class="flex items-center divide-x-2 divide-taupe/30">
+            {items[0].author && (
+              <div class="pr-3 font-medium text-[var(--block-title)] text-taupe">{items[0].author}</div>
             )}
-            <div class="text-left">
-              {item.author && (
-                <p class="font-semibold text-taupe">{item.author}</p>
+            {items[0].role && (
+              <div class="pl-3 text-sm font-light text-[var(--block-text)] text-taupe/70">{items[0].role}</div>
+            )}
+          </div>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+)}
+
+{/* -- Variant 2: Cards – Two-column grid with titles and longer quotes -- */}
+{variant === 'cards' && (
+  <section class="bg-[var(--block-bg,transparent)]">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
+      {(heading || description) && (
+        <div class="mx-auto max-w-screen-sm">
+          {heading && (
+            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-[var(--block-title)] text-taupe font-heading">
+              {heading}
+            </h2>
+          )}
+          {description && (
+            <p class="mb-8 font-light text-[var(--block-text)] text-taupe/70 lg:mb-16 sm:text-xl">
+              {description}
+            </p>
+          )}
+        </div>
+      )}
+      <div class="grid mb-8 lg:mb-12 lg:grid-cols-2">
+        {items.map((item, index) => {
+          const isLeft = index % 2 === 0;
+          const isLastRow = index >= items.length - 2;
+          const borderClasses = [
+            'border-b border-beige',
+            isLeft ? 'lg:border-r' : '',
+            isLastRow ? 'lg:border-b-0' : '',
+          ].filter(Boolean).join(' ');
+          return (
+            <figure class={`flex flex-col justify-center items-center p-8 text-center bg-beige/20 ${borderClasses} md:p-12`}>
+              <blockquote class="mx-auto mb-8 max-w-2xl text-[var(--block-text)] text-taupe/70">
+                {item.author && (
+                  <h3 class="text-lg font-semibold text-[var(--block-title)] text-taupe">{item.author}</h3>
+                )}
+                {item.quote && (
+                  <p class="my-4">"{item.quote}"</p>
+                )}
+              </blockquote>
+              <figcaption class="flex justify-center items-center space-x-3">
+                {item.avatar && (
+                  <img class="w-9 h-9 rounded-full" src={item.avatar.sourceUrl} alt={item.author || ''} />
+                )}
+                <div class="space-y-0.5 font-medium text-left">
+                  {item.author && (
+                    <div class="text-[var(--block-title)] text-taupe">{item.author}</div>
+                  )}
+                  {item.role && (
+                    <div class="text-sm font-light text-[var(--block-text)] text-taupe/70">{item.role}</div>
+                  )}
+                </div>
+              </figcaption>
+            </figure>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+)}
+
+{/* -- Variant 3: Tabs – Interactive tabs with avatars on left, content on right -- */}
+{variant === 'tabs' && (
+  <section class="bg-[var(--block-bg,transparent)]">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
+      {heading && (
+        <h2 class="mb-8 text-4xl tracking-tight font-extrabold text-[var(--block-title)] text-taupe font-heading lg:mb-12">
+          {heading}
+        </h2>
+      )}
+      <div class="lg:flex lg:gap-8 lg:text-left">
+        {/* Tab buttons */}
+        <div class="flex flex-row lg:flex-col gap-2 mb-6 lg:mb-0 lg:min-w-[240px] overflow-x-auto" id="testimonial-tabs" role="tablist">
+          {items.map((item, index) => (
+            <button
+              type="button"
+              role="tab"
+              id={`testimonial-tab-${index}`}
+              aria-controls={`testimonial-panel-${index}`}
+              aria-selected={index === 0 ? 'true' : 'false'}
+              class={`flex items-center gap-3 p-3 rounded-lg text-left whitespace-nowrap transition-colors ${index === 0 ? 'bg-beige text-taupe' : 'text-taupe/60 hover:bg-beige/50'}`}
+              data-tabs-target={`#testimonial-panel-${index}`}
+            >
+              {item.avatar && (
+                <img class="w-10 h-10 rounded-full flex-shrink-0" src={item.avatar.sourceUrl} alt={item.author || ''} />
               )}
-              {item.role && (
-                <p class="text-sm text-taupe/60">{item.role}</p>
+              <div>
+                {item.author && <div class="font-medium text-sm">{item.author}</div>}
+                {item.role && <div class="text-xs text-taupe/50">{item.role}</div>}
+              </div>
+            </button>
+          ))}
+        </div>
+        {/* Tab panels */}
+        <div class="flex-1">
+          {items.map((item, index) => (
+            <div
+              id={`testimonial-panel-${index}`}
+              role="tabpanel"
+              aria-labelledby={`testimonial-tab-${index}`}
+              class={`p-6 bg-beige/20 rounded-lg border border-beige ${index === 0 ? '' : 'hidden'}`}
+            >
+              <Fragment set:html={quoteSvg} />
+              {item.quote && (
+                <p class="text-lg text-[var(--block-text)] text-taupe/80 italic mb-4">
+                  "{item.quote}"
+                </p>
               )}
+              {item.rating > 0 && (
+                <div class="flex justify-center lg:justify-start mb-4">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Fragment set:html={starSvg(i < item.rating)} />
+                  ))}
+                </div>
+              )}
+              <div class="flex items-center justify-center lg:justify-start gap-3 mt-4">
+                {item.avatar && (
+                  <img class="w-10 h-10 rounded-full" src={item.avatar.sourceUrl} alt={item.author || ''} />
+                )}
+                <div>
+                  {item.author && <p class="font-semibold text-[var(--block-title)] text-taupe">{item.author}</p>}
+                  {item.role && <p class="text-sm text-[var(--block-text)] text-taupe/60">{item.role}</p>}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
+<script>
+  // Tabs interaction for testimonial tabs variant
+  document.querySelectorAll('#testimonial-tabs [role="tab"]').forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const target = (tab as HTMLElement).dataset.tabsTarget;
+      if (!target) return;
+      // Deactivate all tabs
+      const tabList = tab.closest('[role="tablist"]');
+      if (!tabList) return;
+      tabList.querySelectorAll('[role="tab"]').forEach((t) => {
+        t.setAttribute('aria-selected', 'false');
+        t.classList.remove('bg-beige', 'text-taupe');
+        t.classList.add('text-taupe/60');
+      });
+      // Hide all panels
+      const container = tabList.parentElement;
+      if (!container) return;
+      container.querySelectorAll('[role="tabpanel"]').forEach((p) => p.classList.add('hidden'));
+      // Activate clicked tab
+      tab.setAttribute('aria-selected', 'true');
+      tab.classList.add('bg-beige', 'text-taupe');
+      tab.classList.remove('text-taupe/60');
+      // Show target panel
+      const panel = container.querySelector(target);
+      if (panel) panel.classList.remove('hidden');
+    });
+  });
+</script>
+
+{/* -- Variant 4: Carousel – Horizontal sliding testimonial carousel -- */}
+{variant === 'carousel' && (
+  <section class="bg-[var(--block-bg,transparent)]">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
+      {heading && (
+        <h2 class="mb-8 text-4xl tracking-tight font-extrabold text-[var(--block-title)] text-taupe font-heading lg:mb-12">
+          {heading}
+        </h2>
+      )}
+      <div id="testimonial-carousel" class="relative" data-carousel="slide">
+        <div class="relative overflow-hidden rounded-lg min-h-[280px]">
+          {items.map((item, index) => (
+            <div class={`${index === 0 ? '' : 'hidden'} duration-700 ease-in-out`} data-carousel-item={index === 0 ? 'active' : ''}>
+              <figure class="max-w-screen-md mx-auto px-4">
+                <Fragment set:html={quoteSvg} />
+                <blockquote>
+                  <p class="text-2xl font-medium text-[var(--block-title)] text-taupe">
+                    "{item.quote}"
+                  </p>
+                </blockquote>
+                {item.rating > 0 && (
+                  <div class="flex justify-center mt-4">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Fragment set:html={starSvg(i < item.rating)} />
+                    ))}
+                  </div>
+                )}
+                <figcaption class="flex items-center justify-center mt-6 space-x-3">
+                  {item.avatar && (
+                    <img class="w-8 h-8 rounded-full" src={item.avatar.sourceUrl} alt={item.author || ''} />
+                  )}
+                  <div class="flex items-center divide-x-2 divide-taupe/30">
+                    {item.author && (
+                      <div class="pr-3 font-medium text-[var(--block-title)] text-taupe">{item.author}</div>
+                    )}
+                    {item.role && (
+                      <div class="pl-3 text-sm font-light text-[var(--block-text)] text-taupe/70">{item.role}</div>
+                    )}
+                  </div>
+                </figcaption>
+              </figure>
+            </div>
+          ))}
+        </div>
+        {/* Navigation */}
+        {items.length > 1 && (
+          <>
+            <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group" data-carousel-prev>
+              <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-beige group-hover:bg-taupe/10 transition-colors">
+                <svg class="w-4 h-4 text-taupe" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+                </svg>
+                <span class="sr-only">Précédent</span>
+              </span>
+            </button>
+            <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group" data-carousel-next>
+              <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-beige group-hover:bg-taupe/10 transition-colors">
+                <svg class="w-4 h-4 text-taupe" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                </svg>
+                <span class="sr-only">Suivant</span>
+              </span>
+            </button>
+          </>
+        )}
+      </div>
+    </div>
+  </section>
+)}
+
+{/* -- Variant 5: Grid – Three-column grid of testimonial cards (default) -- */}
+{variant === 'grid' && (
+  <section class="bg-[var(--block-bg,theme(colors.creme))]">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
+      {heading && (
+        <h2 class="mb-8 text-4xl tracking-tight font-extrabold text-[var(--block-title)] text-taupe font-heading lg:mb-16">
+          {heading}
+        </h2>
+      )}
+      {description && (
+        <p class="mb-8 font-light text-[var(--block-text)] text-taupe/70 lg:mb-16 sm:text-xl max-w-screen-sm mx-auto">
+          {description}
+        </p>
+      )}
+      <div class="grid gap-8 lg:grid-cols-3">
+        {items.map((item) => (
+          <div class="bg-beige/30 rounded-lg p-6 border border-beige">
+            {item.rating > 0 && (
+              <div class="flex justify-center mb-4">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Fragment set:html={starSvg(i < item.rating)} />
+                ))}
+              </div>
+            )}
+            {item.quote && (
+              <blockquote class="mb-4">
+                <p class="text-[var(--block-text)] text-taupe/80 italic">"{item.quote}"</p>
+              </blockquote>
+            )}
+            <div class="flex items-center justify-center space-x-3">
+              {item.avatar && (
+                <img class="w-10 h-10 rounded-full" src={item.avatar.sourceUrl} alt={item.author || ''} />
+              )}
+              <div class="text-left">
+                {item.author && (
+                  <p class="font-semibold text-[var(--block-title)] text-taupe">{item.author}</p>
+                )}
+                {item.role && (
+                  <p class="text-sm text-[var(--block-text)] text-taupe/60">{item.role}</p>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+)}

@@ -3,47 +3,564 @@ import type { WPACFFbFeaturesSection } from '../../types/wp';
 
 interface Props extends WPACFFbFeaturesSection {}
 
-const { heading, description, items = [], columns = '3' } = Astro.props;
+const {
+  heading,
+  description,
+  items = [],
+  columns = '3',
+  variant = 'default',
+  image,
+  ctaText,
+  ctaUrl,
+} = Astro.props;
 
 const gridClass: Record<string, string> = {
   '2': 'md:grid-cols-2',
   '3': 'md:grid-cols-2 lg:grid-cols-3',
   '4': 'md:grid-cols-2 lg:grid-cols-4',
 };
+
+const isDark = variant === 'dark';
+const bgClass = isDark ? 'bg-taupe text-creme' : 'bg-[var(--block-bg,transparent)]';
+const titleClass = isDark ? 'text-creme' : 'text-[var(--block-title,var(--tw-text-taupe))] text-taupe';
+const textClass = isDark ? 'text-creme/70' : 'text-[var(--block-text,var(--tw-text-taupe-70))] text-taupe/70';
+const iconBgClass = isDark ? 'bg-creme/10' : 'bg-sauge/10';
+const iconTextClass = isDark ? 'text-sauge' : 'text-mousse';
+
+/** Default icon for items without SVG */
+const defaultIcon = `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>`;
+
+const checkIcon = `<svg class="w-5 h-5 text-sauge" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>`;
 ---
 
-<section class="bg-creme">
-  <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
-    {(heading || description) && (
-      <div class="max-w-screen-md mb-8 lg:mb-16">
-        {heading && (
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
-            {heading}
-          </h2>
-        )}
-        {description && (
-          <p class="text-taupe/70 sm:text-xl">
-            {description}
-          </p>
+{/* ── Variant 1: Default – Grid with icon circles ── */}
+{variant === 'default' && (
+  <section class={bgClass}>
+    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+      {(heading || description) && (
+        <div class="max-w-screen-md mb-8 lg:mb-16">
+          {heading && <h2 class={`mb-4 text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
+          {description && <p class={`sm:text-xl ${textClass}`}>{description}</p>}
+        </div>
+      )}
+      <div class={`space-y-8 ${gridClass[columns] || gridClass['3']} grid gap-8 lg:gap-12 md:space-y-0`}>
+        {items.map((item) => (
+          <div>
+            {item.icon && (
+              <div class={`flex justify-center items-center mb-4 w-10 h-10 rounded-full ${iconBgClass} lg:h-12 lg:w-12 ${iconTextClass}`}>
+                <Fragment set:html={item.icon} />
+              </div>
+            )}
+            {item.title && <h3 class={`mb-2 text-xl font-bold ${titleClass}`}>{item.title}</h3>}
+            {item.description && <p class={textClass}>{item.description}</p>}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{/* ── Variant 2: Image right + feature list left ── */}
+{variant === 'image_right' && (
+  <section class={bgClass}>
+    <div class="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
+      <div>
+        {heading && <h2 class={`mb-4 text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
+        {description && <p class={`mb-8 sm:text-xl ${textClass}`}>{description}</p>}
+        <div class="space-y-6">
+          {items.map((item) => (
+            <div class="flex gap-4">
+              {item.icon && (
+                <div class={`flex-shrink-0 flex justify-center items-center w-10 h-10 rounded-full ${iconBgClass} ${iconTextClass}`}>
+                  <Fragment set:html={item.icon} />
+                </div>
+              )}
+              <div>
+                {item.title && <h3 class={`mb-1 text-lg font-bold ${titleClass}`}>{item.title}</h3>}
+                {item.description && <p class={textClass}>{item.description}</p>}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      {image && (
+        <img class="w-full rounded-lg shadow-xl" src={image.sourceUrl} alt={image.altText || ''} width={image.mediaDetails?.width} height={image.mediaDetails?.height} />
+      )}
+    </div>
+  </section>
+)}
+
+{/* ── Variant 3: Image left + feature list right ── */}
+{variant === 'image_left' && (
+  <section class={bgClass}>
+    <div class="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
+      {image && (
+        <img class="w-full rounded-lg shadow-xl" src={image.sourceUrl} alt={image.altText || ''} width={image.mediaDetails?.width} height={image.mediaDetails?.height} />
+      )}
+      <div class="mt-8 md:mt-0">
+        {heading && <h2 class={`mb-4 text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
+        {description && <p class={`mb-8 sm:text-xl ${textClass}`}>{description}</p>}
+        <div class="space-y-6">
+          {items.map((item) => (
+            <div class="flex gap-4">
+              {item.icon && (
+                <div class={`flex-shrink-0 flex justify-center items-center w-10 h-10 rounded-full ${iconBgClass} ${iconTextClass}`}>
+                  <Fragment set:html={item.icon} />
+                </div>
+              )}
+              <div>
+                {item.title && <h3 class={`mb-1 text-lg font-bold ${titleClass}`}>{item.title}</h3>}
+                {item.description && <p class={textClass}>{item.description}</p>}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
+{/* ── Variant 4: Feature list with CTA links ── */}
+{variant === 'with_ctas' && (
+  <section class={bgClass}>
+    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+      {(heading || description) && (
+        <div class="max-w-screen-md mb-8 lg:mb-16">
+          {heading && <h2 class={`mb-4 text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
+          {description && <p class={`sm:text-xl ${textClass}`}>{description}</p>}
+        </div>
+      )}
+      <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
+        {items.map((item) => (
+          <div>
+            {item.icon && (
+              <div class={`flex justify-center items-center mb-4 w-10 h-10 rounded-full ${iconBgClass} lg:h-12 lg:w-12 ${iconTextClass}`}>
+                <Fragment set:html={item.icon} />
+              </div>
+            )}
+            {item.title && <h3 class={`mb-2 text-xl font-bold ${titleClass}`}>{item.title}</h3>}
+            {item.description && <p class={`mb-3 ${textClass}`}>{item.description}</p>}
+            {item.link && (
+              <a href={item.link} class="inline-flex items-center text-sauge hover:text-mousse font-medium transition-colors">
+                En savoir plus
+                <svg class="ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{/* ── Variant 5: Icons + checklist sub-items ── */}
+{variant === 'checklist' && (
+  <section class={bgClass}>
+    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+      {(heading || description) && (
+        <div class="max-w-screen-md mb-8 lg:mb-16">
+          {heading && <h2 class={`mb-4 text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
+          {description && <p class={`sm:text-xl ${textClass}`}>{description}</p>}
+        </div>
+      )}
+      <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
+        {items.map((item) => (
+          <div>
+            {item.icon && (
+              <div class={`flex justify-center items-center mb-4 w-10 h-10 rounded-full ${iconBgClass} lg:h-12 lg:w-12 ${iconTextClass}`}>
+                <Fragment set:html={item.icon} />
+              </div>
+            )}
+            {item.title && <h3 class={`mb-2 text-xl font-bold ${titleClass}`}>{item.title}</h3>}
+            {item.description && (
+              <ul class="space-y-2">
+                {item.description.split('\n').filter(Boolean).map((line) => (
+                  <li class="flex items-start gap-2">
+                    <span class="flex-shrink-0 mt-0.5"><Fragment set:html={checkIcon} /></span>
+                    <span class={textClass}>{line}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{/* ── Variant 6: Large icons + CTA button ── */}
+{variant === 'icons_cta' && (
+  <section class={bgClass}>
+    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+      {(heading || description) && (
+        <div class="max-w-screen-md mb-8 lg:mb-16">
+          {heading && <h2 class={`mb-4 text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
+          {description && <p class={`sm:text-xl ${textClass}`}>{description}</p>}
+        </div>
+      )}
+      <div class="space-y-8 md:grid md:grid-cols-2 md:gap-16 md:space-y-0">
+        {items.map((item) => (
+          <div class="flex flex-col items-start">
+            {item.icon && (
+              <div class={`flex justify-center items-center mb-4 w-14 h-14 rounded-full ${iconBgClass} ${iconTextClass}`}>
+                <Fragment set:html={item.icon} />
+              </div>
+            )}
+            {item.title && <h3 class={`mb-2 text-2xl font-bold ${titleClass}`}>{item.title}</h3>}
+            {item.description && <p class={`mb-4 ${textClass}`}>{item.description}</p>}
+          </div>
+        ))}
+      </div>
+      {ctaText && ctaUrl && (
+        <div class="mt-12">
+          <a href={ctaUrl} class="inline-flex items-center px-6 py-3 text-base font-medium text-creme bg-sauge rounded-lg hover:bg-mousse transition-colors">
+            {ctaText}
+            <svg class="ml-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </a>
+        </div>
+      )}
+    </div>
+  </section>
+)}
+
+{/* ── Variant 7: Description left + feature grid right ── */}
+{variant === 'split_description' && (
+  <section class={bgClass}>
+    <div class="gap-16 items-start py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6 md:grid md:grid-cols-2">
+      <div class="md:sticky md:top-24">
+        {heading && <h2 class={`mb-4 text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
+        {description && <p class={`sm:text-xl ${textClass}`}>{description}</p>}
+        {ctaText && ctaUrl && (
+          <a href={ctaUrl} class="inline-flex items-center mt-6 px-5 py-2.5 text-sm font-medium text-creme bg-sauge rounded-lg hover:bg-mousse transition-colors">
+            {ctaText}
+          </a>
         )}
       </div>
-    )}
-    <div class={`space-y-8 ${gridClass[columns] || gridClass['3']} grid gap-8 lg:gap-12`}>
-      {items.map((item) => (
-        <div>
-          {item.icon && (
-            <div class="flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-sauge/10 lg:h-12 lg:w-12 text-mousse">
-              <Fragment set:html={item.icon} />
+      <div class="grid gap-8 mt-8 md:mt-0">
+        {items.map((item) => (
+          <div class="flex gap-4">
+            {item.icon && (
+              <div class={`flex-shrink-0 flex justify-center items-center w-10 h-10 rounded-full ${iconBgClass} ${iconTextClass}`}>
+                <Fragment set:html={item.icon} />
+              </div>
+            )}
+            <div>
+              {item.title && <h3 class={`mb-1 text-lg font-bold ${titleClass}`}>{item.title}</h3>}
+              {item.description && <p class={textClass}>{item.description}</p>}
             </div>
-          )}
-          {item.title && (
-            <h3 class="mb-2 text-xl font-bold text-taupe">{item.title}</h3>
-          )}
-          {item.description && (
-            <p class="text-taupe/70">{item.description}</p>
-          )}
-        </div>
-      ))}
+          </div>
+        ))}
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+)}
+
+{/* ── Variant 8: Feature cards with borders ── */}
+{variant === 'cards' && (
+  <section class={bgClass}>
+    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+      {(heading || description) && (
+        <div class="max-w-screen-md mb-8 lg:mb-16">
+          {heading && <h2 class={`mb-4 text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
+          {description && <p class={`sm:text-xl ${textClass}`}>{description}</p>}
+        </div>
+      )}
+      <div class={`space-y-8 ${gridClass[columns] || gridClass['3']} grid gap-6 md:space-y-0`}>
+        {items.map((item) => (
+          <div class="p-6 bg-creme rounded-lg border border-beige shadow-sm hover:shadow-md transition-shadow">
+            {item.icon && (
+              <div class={`flex justify-center items-center mb-4 w-10 h-10 rounded-full ${iconBgClass} lg:h-12 lg:w-12 ${iconTextClass}`}>
+                <Fragment set:html={item.icon} />
+              </div>
+            )}
+            {item.title && <h3 class={`mb-2 text-xl font-bold ${titleClass}`}>{item.title}</h3>}
+            {item.description && <p class={textClass}>{item.description}</p>}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{/* ── Variant 9: Alternating image/text rows ── */}
+{variant === 'alternating' && (
+  <section class={bgClass}>
+    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+      {(heading || description) && (
+        <div class="max-w-screen-md mb-8 lg:mb-16">
+          {heading && <h2 class={`mb-4 text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
+          {description && <p class={`sm:text-xl ${textClass}`}>{description}</p>}
+        </div>
+      )}
+      <div class="space-y-16">
+        {/* First row: image left, features right */}
+        {image && (
+          <div class="gap-8 items-center md:grid md:grid-cols-2 xl:gap-16">
+            <img class="w-full rounded-lg shadow-xl" src={image.sourceUrl} alt={image.altText || ''} width={image.mediaDetails?.width} height={image.mediaDetails?.height} />
+            <div class="mt-8 md:mt-0 space-y-6">
+              {items.slice(0, Math.ceil(items.length / 2)).map((item) => (
+                <div class="flex gap-4">
+                  {item.icon && (
+                    <div class={`flex-shrink-0 flex justify-center items-center w-10 h-10 rounded-full ${iconBgClass} ${iconTextClass}`}>
+                      <Fragment set:html={item.icon} />
+                    </div>
+                  )}
+                  <div>
+                    {item.title && <h3 class={`mb-1 text-lg font-bold ${titleClass}`}>{item.title}</h3>}
+                    {item.description && <p class={textClass}>{item.description}</p>}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        {/* Second row: features left, image right (reversed) */}
+        {image && items.length > Math.ceil(items.length / 2) && (
+          <div class="gap-8 items-center md:grid md:grid-cols-2 xl:gap-16">
+            <div class="space-y-6 md:order-1">
+              {items.slice(Math.ceil(items.length / 2)).map((item) => (
+                <div class="flex gap-4">
+                  {item.icon && (
+                    <div class={`flex-shrink-0 flex justify-center items-center w-10 h-10 rounded-full ${iconBgClass} ${iconTextClass}`}>
+                      <Fragment set:html={item.icon} />
+                    </div>
+                  )}
+                  <div>
+                    {item.title && <h3 class={`mb-1 text-lg font-bold ${titleClass}`}>{item.title}</h3>}
+                    {item.description && <p class={textClass}>{item.description}</p>}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <img class="w-full rounded-lg shadow-xl md:order-2" src={image.sourceUrl} alt={image.altText || ''} width={image.mediaDetails?.width} height={image.mediaDetails?.height} />
+          </div>
+        )}
+        {/* Fallback: no image, just list */}
+        {!image && (
+          <div class="space-y-8 md:grid md:grid-cols-2 md:gap-12 md:space-y-0">
+            {items.map((item) => (
+              <div class="flex gap-4">
+                {item.icon && (
+                  <div class={`flex-shrink-0 flex justify-center items-center w-10 h-10 rounded-full ${iconBgClass} ${iconTextClass}`}>
+                    <Fragment set:html={item.icon} />
+                  </div>
+                )}
+                <div>
+                  {item.title && <h3 class={`mb-1 text-lg font-bold ${titleClass}`}>{item.title}</h3>}
+                  {item.description && <p class={textClass}>{item.description}</p>}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+)}
+
+{/* ── Variant 10: Rounded icons – large colored circles ── */}
+{variant === 'rounded_icons' && (
+  <section class={bgClass}>
+    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+      {(heading || description) && (
+        <div class="max-w-screen-md mb-8 lg:mb-16">
+          {heading && <h2 class={`mb-4 text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
+          {description && <p class={`sm:text-xl ${textClass}`}>{description}</p>}
+        </div>
+      )}
+      <div class={`space-y-8 ${gridClass[columns] || gridClass['3']} grid gap-8 lg:gap-12 md:space-y-0`}>
+        {items.map((item) => (
+          <div class="text-center">
+            <div class={`flex justify-center items-center mx-auto mb-4 w-16 h-16 rounded-full bg-sauge/20 ${iconTextClass}`}>
+              {item.icon ? <Fragment set:html={item.icon} /> : <Fragment set:html={defaultIcon} />}
+            </div>
+            {item.title && <h3 class={`mb-2 text-xl font-bold ${titleClass}`}>{item.title}</h3>}
+            {item.description && <p class={textClass}>{item.description}</p>}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{/* ── Variant 11: Centered – all centered alignment ── */}
+{variant === 'centered' && (
+  <section class={bgClass}>
+    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+      {(heading || description) && (
+        <div class="max-w-screen-md mx-auto text-center mb-8 lg:mb-16">
+          {heading && <h2 class={`mb-4 text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
+          {description && <p class={`sm:text-xl ${textClass}`}>{description}</p>}
+        </div>
+      )}
+      <div class={`space-y-8 ${gridClass[columns] || gridClass['3']} grid gap-8 lg:gap-12 md:space-y-0`}>
+        {items.map((item) => (
+          <div class="text-center">
+            {item.icon && (
+              <div class={`flex justify-center items-center mx-auto mb-4 w-10 h-10 rounded-full ${iconBgClass} lg:h-12 lg:w-12 ${iconTextClass}`}>
+                <Fragment set:html={item.icon} />
+              </div>
+            )}
+            {item.title && <h3 class={`mb-2 text-xl font-bold ${titleClass}`}>{item.title}</h3>}
+            {item.description && <p class={`mx-auto max-w-sm ${textClass}`}>{item.description}</p>}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{/* ── Variant 12: Numbered steps ── */}
+{variant === 'numbered' && (
+  <section class={bgClass}>
+    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+      {(heading || description) && (
+        <div class="max-w-screen-md mb-8 lg:mb-16">
+          {heading && <h2 class={`mb-4 text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
+          {description && <p class={`sm:text-xl ${textClass}`}>{description}</p>}
+        </div>
+      )}
+      <div class={`space-y-8 ${gridClass[columns] || gridClass['3']} grid gap-8 lg:gap-12 md:space-y-0`}>
+        {items.map((item, i) => (
+          <div class="relative">
+            <span class={`flex justify-center items-center mb-4 w-10 h-10 rounded-full bg-sauge text-creme lg:h-12 lg:w-12 text-lg font-bold`}>
+              {i + 1}
+            </span>
+            {item.title && <h3 class={`mb-2 text-xl font-bold ${titleClass}`}>{item.title}</h3>}
+            {item.description && <p class={textClass}>{item.description}</p>}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{/* ── Variant 13: Two columns large format ── */}
+{variant === 'two_col_large' && (
+  <section class={bgClass}>
+    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+      {(heading || description) && (
+        <div class="max-w-screen-md mb-8 lg:mb-16">
+          {heading && <h2 class={`mb-4 text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
+          {description && <p class={`sm:text-xl ${textClass}`}>{description}</p>}
+        </div>
+      )}
+      <div class="space-y-8 md:grid md:grid-cols-2 md:gap-16 md:space-y-0">
+        {items.map((item) => (
+          <div class="mb-8">
+            {item.icon && (
+              <div class={`flex justify-center items-center mb-4 w-12 h-12 rounded-lg ${iconBgClass} ${iconTextClass}`}>
+                <Fragment set:html={item.icon} />
+              </div>
+            )}
+            {item.title && <h3 class={`mb-3 text-2xl font-bold ${titleClass}`}>{item.title}</h3>}
+            {item.description && <p class={`text-lg ${textClass}`}>{item.description}</p>}
+            {item.link && (
+              <a href={item.link} class="inline-flex items-center mt-4 text-sauge hover:text-mousse font-medium transition-colors">
+                En savoir plus
+                <svg class="ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{/* ── Variant 14: Dark background ── */}
+{variant === 'dark' && (
+  <section class={bgClass}>
+    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+      {(heading || description) && (
+        <div class="max-w-screen-md mb-8 lg:mb-16">
+          {heading && <h2 class={`mb-4 text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
+          {description && <p class={`sm:text-xl ${textClass}`}>{description}</p>}
+        </div>
+      )}
+      <div class={`space-y-8 ${gridClass[columns] || gridClass['3']} grid gap-8 lg:gap-12 md:space-y-0`}>
+        {items.map((item) => (
+          <div>
+            {item.icon && (
+              <div class={`flex justify-center items-center mb-4 w-10 h-10 rounded-full ${iconBgClass} lg:h-12 lg:w-12 text-sauge`}>
+                <Fragment set:html={item.icon} />
+              </div>
+            )}
+            {item.title && <h3 class={`mb-2 text-xl font-bold ${titleClass}`}>{item.title}</h3>}
+            {item.description && <p class={textClass}>{item.description}</p>}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{/* ── Variant 15: Horizontal – icon + text inline ── */}
+{variant === 'horizontal' && (
+  <section class={bgClass}>
+    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+      {(heading || description) && (
+        <div class="max-w-screen-md mb-8 lg:mb-16">
+          {heading && <h2 class={`mb-4 text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
+          {description && <p class={`sm:text-xl ${textClass}`}>{description}</p>}
+        </div>
+      )}
+      <div class="space-y-6 max-w-screen-md">
+        {items.map((item) => (
+          <div class="flex items-start gap-5 p-4 rounded-lg hover:bg-beige/50 transition-colors">
+            {item.icon && (
+              <div class={`flex-shrink-0 flex justify-center items-center w-12 h-12 rounded-lg ${iconBgClass} ${iconTextClass}`}>
+                <Fragment set:html={item.icon} />
+              </div>
+            )}
+            <div class="flex-1">
+              <div class="flex items-center gap-3">
+                {item.title && <h3 class={`text-lg font-bold ${titleClass}`}>{item.title}</h3>}
+              </div>
+              {item.description && <p class={`mt-1 ${textClass}`}>{item.description}</p>}
+            </div>
+            {item.link && (
+              <a href={item.link} class="flex-shrink-0 text-sauge hover:text-mousse transition-colors">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{/* ── Variant 16: Icon cards – prominent icon ── */}
+{variant === 'icon_cards' && (
+  <section class={bgClass}>
+    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+      {(heading || description) && (
+        <div class="max-w-screen-md mx-auto text-center mb-8 lg:mb-16">
+          {heading && <h2 class={`mb-4 text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
+          {description && <p class={`sm:text-xl ${textClass}`}>{description}</p>}
+        </div>
+      )}
+      <div class={`space-y-8 ${gridClass[columns] || gridClass['3']} grid gap-6 md:space-y-0`}>
+        {items.map((item) => (
+          <div class="group p-8 text-center bg-creme rounded-xl border border-beige shadow-sm hover:shadow-lg hover:border-sauge/30 transition-all">
+            {item.icon && (
+              <div class="flex justify-center items-center mx-auto mb-5 w-16 h-16 rounded-2xl bg-sauge/10 text-mousse group-hover:bg-sauge/20 transition-colors">
+                <Fragment set:html={item.icon} />
+              </div>
+            )}
+            {item.title && <h3 class={`mb-2 text-xl font-bold ${titleClass}`}>{item.title}</h3>}
+            {item.description && <p class={textClass}>{item.description}</p>}
+            {item.link && (
+              <a href={item.link} class="inline-flex items-center mt-4 text-sauge hover:text-mousse font-medium transition-colors">
+                Découvrir
+                <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}

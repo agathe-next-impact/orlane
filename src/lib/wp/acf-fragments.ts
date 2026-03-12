@@ -35,24 +35,14 @@ export const flexibleContentFragment = `
       cta2Text
       cta2Url
       variant
+      badge
+      videoUrl
       colorVariation
     }
     ... on AcfFieldsFlexibleContentFbFeaturesSectionLayout {
       heading
       description
       columns
-      colorVariation
-      items {
-        icon
-        title
-        description
-      }
-    }
-    ... on AcfFieldsFlexibleContentFbCtaSectionLayout {
-      heading
-      description
-      buttonText
-      buttonUrl
       variant
       colorVariation
       image {
@@ -60,6 +50,64 @@ export const flexibleContentFragment = `
           ${imageNodeFields}
         }
       }
+      ctaText
+      ctaUrl
+      items {
+        icon
+        title
+        description
+        link
+      }
+    }
+    ... on AcfFieldsFlexibleContentFbCtaSectionLayout {
+      heading
+      description
+      buttonText
+      buttonUrl
+      button2Text
+      button2Url
+      variant
+      colorVariation
+      image {
+        node {
+          ${imageNodeFields}
+        }
+      }
+      iconItems {
+        icon
+        title
+        description
+        link
+      }
+      cards {
+        title
+        description
+        value
+        buttonText
+        buttonUrl
+        image {
+          node {
+            ${imageNodeFields}
+          }
+        }
+      }
+      tableRows {
+        label
+        value
+        change
+        buttonText
+        buttonUrl
+      }
+      tabs {
+        label
+        description
+        buttonText
+        buttonUrl
+        features
+      }
+      formAction
+      placeholder
+      privacyText
     }
     ... on AcfFieldsFlexibleContentFbContentSectionLayout {
       heading
@@ -71,9 +119,36 @@ export const flexibleContentFragment = `
           ${imageNodeFields}
         }
       }
+      videoUrl
+      images {
+        nodes {
+          ${imageNodeFields}
+        }
+      }
+      bodyRight
+      contentStats {
+        value
+        label
+      }
+      contentCards {
+        title
+        description
+        image {
+          node {
+            ${imageNodeFields}
+          }
+        }
+      }
+      contentFeatures {
+        text
+      }
+      ctaText
+      ctaUrl
     }
     ... on AcfFieldsFlexibleContentFbTestimonialsSectionLayout {
       heading
+      description
+      variant
       colorVariation
     }
     ... on AcfFieldsFlexibleContentFbPricingSectionLayout {
@@ -97,11 +172,13 @@ export const flexibleContentFragment = `
     ... on AcfFieldsFlexibleContentFbFaqSectionLayout {
       heading
       description
+      variant
       colorVariation
     }
     ... on AcfFieldsFlexibleContentFbTeamSectionLayout {
       heading
       description
+      variant
       colorVariation
       members {
         name
@@ -137,7 +214,13 @@ export const flexibleContentFragment = `
       placeholder
       buttonText
       privacyText
+      variant
       colorVariation
+      image {
+        node {
+          ${imageNodeFields}
+        }
+      }
     }
     ... on AcfFieldsFlexibleContentFbStatsSectionLayout {
       heading
@@ -161,6 +244,19 @@ export const flexibleContentFragment = `
       description
       variant
       colorVariation
+      subtitle
+      ctaText
+      ctaUrl
+      image {
+        node {
+          ${imageNodeFields}
+        }
+      }
+      images {
+        nodes {
+          ${imageNodeFields}
+        }
+      }
     }
     ... on AcfFieldsFlexibleContentFbCustomerLogosSectionLayout {
       heading
@@ -170,6 +266,7 @@ export const flexibleContentFragment = `
       logos {
         name
         url
+        since
         image {
           node {
             ${imageNodeFields}

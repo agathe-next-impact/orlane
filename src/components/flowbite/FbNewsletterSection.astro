@@ -3,46 +3,248 @@ import type { WPACFFbNewsletterSection } from '../../types/wp';
 
 interface Props extends WPACFFbNewsletterSection {}
 
-const { heading, description, formAction, placeholder = 'Votre adresse email', buttonText = "S'inscrire", privacyText } = Astro.props;
+const {
+  heading,
+  description,
+  formAction,
+  placeholder = 'Votre adresse email',
+  buttonText = "S'inscrire",
+  privacyText,
+  variant = 'default',
+  image,
+} = Astro.props;
+
+const emailSvg = `<svg class="w-5 h-5 text-taupe/40" fill="currentColor" viewBox="0 0 20 16" xmlns="http://www.w3.org/2000/svg"><path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"/><path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/></svg>`;
+
+const closeSvg = `<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>`;
 ---
 
-<section class="bg-beige">
-  <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-    <div class="mx-auto max-w-screen-md sm:text-center">
+{/* ── Variant 1: Default – formulaire inline centré ── */}
+{variant === 'default' && (
+  <section class="bg-beige">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+      <div class="mx-auto max-w-screen-md sm:text-center">
+        {heading && (
+          <h2 class="mb-4 text-3xl tracking-tight font-extrabold text-taupe sm:text-4xl font-heading">
+            {heading}
+          </h2>
+        )}
+        {description && (
+          <p class="mx-auto mb-8 max-w-2xl font-light text-taupe/70 md:mb-12 sm:text-xl">
+            {description}
+          </p>
+        )}
+        <form action={formAction || '#'} method="POST">
+          <div class="items-center mx-auto mb-3 space-y-4 max-w-screen-sm sm:flex sm:space-y-0">
+            <div class="relative w-full">
+              <label for="newsletter-email" class="hidden mb-2 text-sm font-medium text-taupe">Email</label>
+              <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                <Fragment set:html={emailSvg} />
+              </div>
+              <input class="block p-3 pl-10 w-full text-sm text-taupe bg-creme border border-beige rounded-lg sm:rounded-none sm:rounded-l-lg focus:ring-sauge focus:border-sauge" placeholder={placeholder} type="email" id="newsletter-email" name="email" required />
+            </div>
+            <div>
+              <button type="submit" class="py-3 px-5 w-full text-sm font-medium text-center text-creme rounded-lg sm:rounded-none sm:rounded-r-lg bg-sauge hover:bg-mousse transition-colors focus:ring-4 focus:outline-none focus:ring-sauge/30 cursor-pointer">
+                {buttonText}
+              </button>
+            </div>
+          </div>
+          {privacyText && (
+            <div class="mx-auto max-w-screen-sm text-sm text-left text-taupe/60">
+              {privacyText}
+            </div>
+          )}
+        </form>
+      </div>
+    </div>
+  </section>
+)}
+
+{/* ── Variant 2: Card – formulaire dans une carte ── */}
+{variant === 'card' && (
+  <section class="bg-beige">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+      <div class="mx-auto max-w-screen-md p-6 sm:p-8 bg-creme rounded-lg border border-beige shadow-sm sm:text-center">
+        <div class="mb-6">
+          {heading && (
+            <h2 class="mb-3 text-2xl tracking-tight font-extrabold text-taupe sm:text-3xl font-heading">
+              {heading}
+            </h2>
+          )}
+          {description && (
+            <p class="font-light text-taupe/70 sm:text-lg">
+              {description}
+            </p>
+          )}
+        </div>
+        <div>
+          <form action={formAction || '#'} method="POST">
+            <div class="items-center mx-auto mb-3 space-y-4 max-w-screen-sm sm:flex sm:space-y-0">
+              <div class="relative w-full">
+                <label for="newsletter-card-email" class="hidden mb-2 text-sm font-medium text-taupe">Email</label>
+                <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                  <Fragment set:html={emailSvg} />
+                </div>
+                <input class="block p-3 pl-10 w-full text-sm text-taupe bg-beige border border-beige rounded-lg sm:rounded-none sm:rounded-l-lg focus:ring-sauge focus:border-sauge" placeholder={placeholder} type="email" id="newsletter-card-email" name="email" required />
+              </div>
+              <div>
+                <button type="submit" class="py-3 px-5 w-full text-sm font-medium text-center text-creme rounded-lg sm:rounded-none sm:rounded-r-lg bg-sauge hover:bg-mousse transition-colors focus:ring-4 focus:outline-none focus:ring-sauge/30 cursor-pointer">
+                  {buttonText}
+                </button>
+              </div>
+            </div>
+            {privacyText && (
+              <div class="text-sm text-left text-taupe/60">
+                {privacyText}
+              </div>
+            )}
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
+{/* ── Variant 3: Banner – bandeau haut fermable ── */}
+{variant === 'banner' && (
+  <div id="newsletter-banner" tabindex="-1" class="flex justify-between items-center w-full p-4 border-b border-beige bg-creme">
+    <div class="items-center mx-auto md:flex w-full max-w-screen-xl">
       {heading && (
-        <h2 class="mb-4 text-3xl tracking-tight font-extrabold text-taupe sm:text-4xl font-heading">
+        <p class="text-sm font-medium text-taupe md:mb-0 mb-2 mr-4 shrink-0">
           {heading}
-        </h2>
-      )}
-      {description && (
-        <p class="mx-auto mb-8 max-w-2xl font-light text-taupe/70 md:mb-12 sm:text-xl">
-          {description}
         </p>
       )}
-      <form action={formAction || '#'} method="POST">
-        <div class="items-center mx-auto mb-3 space-y-4 max-w-screen-sm sm:flex sm:space-y-0">
-          <div class="relative w-full">
-            <label for="newsletter-email" class="hidden mb-2 text-sm font-medium text-taupe">Email</label>
+      <form action={formAction || '#'} method="POST" class="flex-1">
+        <div class="flex items-center space-x-3 max-w-md">
+          <div class="relative w-full flex-1">
+            <label for="newsletter-banner-email" class="hidden text-sm font-medium text-taupe">Email</label>
             <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-              <svg class="w-5 h-5 text-taupe/40" fill="currentColor" viewBox="0 0 20 16" xmlns="http://www.w3.org/2000/svg">
-                <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"/>
-                <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/>
-              </svg>
+              <Fragment set:html={emailSvg} />
             </div>
-            <input class="block p-3 pl-10 w-full text-sm text-taupe bg-creme border border-beige rounded-lg sm:rounded-none sm:rounded-l-lg focus:ring-sauge focus:border-sauge" placeholder={placeholder} type="email" id="newsletter-email" name="email" required />
+            <input class="block p-2.5 pl-10 w-full text-sm text-taupe bg-beige border border-beige rounded-lg focus:ring-sauge focus:border-sauge" placeholder={placeholder} type="email" id="newsletter-banner-email" name="email" required />
           </div>
           <div>
-            <button type="submit" class="py-3 px-5 w-full text-sm font-medium text-center text-creme rounded-lg sm:rounded-none sm:rounded-r-lg bg-sauge hover:bg-mousse transition-colors focus:ring-4 focus:outline-none focus:ring-sauge/30 cursor-pointer">
+            <button type="submit" class="py-2.5 px-4 w-full text-sm font-medium text-creme rounded-lg bg-sauge hover:bg-mousse transition-colors focus:ring-4 focus:outline-none focus:ring-sauge/30 cursor-pointer">
               {buttonText}
             </button>
           </div>
         </div>
-        {privacyText && (
-          <div class="mx-auto max-w-screen-sm text-sm text-left text-taupe/60">
-            {privacyText}
+      </form>
+    </div>
+    <button data-dismiss="newsletter-banner" type="button" class="flex-shrink-0 inline-flex justify-center items-center text-taupe/60 hover:bg-beige hover:text-taupe rounded-lg text-sm p-1.5 ml-2" aria-label="Fermer">
+      <Fragment set:html={closeSvg} />
+    </button>
+  </div>
+)}
+
+{/* ── Variant 4: Popup – popup bas-droite ── */}
+{variant === 'popup' && (
+  <div id="newsletter-popup" tabindex="-1" class="fixed bottom-4 right-4 z-50 bg-creme rounded-lg shadow-xl border border-beige p-6 max-w-sm w-full">
+    <button data-dismiss="newsletter-popup" type="button" class="absolute top-3 right-3 text-taupe/40 hover:text-taupe hover:bg-beige rounded-lg text-sm p-1.5" aria-label="Fermer">
+      <Fragment set:html={closeSvg} />
+    </button>
+    <div>
+      {heading && (
+        <h3 class="mb-2 text-xl font-semibold tracking-tight text-taupe font-heading">
+          {heading}
+        </h3>
+      )}
+      {description && (
+        <p class="mb-4 text-sm font-light text-taupe/70">
+          {description}
+        </p>
+      )}
+      <form action={formAction || '#'} method="POST">
+        <div class="items-center mb-3 space-y-3 sm:flex sm:space-y-0 sm:space-x-3">
+          <div class="relative w-full flex-1">
+            <label for="newsletter-popup-email" class="hidden text-sm font-medium text-taupe">Email</label>
+            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+              <Fragment set:html={emailSvg} />
+            </div>
+            <input class="block p-2.5 pl-10 w-full text-sm text-taupe bg-beige border border-beige rounded-lg focus:ring-sauge focus:border-sauge" placeholder={placeholder} type="email" id="newsletter-popup-email" name="email" required />
           </div>
-        )}
+          <div>
+            <button type="submit" class="w-full py-2.5 px-4 text-sm font-medium text-creme rounded-lg bg-sauge hover:bg-mousse transition-colors focus:ring-4 focus:outline-none focus:ring-sauge/30 cursor-pointer">
+              {buttonText}
+            </button>
+          </div>
+        </div>
       </form>
     </div>
   </div>
-</section>
+)}
+
+{/* ── Variant 5: Modal – modale centrée avec image ── */}
+{variant === 'modal' && (
+  <div id="newsletter-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-full bg-taupe/50" data-modal="newsletter-modal">
+    <div class="relative mx-auto mt-[10vh] max-w-xl w-full p-4">
+      <div class="relative flex bg-creme rounded-lg shadow-xl border border-beige overflow-hidden">
+        {image && (
+          <img src={image.sourceUrl} alt={image.altText || ''} class="hidden sm:block w-48 object-cover flex-shrink-0" />
+        )}
+        <div class="p-6 flex-1">
+          <button data-dismiss="newsletter-modal" type="button" class="absolute top-3 right-3 text-taupe/40 hover:text-taupe hover:bg-beige rounded-lg text-sm p-1.5" aria-label="Fermer">
+            <Fragment set:html={closeSvg} />
+          </button>
+          <div class="pr-6">
+            {heading && (
+              <h3 class="mb-2 text-xl font-semibold tracking-tight text-taupe font-heading">
+                {heading}
+              </h3>
+            )}
+            {description && (
+              <p class="mb-4 text-sm font-light text-taupe/70">
+                {description}
+              </p>
+            )}
+            <form action={formAction || '#'} method="POST">
+              <div class="items-center mb-3 space-y-3 sm:flex sm:space-y-0 sm:space-x-3">
+                <div class="relative w-full flex-1">
+                  <label for="newsletter-modal-email" class="hidden text-sm font-medium text-taupe">Email</label>
+                  <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                    <Fragment set:html={emailSvg} />
+                  </div>
+                  <input class="block p-2.5 pl-10 w-full text-sm text-taupe bg-beige border border-beige rounded-lg focus:ring-sauge focus:border-sauge" placeholder={placeholder} type="email" id="newsletter-modal-email" name="email" required />
+                </div>
+                <div>
+                  <button type="submit" class="w-full py-2.5 px-4 text-sm font-medium text-creme rounded-lg bg-sauge hover:bg-mousse transition-colors focus:ring-4 focus:outline-none focus:ring-sauge/30 cursor-pointer">
+                    {buttonText}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
+<script>
+  // Dismiss handler for banner, popup, and modal
+  document.querySelectorAll('[data-dismiss]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = (btn as HTMLElement).getAttribute('data-dismiss');
+      if (targetId) {
+        const el = document.getElementById(targetId);
+        if (el) el.style.display = 'none';
+      }
+    });
+  });
+
+  // Open modal trigger (use data-modal-toggle="newsletter-modal" on any button)
+  document.querySelectorAll('[data-modal-toggle]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = (btn as HTMLElement).getAttribute('data-modal-toggle');
+      if (targetId) {
+        const el = document.getElementById(targetId);
+        if (el) {
+          el.style.display = el.style.display === 'none' || el.classList.contains('hidden')
+            ? 'flex'
+            : 'none';
+          el.classList.remove('hidden');
+        }
+      }
+    });
+  });
+</script>

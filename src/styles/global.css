@@ -10,6 +10,104 @@
     --color-taupe-rgb: 107 98 87;
     --color-sauge-rgb: 168 191 163;
     --color-mousse-rgb: 122 149 117;
+
+    /* ── Flowbite v4 CSS variables — mapped to WP theme palette ──
+       These mirror node_modules/flowbite/src/themes/default.css
+       but use concrete values since @theme / Tailwind v4 vars aren't available.
+       WP overrides cascade: Layout.astro injects --color-taupe etc. on <body>,
+       and these variables reference them via var(). ── */
+
+    /* Text colors */
+    --color-body: var(--color-taupe, #6B6257);
+    --color-body-subtle: var(--color-taupe, #6B6257);
+    --color-heading: var(--color-taupe, #6B6257);
+
+    /* Brand foreground (accent = sauge / mousse) */
+    --color-fg-brand-subtle: var(--color-sauge, #A8BFA3);
+    --color-fg-brand: var(--color-mousse, #7A9575);
+    --color-fg-brand-strong: var(--color-mousse, #7A9575);
+
+    /* Status foreground — keep standard semantic colors */
+    --color-fg-success: #047857;
+    --color-fg-success-strong: #064e3b;
+    --color-fg-danger: #be123c;
+    --color-fg-danger-strong: #881337;
+    --color-fg-warning-subtle: #ea580c;
+    --color-fg-warning: #7c2d12;
+    --color-fg-yellow: #facc15;
+    --color-fg-disabled: #9ca3af;
+
+    /* Neutral backgrounds — palette tones */
+    --color-neutral-primary-soft: var(--color-creme, #FAF8F5);
+    --color-neutral-primary: var(--color-creme, #FAF8F5);
+    --color-neutral-primary-medium: var(--color-creme, #FAF8F5);
+    --color-neutral-primary-strong: var(--color-beige, #E8DCCB);
+    --color-neutral-secondary-soft: var(--color-creme, #FAF8F5);
+    --color-neutral-secondary: var(--color-creme, #FAF8F5);
+    --color-neutral-secondary-medium: var(--color-beige, #E8DCCB);
+    --color-neutral-secondary-strong: var(--color-beige, #E8DCCB);
+    --color-neutral-secondary-strongest: var(--color-beige, #E8DCCB);
+    --color-neutral-tertiary-soft: var(--color-beige, #E8DCCB);
+    --color-neutral-tertiary: var(--color-beige, #E8DCCB);
+    --color-neutral-tertiary-medium: var(--color-taupe, #6B6257);
+    --color-neutral-quaternary: var(--color-taupe, #6B6257);
+    --color-neutral-quaternary-medium: var(--color-taupe, #6B6257);
+    --color-gray: #d1d5db;
+
+    /* Brand backgrounds */
+    --color-brand-softer: var(--color-creme, #FAF8F5);
+    --color-brand-soft: var(--color-beige, #E8DCCB);
+    --color-brand: var(--color-mousse, #7A9575);
+    --color-brand-medium: var(--color-sauge, #A8BFA3);
+    --color-brand-strong: var(--color-mousse, #7A9575);
+
+    /* Status backgrounds — semantic colors */
+    --color-success-soft: #ecfdf5;
+    --color-success: #047857;
+    --color-success-medium: #d1fae5;
+    --color-success-strong: #065f46;
+    --color-danger-soft: #fff1f2;
+    --color-danger: #be123c;
+    --color-danger-medium: #ffe4e6;
+    --color-danger-strong: #9f1239;
+    --color-warning-soft: #fff7ed;
+    --color-warning: #f97316;
+    --color-warning-medium: #ffedd5;
+    --color-warning-strong: #c2410c;
+    --color-dark-soft: var(--color-taupe, #6B6257);
+    --color-dark: var(--color-taupe, #6B6257);
+    --color-dark-strong: var(--color-taupe, #6B6257);
+    --color-disabled: var(--color-beige, #E8DCCB);
+
+    /* Border colors */
+    --color-buffer: var(--color-creme, #FAF8F5);
+    --color-buffer-medium: var(--color-creme, #FAF8F5);
+    --color-buffer-strong: var(--color-creme, #FAF8F5);
+    --color-muted: var(--color-creme, #FAF8F5);
+    --color-light-subtle: var(--color-beige, #E8DCCB);
+    --color-light: var(--color-beige, #E8DCCB);
+    --color-light-medium: var(--color-beige, #E8DCCB);
+    --color-default-subtle: var(--color-beige, #E8DCCB);
+    --color-default: var(--color-beige, #E8DCCB);
+    --color-default-medium: var(--color-beige, #E8DCCB);
+    --color-default-strong: var(--color-beige, #E8DCCB);
+    --color-success-subtle: #a7f3d0;
+    --color-danger-subtle: #fecdd3;
+    --color-warning-subtle: #fed7aa;
+    --color-brand-subtle: var(--color-sauge, #A8BFA3);
+    --color-brand-light: var(--color-mousse, #7A9575);
+    --color-dark-subtle: var(--color-taupe, #6B6257);
+    --color-dark-backdrop: var(--color-taupe, #6B6257);
+
+    /* Border radius */
+    --radius-0: 0px;
+    --radius-xxs: 2px;
+    --radius-xs: 4px;
+    --radius-sm: 6px;
+    --radius: 8px;
+    --radius-base: 12px;
+    --radius-lg: 16px;
+    --default-border-width: 1px;
   }
 
   h1, h2, h3, h4, h5, h6 {

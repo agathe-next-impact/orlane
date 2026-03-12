@@ -4,7 +4,16 @@
       "Bash(kill %1)",
       "Bash(python3 -m json.tool)",
       "Bash(npx tsc:*)",
-      "WebFetch(domain:indigo-heron-756040.hostingersite.com)"
+      "WebFetch(domain:indigo-heron-756040.hostingersite.com)",
+      "Bash(rm -f wordpress-plugin/flowbite-acf-blocks.zip)",
+      "Bash(powershell -Command \"Compress-Archive -Path flowbite-acf-blocks -DestinationPath flowbite-acf-blocks.zip\")",
+      "Bash(rm -f flowbite-acf-blocks.zip)",
+      "Bash(powershell -Command \"Compress-Archive -Path ''flowbite-acf-blocks'' -DestinationPath ''flowbite-acf-blocks.zip''\")",
+      "Bash(powershell -Command \"Remove-Item -Force flowbite-acf-blocks.zip -ErrorAction SilentlyContinue; Compress-Archive -Path ''flowbite-acf-blocks\\\\*'' -DestinationPath ''flowbite-acf-blocks.zip'' -Force\")",
+      "Bash(npm install:*)",
+      "Bash(node -e \"const p=require\\(''''fs''''\\).readFileSync\\(''''/dev/stdin'''',''''utf8''''\\);const j=JSON.parse\\(p\\);console.log\\(''''version:'''',j.version\\);console.log\\(''''exports:'''',JSON.stringify\\(j.exports,null,2\\)\\)\")",
+      "Bash(node -e \"const p=require\\(''flowbite/package.json''\\); console.log\\(''version:'', p.version\\)\")",
+      "Bash(php -l wordpress-plugin/flowbite-acf-blocks/flowbite-acf-blocks.php)"
     ]
   }
 }

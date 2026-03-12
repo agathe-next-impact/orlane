@@ -4,9 +4,26 @@ import type { WPACFFbContentSection } from '../../types/wp';
 
 interface Props extends WPACFFbContentSection {}
 
-const { heading, body, image, layout = 'text_only' } = Astro.props;
+const {
+  heading, body, image, layout = 'text_only',
+  videoUrl, images, bodyRight,
+  contentStats, contentCards, contentFeatures,
+  ctaText, ctaUrl,
+} = Astro.props;
+
+/** Extract YouTube/Vimeo embed URL from a watch/share URL */
+function toEmbedUrl(url: string): string {
+  // YouTube
+  const ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([^&?/]+)/);
+  if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}`;
+  // Vimeo
+  const vmMatch = url.match(/vimeo\.com\/(\d+)/);
+  if (vmMatch) return `https://player.vimeo.com/video/${vmMatch[1]}`;
+  return url;
+}
 ---
 
+{/* 1. Heading with description */}
 {layout === 'text_only' && (
   <section class="bg-creme">
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
@@ -24,6 +41,7 @@ const { heading, body, image, layout = 'text_only' } = Astro.props;
   </section>
 )}
 
+{/* 2. Images with heading and description (image right) */}
 {layout === 'image_right' && (
   <section class="bg-creme">
     <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
@@ -46,6 +64,7 @@ const { heading, body, image, layout = 'text_only' } = Astro.props;
   </section>
 )}
 
+{/* 3. Images with heading and description (image left) */}
 {layout === 'image_left' && (
   <section class="bg-creme">
     <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
@@ -64,6 +83,198 @@ const { heading, body, image, layout = 'text_only' } = Astro.props;
           <div class="prose prose-lg max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
         )}
       </div>
+    </div>
+  </section>
+)}
+
+{/* 4. Video embed content */}
+{layout === 'video' && (
+  <section class="bg-creme">
+    <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
+      <div>
+        {heading && (
+          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+            {heading}
+          </h2>
+        )}
+        {body && (
+          <div class="prose prose-lg max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
+        )}
+      </div>
+      {videoUrl && (
+        <div class="mt-8 lg:mt-0">
+          <div class="relative w-full aspect-video rounded-lg overflow-hidden shadow-lg">
+            <iframe
+              class="absolute inset-0 w-full h-full"
+              src={toEmbedUrl(videoUrl)}
+              title={heading || 'Vidéo'}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  </section>
+)}
+
+{/* 5. Image gallery */}
+{layout === 'gallery' && (
+  <section class="bg-creme">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+      {heading && (
+        <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          {heading}
+        </h2>
+      )}
+      {body && (
+        <div class="mb-8 prose prose-lg max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
+      )}
+      {images && images.length > 0 && (
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {images.map((img, i) => (
+            <img
+              class:list={[
+                'w-full rounded-lg shadow-md',
+                i === 0 && images.length > 3 ? 'md:col-span-2 md:row-span-2' : '',
+              ]}
+              src={img.sourceUrl}
+              alt={img.altText || `Image ${i + 1}`}
+              loading="lazy"
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+)}
+
+{/* 6. Heading with description - two columns */}
+{layout === 'two_columns' && (
+  <section class="bg-creme">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+      {heading && (
+        <h2 class="mb-8 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          {heading}
+        </h2>
+      )}
+      <div class="grid gap-12 lg:grid-cols-2">
+        {body && (
+          <div class="prose prose-lg max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
+        )}
+        {bodyRight && (
+          <div class="prose prose-lg max-w-none text-taupe/70" set:html={sanitizeHTML(bodyRight)} />
+        )}
+      </div>
+    </div>
+  </section>
+)}
+
+{/* 7. Social proof content (stats) */}
+{layout === 'social_proof' && (
+  <section class="bg-creme">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+      <div class="max-w-screen-lg mx-auto mb-8">
+        {heading && (
+          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+            {heading}
+          </h2>
+        )}
+        {body && (
+          <div class="prose prose-lg max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
+        )}
+      </div>
+      {contentStats && contentStats.length > 0 && (
+        <dl class="grid gap-8 sm:grid-cols-3 max-w-screen-md mx-auto text-center">
+          {contentStats.map((stat) => (
+            <div class="flex flex-col items-center">
+              <dt class="mb-2 text-3xl md:text-4xl font-extrabold text-sauge">{stat.value}</dt>
+              <dd class="text-taupe/70">{stat.label}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+    </div>
+  </section>
+)}
+
+{/* 8. Content card images */}
+{layout === 'cards' && (
+  <section class="bg-creme">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+      <div class="flex flex-wrap items-center justify-between mb-8">
+        {heading && (
+          <h2 class="text-4xl tracking-tight font-extrabold text-taupe font-heading">
+            {heading}
+          </h2>
+        )}
+        {ctaText && ctaUrl && (
+          <a href={ctaUrl} class="inline-flex items-center font-medium text-sauge hover:underline">
+            {ctaText}
+            <svg class="ml-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+          </a>
+        )}
+      </div>
+      {contentCards && contentCards.length > 0 && (
+        <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {contentCards.map((card) => (
+            <article class="rounded-lg overflow-hidden shadow-md bg-white">
+              {card.image && (
+                <img class="w-full h-48 object-cover" src={card.image.sourceUrl} alt={card.image.altText || card.title || ''} loading="lazy" />
+              )}
+              <div class="p-5">
+                {card.title && (
+                  <h3 class="mb-2 text-xl font-bold tracking-tight text-taupe font-heading">{card.title}</h3>
+                )}
+                {card.description && (
+                  <p class="text-taupe/70">{card.description}</p>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+)}
+
+{/* 9. Content section with image and feature list */}
+{layout === 'features_list' && (
+  <section class="bg-creme">
+    <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
+      <div>
+        {heading && (
+          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+            {heading}
+          </h2>
+        )}
+        {body && (
+          <div class="mb-6 prose prose-lg max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
+        )}
+        {contentFeatures && contentFeatures.length > 0 && (
+          <ul class="space-y-3 mb-6">
+            {contentFeatures.map((feat) => (
+              <li class="flex items-center space-x-3">
+                <svg class="flex-shrink-0 w-5 h-5 text-sauge" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                <span class="text-taupe/80">{feat.text}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+        {ctaText && ctaUrl && (
+          <a href={ctaUrl} class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-white bg-sauge rounded-lg hover:bg-sauge/90 transition-colors">
+            {ctaText}
+            <svg class="ml-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+          </a>
+        )}
+      </div>
+      {image && (
+        <div class="mt-8 lg:mt-0">
+          <img class="w-full rounded-lg shadow-lg" src={image.sourceUrl} alt={image.altText || heading || ''} />
+        </div>
+      )}
     </div>
   </section>
 )}

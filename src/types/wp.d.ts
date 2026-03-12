@@ -98,13 +98,16 @@ export interface WPACFFbHeroSection extends WPACFBase {
   ctaUrl?: string;
   cta2Text?: string;
   cta2Url?: string;
-  variant?: 'centered' | 'image_right' | 'image_left' | 'fullscreen';
+  variant?: 'centered' | 'image_right' | 'image_left' | 'fullscreen' | 'video' | 'cover_split';
+  badge?: string;
+  videoUrl?: string;
 }
 
 export interface WPACFFbFeatureItem {
   icon?: string;
   title?: string;
   description?: string;
+  link?: string;
 }
 
 export interface WPACFFbFeaturesSection extends WPACFBase {
@@ -112,6 +115,42 @@ export interface WPACFFbFeaturesSection extends WPACFBase {
   description?: string;
   items?: WPACFFbFeatureItem[];
   columns?: '2' | '3' | '4';
+  variant?: 'default' | 'image_right' | 'image_left' | 'with_ctas' | 'checklist' | 'icons_cta' | 'split_description' | 'cards' | 'alternating' | 'rounded_icons' | 'centered' | 'numbered' | 'two_col_large' | 'dark' | 'horizontal' | 'icon_cards';
+  image?: WPImage;
+  ctaText?: string;
+  ctaUrl?: string;
+}
+
+export interface WPACFFbCtaCardItem {
+  image?: WPImage;
+  title?: string;
+  description?: string;
+  value?: string;
+  buttonText?: string;
+  buttonUrl?: string;
+}
+
+export interface WPACFFbCtaIconItem {
+  icon?: string;
+  title?: string;
+  description?: string;
+  link?: string;
+}
+
+export interface WPACFFbCtaTabItem {
+  label?: string;
+  description?: string;
+  buttonText?: string;
+  buttonUrl?: string;
+  features?: string[];
+}
+
+export interface WPACFFbCtaTableRow {
+  label?: string;
+  value?: string;
+  change?: string;
+  buttonText?: string;
+  buttonUrl?: string;
 }
 
 export interface WPACFFbCtaSection extends WPACFBase {
@@ -119,15 +158,47 @@ export interface WPACFFbCtaSection extends WPACFBase {
   description?: string;
   buttonText?: string;
   buttonUrl?: string;
-  variant?: 'centered' | 'with_image' | 'dark';
+  button2Text?: string;
+  button2Url?: string;
+  variant?: 'default' | 'with_image' | 'centered' | 'qr_code' | 'icon_cards' | 'table_cta' | 'newsletter' | 'app_download' | 'image_cards' | 'tabs_mobile' | 'dark';
   image?: WPImage;
+  iconItems?: WPACFFbCtaIconItem[];
+  cards?: WPACFFbCtaCardItem[];
+  tableRows?: WPACFFbCtaTableRow[];
+  tabs?: WPACFFbCtaTabItem[];
+  formAction?: string;
+  placeholder?: string;
+  privacyText?: string;
+}
+
+export interface WPACFFbContentCardItem {
+  image?: WPImage;
+  title?: string;
+  description?: string;
+}
+
+export interface WPACFFbContentStatItem {
+  value?: string;
+  label?: string;
+}
+
+export interface WPACFFbContentFeatureItem {
+  text?: string;
 }
 
 export interface WPACFFbContentSection extends WPACFBase {
   heading?: string;
   body?: string;
   image?: WPImage;
-  layout?: 'text_only' | 'image_right' | 'image_left';
+  layout?: 'text_only' | 'image_right' | 'image_left' | 'video' | 'gallery' | 'two_columns' | 'social_proof' | 'cards' | 'features_list';
+  videoUrl?: string;
+  images?: WPImage[];
+  bodyRight?: string;
+  contentStats?: WPACFFbContentStatItem[];
+  contentCards?: WPACFFbContentCardItem[];
+  contentFeatures?: WPACFFbContentFeatureItem[];
+  ctaText?: string;
+  ctaUrl?: string;
 }
 
 export interface WPACFFbTestimonialItem {
@@ -140,7 +211,9 @@ export interface WPACFFbTestimonialItem {
 
 export interface WPACFFbTestimonialsSection extends WPACFBase {
   heading?: string;
+  description?: string;
   items?: WPACFFbTestimonialItem[];
+  variant?: 'blockquote' | 'cards' | 'tabs' | 'carousel' | 'grid';
 }
 
 export interface WPACFFbPlanFeature {
@@ -173,6 +246,7 @@ export interface WPACFFbFaqItem {
 export interface WPACFFbFaqSection extends WPACFBase {
   heading?: string;
   description?: string;
+  variant?: 'default' | 'search_links' | 'side_description' | 'accordion' | 'three_columns' | 'help_center' | 'cards';
   items?: WPACFFbFaqItem[];
 }
 
@@ -192,6 +266,7 @@ export interface WPACFFbTeamSection extends WPACFBase {
   heading?: string;
   description?: string;
   members?: WPACFFbTeamMember[];
+  variant?: 'default' | 'grid';
 }
 
 export interface WPACFFbContactSection extends WPACFBase {
@@ -212,6 +287,8 @@ export interface WPACFFbNewsletterSection extends WPACFBase {
   placeholder?: string;
   buttonText?: string;
   privacyText?: string;
+  variant?: 'default' | 'card' | 'banner' | 'popup' | 'modal';
+  image?: WPImage;
 }
 
 export interface WPACFFbStatItem {
@@ -244,20 +321,26 @@ export interface WPACFFbSocialProofSection extends WPACFBase {
   heading?: string;
   description?: string;
   items?: WPACFFbSocialProofItem[];
-  variant?: 'cards' | 'inline' | 'with_background';
+  variant?: 'cards' | 'inline' | 'with_background' | 'illustration' | 'carousel' | 'icons_cta';
+  image?: WPImage;
+  images?: WPImage[];
+  subtitle?: string;
+  ctaText?: string;
+  ctaUrl?: string;
 }
 
 export interface WPACFFbCustomerLogo {
   name?: string;
   image?: WPImage;
   url?: string;
+  since?: string;
 }
 
 export interface WPACFFbCustomerLogosSection extends WPACFBase {
   heading?: string;
   description?: string;
   logos?: WPACFFbCustomerLogo[];
-  variant?: 'grid' | 'banner' | 'with_cta';
+  variant?: 'grid' | 'banner' | 'with_cta' | 'cards';
 }
 
 export interface WPACFFbBlogPost {
@@ -277,7 +360,7 @@ export interface WPACFFbBlogSection extends WPACFBase {
   posts?: WPACFFbBlogPost[];
   ctaText?: string;
   ctaUrl?: string;
-  variant?: 'cards' | 'list' | 'featured';
+  variant?: 'cards' | 'list' | 'featured' | 'centered' | 'cards_image';
 }
 
 export interface WPACFFbPortfolioProject {
@@ -341,6 +424,13 @@ export interface WPACFFbFooterSocialLink {
   icon?: string;
 }
 
+export interface WPACFFbFooterAddress {
+  city?: string;
+  address?: string;
+  phone?: string;
+  email?: string;
+}
+
 export interface WPACFFbFooterSection extends WPACFBase {
   logo?: WPImage;
   logoAlt?: string;
@@ -348,7 +438,15 @@ export interface WPACFFbFooterSection extends WPACFBase {
   columns?: WPACFFbFooterColumn[];
   copyright?: string;
   socialLinks?: WPACFFbFooterSocialLink[];
-  variant?: 'columns' | 'simple' | 'with_newsletter';
+  navLinks?: WPACFFbFooterLink[];
+  addresses?: WPACFFbFooterAddress[];
+  newsletterHeading?: string;
+  newsletterDescription?: string;
+  ctaText?: string;
+  ctaUrl?: string;
+  cta2Text?: string;
+  cta2Url?: string;
+  variant?: 'columns' | 'simple' | 'with_newsletter' | 'default' | 'addresses' | 'pre_footer_cta' | 'sitemap_centered';
 }
 
 export interface WPACFFbCookieConsent extends WPACFBase {

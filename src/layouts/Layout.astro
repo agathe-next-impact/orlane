@@ -69,7 +69,6 @@ const wpBlockCssUrl = `${wpBaseUrl}/wp-includes/css/dist/block-library/style.min
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href={googleFontsUrl} rel="stylesheet" />
 		<link rel="stylesheet" href={wpBlockCssUrl} />
-		<link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
 		<SEO title={title} description={description} seo={seo} type={type} />
 	</head>
 	<body class="min-h-screen bg-creme text-taupe" style={colorVars || undefined}>
@@ -149,6 +148,8 @@ const wpBlockCssUrl = `${wpBaseUrl}/wp-includes/css/dist/block-library/style.min
 				</div>
 			</div>
 		</footer>
-		<script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+		<script>
+			import 'flowbite';
+		</script>
 	</body>
 </html>

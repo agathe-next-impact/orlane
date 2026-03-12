@@ -126,6 +126,129 @@ const { heading, description, posts = [], variant = 'cards', ctaText, ctaUrl } =
   </section>
 )}
 
+{variant === 'centered' && (
+  <section class="bg-creme">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+      {(heading || description) && (
+        <div class="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
+          {heading && (
+            <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">{heading}</h2>
+          )}
+          {description && (
+            <p class="font-light text-taupe/70 sm:text-xl">{description}</p>
+          )}
+        </div>
+      )}
+      <div class="space-y-12 max-w-screen-md mx-auto">
+        {posts.map((post) => (
+          <article class="text-center">
+            {post.category && (
+              <span class="bg-sauge/10 text-mousse text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded mb-3">
+                {post.category}
+              </span>
+            )}
+            {post.title && (
+              <h3 class="mb-2 text-2xl font-bold tracking-tight text-taupe">
+                <a href={post.url || '#'} class="hover:text-mousse transition-colors">{post.title}</a>
+              </h3>
+            )}
+            {post.excerpt && (
+              <p class="mb-4 font-light text-taupe/70 max-w-lg mx-auto">{post.excerpt}</p>
+            )}
+            <div class="flex justify-center items-center gap-4 text-sm text-taupe/60">
+              {post.author && (
+                <div class="flex items-center gap-2">
+                  {post.authorAvatar && (
+                    <img class="w-6 h-6 rounded-full" src={post.authorAvatar.sourceUrl} alt={post.author} />
+                  )}
+                  <span class="font-medium text-taupe">{post.author}</span>
+                </div>
+              )}
+              {post.date && <span>{post.date}</span>}
+            </div>
+          </article>
+        ))}
+      </div>
+      {ctaText && ctaUrl && (
+        <div class="text-center mt-12">
+          <a href={ctaUrl} class="inline-flex items-center text-sauge hover:text-mousse font-medium transition-colors">
+            {ctaText}
+            <svg class="w-5 h-5 ms-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+          </a>
+        </div>
+      )}
+    </div>
+  </section>
+)}
+
+{variant === 'cards_image' && (
+  <section class="bg-creme">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+      {(heading || description) && (
+        <div class="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
+          {heading && (
+            <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">{heading}</h2>
+          )}
+          {description && (
+            <p class="font-light text-taupe/70 sm:text-xl">{description}</p>
+          )}
+        </div>
+      )}
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {posts.map((post) => (
+          <article class="bg-beige/20 rounded-lg border border-beige shadow-sm overflow-hidden">
+            {post.image && (
+              <a href={post.url || '#'}>
+                <img class="w-full h-56 object-cover" src={post.image.sourceUrl} alt={post.image.altText || post.title || ''} loading="lazy" />
+              </a>
+            )}
+            <div class="p-5">
+              {post.category && (
+                <span class="bg-sauge/10 text-mousse text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded mb-3">
+                  {post.category}
+                </span>
+              )}
+              {post.title && (
+                <h3 class="mb-2 text-xl font-bold tracking-tight text-taupe">
+                  <a href={post.url || '#'} class="hover:text-mousse transition-colors">{post.title}</a>
+                </h3>
+              )}
+              {post.excerpt && (
+                <p class="mb-4 text-sm font-light text-taupe/70">{post.excerpt}</p>
+              )}
+              <div class="flex items-center justify-between">
+                {post.author && (
+                  <div class="flex items-center gap-2">
+                    {post.authorAvatar && (
+                      <img class="w-8 h-8 rounded-full" src={post.authorAvatar.sourceUrl} alt={post.author} />
+                    )}
+                    <div>
+                      <p class="text-sm font-medium text-taupe">{post.author}</p>
+                      {post.date && <p class="text-xs text-taupe/60">{post.date}</p>}
+                    </div>
+                  </div>
+                )}
+                <a href={post.url || '#'} class="inline-flex items-center text-sm font-medium text-sauge hover:text-mousse transition-colors">
+                  Lire
+                  <svg class="w-4 h-4 ms-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+      {ctaText && ctaUrl && (
+        <div class="text-center mt-12">
+          <a href={ctaUrl} class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-creme rounded-lg bg-sauge hover:bg-mousse transition-colors">
+            {ctaText}
+            <svg class="w-5 h-5 ms-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+          </a>
+        </div>
+      )}
+    </div>
+  </section>
+)}
+
 {variant === 'featured' && (
   <section class="bg-creme">
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">

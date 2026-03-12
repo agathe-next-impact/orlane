@@ -18,6 +18,58 @@ if (!defined('ABSPATH')) {
 add_filter('use_block_editor_for_post', '__return_false');
 add_filter('use_widgets_block_editor', '__return_false');
 
+// ── Icônes SVG Flowbite pour les layouts ACF Flexible Content ──────────
+add_action('admin_head', function (): void {
+    $screen = get_current_screen();
+    if (!$screen || !in_array($screen->base, ['post', 'toplevel_page_theme-settings'], true)) {
+        return;
+    }
+
+    // Icônes SVG Flowbite (outline, 24x24, currentColor)
+    $icons = [
+        'fb_hero_section'           => '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11V4m4 4-4-4-4 4m9 7H7m11 4H6a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1Z"/>',
+        'fb_hero_homepage'          => '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5"/>',
+        'fb_features_section'       => '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.143 4H4.857A.857.857 0 0 0 4 4.857v4.286c0 .473.384.857.857.857h4.286A.857.857 0 0 0 10 9.143V4.857A.857.857 0 0 0 9.143 4Zm10 0h-4.286a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286A.857.857 0 0 0 20 9.143V4.857A.857.857 0 0 0 19.143 4Zm-10 10H4.857a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286a.857.857 0 0 0 .857-.857v-4.286A.857.857 0 0 0 9.143 14Zm10 0h-4.286a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286a.857.857 0 0 0 .857-.857v-4.286a.857.857 0 0 0-.857-.857Z"/>',
+        'fb_cta_section'            => '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 5V4a1 1 0 0 0-1-1H8.914a1 1 0 0 0-.707.293L4.293 7.207A1 1 0 0 0 4 7.914V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5M9 3v4a1 1 0 0 1-1 1H4m11.383.772 2.745 2.746m1.215-3.906a2.089 2.089 0 0 1 0 2.953l-6.65 6.646L9 17.95l.739-3.692 6.646-6.646a2.087 2.087 0 0 1 2.958 0Z"/>',
+        'fb_content_section'        => '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 5V4a1 1 0 0 0-1-1H8.914a1 1 0 0 0-.707.293L4.293 7.207A1 1 0 0 0 4 7.914V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9M9 3v4a1 1 0 0 1-1 1H4m9 4h2m-2 3h2m-2-6h2M9 7h2m-2 3h2"/>',
+        'fb_testimonials_section'   => '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.556 2h9.889C20.09 2 22 3.91 22 6.556v5.89C22 15.09 20.09 17 17.444 17H14l-5 4v-4H7.556C4.91 17 3 15.09 3 12.444V6.556C3 3.91 4.91 2 7.556 2Z"/>',
+        'fb_pricing_section'        => '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.345a4.76 4.76 0 0 0 2.558 1.618c2.274.589 4.512-.446 4.999-2.31.487-1.866-1.273-3.9-3.546-4.49-2.273-.59-4.034-2.623-3.547-4.49.487-1.866 2.725-2.899 4.999-2.31A4.76 4.76 0 0 1 16 6.655M12 2v20"/>',
+        'fb_faq_section'            => '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.529 9.988a2.502 2.502 0 1 1 2.666 2.475M12 15h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>',
+        'fb_team_section'           => '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.99 9H15M8.99 9H9m12 3a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM7 13c0 1 .507 2.397 1.494 3.216a5.5 5.5 0 0 0 7.022 0C16.503 15.397 17 14 17 13c0 0-1.99 1-5 1s-5-1-5-1Z"/>',
+        'fb_contact_section'        => '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16v-5.5A3.5 3.5 0 0 0 7.5 7m3.5 9H4v-5.5A3.5 3.5 0 0 1 7.5 7m3.5 9v4M7.5 7H14m0 0V4h2.5M14 7v3m-3.5 6H20v-6a3 3 0 0 0-3-3m-2 9v4m-8-6.5h1"/>',
+        'fb_newsletter_section'     => '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16v-5.5A3.5 3.5 0 0 0 7.5 7m3.5 9H4v-5.5A3.5 3.5 0 0 1 7.5 7m3.5 9v4M7.5 7H14m0 0V4h2.5M14 7v3m-3.5 6H20v-6a3 3 0 0 0-3-3m-2 9v4m-8-6.5h1"/>',
+        'fb_stats_section'          => '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4.5V19a1 1 0 0 0 1 1h15M7 14l4-4 4 4 5-5m0 0h-3.207M20 9v3.207"/>',
+        'fb_gallery_section'        => '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m3 16 5-7 6 6.5m6.5 2.5L16 13l-4.286 6M14 10h.01M4 19h16a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Z"/>',
+        'fb_social_proof_section'   => '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022 4.342.557c.866.111 1.211 1.175.585 1.8l-3.155 3.116.757 4.382c.15.863-.754 1.528-1.53 1.123L12 18.202l-3.868 2.102c-.776.405-1.68-.26-1.53-1.123l.757-4.382L4.204 11.483c-.626-.625-.28-1.689.585-1.8l4.342-.557 1.752-4.022Z"/>',
+        'fb_customer_logos_section'  => '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15v4m6-6v6m6-4v4m6-6v6M3 11l6-5 6 5 6-5"/>',
+        'fb_blog_section'           => '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7h1v12a1 1 0 0 1-2 0V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h11.5M7 14h6m-6 3h6m0-10H7v5h6V7Z"/>',
+        'fb_portfolio_section'      => '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11H4a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h8M7 11V7a5 5 0 0 1 10 0v4m-4.5 8H20a1 1 0 0 0 1-1v-7a1 1 0 0 0-1-1h-8"/>',
+        'fb_banner_section'         => '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5.365V3m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175C19 17.4 19 18 18.462 18H5.538C5 18 5 17.4 5 16.708c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 12 5.365ZM8.733 18c.094.852.306 1.54.944 2.112a3.48 3.48 0 0 0 4.646 0c.638-.572 1.236-1.26 1.33-2.112h-6.92Z"/>',
+        'fb_event_schedule_section' => '<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"/>',
+    ];
+
+    echo '<style>';
+    echo '/* Flowbite icons for ACF Flexible Content layouts */';
+    foreach ($icons as $layout => $svg_path) {
+        $svg = rawurlencode('<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24">' . $svg_path . '</svg>');
+        // Cible le bouton d'ajout dans le popup et le label du layout replié
+        echo ".acf-fc-popup a[data-layout=\"{$layout}\"]::before,";
+        echo ".layout[data-layout=\"{$layout}\"] .acf-fc-layout-handle::before {";
+        echo "  content: '';";
+        echo "  display: inline-block;";
+        echo "  width: 20px;";
+        echo "  height: 20px;";
+        echo "  margin-right: 8px;";
+        echo "  vertical-align: middle;";
+        echo "  background: url(\"data:image/svg+xml,{$svg}\") no-repeat center / contain;";
+        echo '}';
+    }
+    // Style global pour aligner les icônes dans les handles
+    echo '.acf-fc-layout-handle { display: flex; align-items: center; }';
+    echo '.acf-fc-popup a { display: flex; align-items: center; }';
+    echo '</style>';
+});
+
 // Supprime l'éditeur classique pour les types qui utilisent le flexible content ACF
 add_action('init', function(): void {
     remove_post_type_support('page', 'editor');
@@ -131,12 +183,37 @@ add_action('acf/include_fields', function () {
                                 'name' => 'variant',
                                 'type' => 'select',
                                 'choices' => [
-                                    'centered' => 'Centré',
-                                    'image_right' => 'Image à droite',
-                                    'image_left' => 'Image à gauche',
-                                    'fullscreen' => 'Plein écran avec fond',
+                                    'centered' => '1. Centré',
+                                    'image_right' => '2. Image à droite',
+                                    'image_left' => '3. Image à gauche',
+                                    'fullscreen' => '4. Plein écran avec fond',
+                                    'video' => '5. Vidéo + texte',
+                                    'cover_split' => '6. Image latérale + détails',
                                 ],
                                 'default_value' => 'centered',
+                            ],
+                            [
+                                'key' => 'field_fb_hero_badge',
+                                'label' => 'Badge d\'annonce',
+                                'name' => 'badge',
+                                'type' => 'text',
+                                'instructions' => 'Texte affiché dans un badge au-dessus du titre (ex: « Nouveau », « Offre spéciale »). Laisser vide pour masquer.',
+                            ],
+                            [
+                                'key' => 'field_fb_hero_video_url',
+                                'label' => 'URL de la vidéo',
+                                'name' => 'video_url',
+                                'type' => 'url',
+                                'instructions' => 'URL YouTube ou Vimeo (variante 5).',
+                                'conditional_logic' => [
+                                    [
+                                        [
+                                            'field' => 'field_fb_hero_variant',
+                                            'operator' => '==',
+                                            'value' => 'video',
+                                        ],
+                                    ],
+                                ],
                             ],
                         ],
                     ],
@@ -167,6 +244,33 @@ add_action('acf/include_fields', function () {
                                 'wrapper'           => ['width' => '30'],
                             ],
                             [
+                                'key'               => 'field_fb_features_variant',
+                                'label'             => 'Variante d\'affichage',
+                                'name'              => 'variant',
+                                'type'              => 'select',
+                                'choices'           => [
+                                    'default'            => '1. Grille avec icônes',
+                                    'image_right'        => '2. Image à droite + liste',
+                                    'image_left'         => '3. Image à gauche + liste',
+                                    'with_ctas'          => '4. Fonctionnalités avec liens',
+                                    'checklist'          => '5. Icônes + listes à coches',
+                                    'icons_cta'          => '6. Grandes icônes + CTA',
+                                    'split_description'  => '7. Description + grille',
+                                    'cards'              => '8. Cartes avec bordures',
+                                    'alternating'        => '9. Image/texte alternés',
+                                    'rounded_icons'      => '10. Icônes rondes colorées',
+                                    'centered'           => '11. Grille centrée',
+                                    'numbered'           => '12. Étapes numérotées',
+                                    'two_col_large'      => '13. 2 colonnes grand format',
+                                    'dark'               => '14. Fond sombre',
+                                    'horizontal'         => '15. Icône + texte en ligne',
+                                    'icon_cards'         => '16. Cartes avec icône proéminente',
+                                ],
+                                'default_value'     => 'default',
+                                'instructions'      => 'Style d\'affichage de la section (voir flowbite.com/blocks/marketing/feature/).',
+                                'wrapper'           => ['width' => '35'],
+                            ],
+                            [
                                 'key' => 'field_fb_features_heading',
                                 'label' => 'Titre',
                                 'name' => 'heading',
@@ -178,6 +282,51 @@ add_action('acf/include_fields', function () {
                                 'name' => 'description',
                                 'type' => 'textarea',
                                 'rows' => 2,
+                            ],
+                            [
+                                'key' => 'field_fb_features_image',
+                                'label' => 'Image',
+                                'name' => 'image',
+                                'type' => 'image',
+                                'return_format' => 'array',
+                                'preview_size' => 'medium',
+                                'instructions' => 'Image utilisée dans les variantes avec image (2, 3, 9).',
+                                'conditional_logic' => [
+                                    [
+                                        [
+                                            'field' => 'field_fb_features_variant',
+                                            'operator' => '==',
+                                            'value' => 'image_right',
+                                        ],
+                                    ],
+                                    [
+                                        [
+                                            'field' => 'field_fb_features_variant',
+                                            'operator' => '==',
+                                            'value' => 'image_left',
+                                        ],
+                                    ],
+                                    [
+                                        [
+                                            'field' => 'field_fb_features_variant',
+                                            'operator' => '==',
+                                            'value' => 'alternating',
+                                        ],
+                                    ],
+                                ],
+                            ],
+                            [
+                                'key' => 'field_fb_features_cta_text',
+                                'label' => 'Texte du bouton',
+                                'name' => 'cta_text',
+                                'type' => 'text',
+                                'instructions' => 'Bouton CTA (variantes 4, 6).',
+                            ],
+                            [
+                                'key' => 'field_fb_features_cta_url',
+                                'label' => 'Lien du bouton',
+                                'name' => 'cta_url',
+                                'type' => 'url',
                             ],
                             [
                                 'key' => 'field_fb_features_items',
@@ -209,6 +358,13 @@ add_action('acf/include_fields', function () {
                                         'name' => 'description',
                                         'type' => 'textarea',
                                         'rows' => 2,
+                                    ],
+                                    [
+                                        'key' => 'field_fb_feature_link',
+                                        'label' => 'Lien',
+                                        'name' => 'link',
+                                        'type' => 'url',
+                                        'instructions' => 'URL optionnelle (variante 4 : « En savoir plus »).',
                                     ],
                                 ],
                             ],
@@ -284,12 +440,42 @@ add_action('acf/include_fields', function () {
                                 'name' => 'variant',
                                 'type' => 'select',
                                 'choices' => [
-                                    'centered' => 'Centré',
-                                    'with_image' => 'Avec image',
-                                    'dark' => 'Fond sombre',
+                                    'default'       => 'Par défaut (deux boutons)',
+                                    'with_image'    => 'Avec image',
+                                    'centered'      => 'Centré minimal',
+                                    'qr_code'       => 'QR Code',
+                                    'icon_cards'    => 'Cartes avec icônes',
+                                    'table_cta'     => 'Tableau de données',
+                                    'newsletter'    => 'Inscription newsletter',
+                                    'app_download'  => 'Téléchargement app',
+                                    'image_cards'   => 'Cartes avec images',
+                                    'tabs_mobile'   => 'Onglets avec aperçu mobile',
+                                    'dark'          => 'Fond sombre',
                                 ],
                                 'default_value' => 'centered',
                             ],
+                            // Bouton secondaire (default, app_download)
+                            [
+                                'key' => 'field_fb_cta_button2_text',
+                                'label' => 'Texte du bouton secondaire',
+                                'name' => 'button2_text',
+                                'type' => 'text',
+                                'conditional_logic' => [
+                                    [['field' => 'field_fb_cta_variant', 'operator' => '==', 'value' => 'default']],
+                                    [['field' => 'field_fb_cta_variant', 'operator' => '==', 'value' => 'app_download']],
+                                ],
+                            ],
+                            [
+                                'key' => 'field_fb_cta_button2_url',
+                                'label' => 'Lien du bouton secondaire',
+                                'name' => 'button2_url',
+                                'type' => 'url',
+                                'conditional_logic' => [
+                                    [['field' => 'field_fb_cta_variant', 'operator' => '==', 'value' => 'default']],
+                                    [['field' => 'field_fb_cta_variant', 'operator' => '==', 'value' => 'app_download']],
+                                ],
+                            ],
+                            // Image (with_image, qr_code, app_download, tabs_mobile)
                             [
                                 'key' => 'field_fb_cta_image',
                                 'label' => 'Image',
@@ -297,13 +483,130 @@ add_action('acf/include_fields', function () {
                                 'type' => 'image',
                                 'return_format' => 'array',
                                 'conditional_logic' => [
-                                    [
-                                        [
-                                            'field' => 'field_fb_cta_variant',
-                                            'operator' => '==',
-                                            'value' => 'with_image',
-                                        ],
-                                    ],
+                                    [['field' => 'field_fb_cta_variant', 'operator' => '==', 'value' => 'with_image']],
+                                    [['field' => 'field_fb_cta_variant', 'operator' => '==', 'value' => 'qr_code']],
+                                    [['field' => 'field_fb_cta_variant', 'operator' => '==', 'value' => 'app_download']],
+                                    [['field' => 'field_fb_cta_variant', 'operator' => '==', 'value' => 'tabs_mobile']],
+                                ],
+                            ],
+                            // Icon items repeater (icon_cards)
+                            [
+                                'key' => 'field_fb_cta_icon_items',
+                                'label' => 'Cartes',
+                                'name' => 'icon_items',
+                                'type' => 'repeater',
+                                'min' => 1,
+                                'max' => 8,
+                                'layout' => 'block',
+                                'button_label' => 'Ajouter une carte',
+                                'show_in_graphql' => 1,
+                                'conditional_logic' => [
+                                    [['field' => 'field_fb_cta_variant', 'operator' => '==', 'value' => 'icon_cards']],
+                                ],
+                                'sub_fields' => [
+                                    ['key' => 'field_fb_cta_icon_item_icon', 'label' => 'Icône', 'name' => 'icon', 'type' => 'text', 'instructions' => 'Nom de l\'icône (ex: chart, star, heart)'],
+                                    ['key' => 'field_fb_cta_icon_item_title', 'label' => 'Titre', 'name' => 'title', 'type' => 'text'],
+                                    ['key' => 'field_fb_cta_icon_item_desc', 'label' => 'Description', 'name' => 'description', 'type' => 'textarea', 'rows' => 2],
+                                    ['key' => 'field_fb_cta_icon_item_link', 'label' => 'Lien', 'name' => 'link', 'type' => 'url'],
+                                ],
+                            ],
+                            // Table rows repeater (table_cta)
+                            [
+                                'key' => 'field_fb_cta_table_rows',
+                                'label' => 'Lignes du tableau',
+                                'name' => 'table_rows',
+                                'type' => 'repeater',
+                                'min' => 1,
+                                'max' => 20,
+                                'layout' => 'table',
+                                'button_label' => 'Ajouter une ligne',
+                                'show_in_graphql' => 1,
+                                'conditional_logic' => [
+                                    [['field' => 'field_fb_cta_variant', 'operator' => '==', 'value' => 'table_cta']],
+                                ],
+                                'sub_fields' => [
+                                    ['key' => 'field_fb_cta_table_label', 'label' => 'Libellé', 'name' => 'label', 'type' => 'text'],
+                                    ['key' => 'field_fb_cta_table_value', 'label' => 'Valeur', 'name' => 'value', 'type' => 'text'],
+                                    ['key' => 'field_fb_cta_table_change', 'label' => 'Variation', 'name' => 'change', 'type' => 'text'],
+                                    ['key' => 'field_fb_cta_table_btn_text', 'label' => 'Bouton', 'name' => 'button_text', 'type' => 'text'],
+                                    ['key' => 'field_fb_cta_table_btn_url', 'label' => 'Lien', 'name' => 'button_url', 'type' => 'url'],
+                                ],
+                            ],
+                            // Newsletter fields
+                            [
+                                'key' => 'field_fb_cta_form_action',
+                                'label' => 'URL du formulaire',
+                                'name' => 'form_action',
+                                'type' => 'url',
+                                'instructions' => 'URL d\'action du formulaire d\'inscription.',
+                                'conditional_logic' => [
+                                    [['field' => 'field_fb_cta_variant', 'operator' => '==', 'value' => 'newsletter']],
+                                ],
+                            ],
+                            [
+                                'key' => 'field_fb_cta_placeholder',
+                                'label' => 'Placeholder',
+                                'name' => 'placeholder',
+                                'type' => 'text',
+                                'default_value' => 'Votre adresse email',
+                                'conditional_logic' => [
+                                    [['field' => 'field_fb_cta_variant', 'operator' => '==', 'value' => 'newsletter']],
+                                ],
+                            ],
+                            [
+                                'key' => 'field_fb_cta_privacy_text',
+                                'label' => 'Texte de confidentialité',
+                                'name' => 'privacy_text',
+                                'type' => 'textarea',
+                                'rows' => 2,
+                                'instructions' => 'Texte sous le formulaire (HTML autorisé).',
+                                'conditional_logic' => [
+                                    [['field' => 'field_fb_cta_variant', 'operator' => '==', 'value' => 'newsletter']],
+                                ],
+                            ],
+                            // Image cards repeater (image_cards)
+                            [
+                                'key' => 'field_fb_cta_cards',
+                                'label' => 'Cartes',
+                                'name' => 'cards',
+                                'type' => 'repeater',
+                                'min' => 1,
+                                'max' => 4,
+                                'layout' => 'block',
+                                'button_label' => 'Ajouter une carte',
+                                'show_in_graphql' => 1,
+                                'conditional_logic' => [
+                                    [['field' => 'field_fb_cta_variant', 'operator' => '==', 'value' => 'image_cards']],
+                                ],
+                                'sub_fields' => [
+                                    ['key' => 'field_fb_cta_card_image', 'label' => 'Image', 'name' => 'image', 'type' => 'image', 'return_format' => 'array'],
+                                    ['key' => 'field_fb_cta_card_title', 'label' => 'Titre', 'name' => 'title', 'type' => 'text'],
+                                    ['key' => 'field_fb_cta_card_desc', 'label' => 'Description', 'name' => 'description', 'type' => 'textarea', 'rows' => 2],
+                                    ['key' => 'field_fb_cta_card_value', 'label' => 'Valeur mise en avant', 'name' => 'value', 'type' => 'text', 'instructions' => 'Ex: 2 500 €, 85%, etc.'],
+                                    ['key' => 'field_fb_cta_card_btn_text', 'label' => 'Texte du bouton', 'name' => 'button_text', 'type' => 'text'],
+                                    ['key' => 'field_fb_cta_card_btn_url', 'label' => 'Lien du bouton', 'name' => 'button_url', 'type' => 'url'],
+                                ],
+                            ],
+                            // Tabs repeater (tabs_mobile)
+                            [
+                                'key' => 'field_fb_cta_tabs',
+                                'label' => 'Onglets',
+                                'name' => 'tabs',
+                                'type' => 'repeater',
+                                'min' => 1,
+                                'max' => 5,
+                                'layout' => 'block',
+                                'button_label' => 'Ajouter un onglet',
+                                'show_in_graphql' => 1,
+                                'conditional_logic' => [
+                                    [['field' => 'field_fb_cta_variant', 'operator' => '==', 'value' => 'tabs_mobile']],
+                                ],
+                                'sub_fields' => [
+                                    ['key' => 'field_fb_cta_tab_label', 'label' => 'Titre de l\'onglet', 'name' => 'label', 'type' => 'text'],
+                                    ['key' => 'field_fb_cta_tab_desc', 'label' => 'Description', 'name' => 'description', 'type' => 'textarea', 'rows' => 2],
+                                    ['key' => 'field_fb_cta_tab_btn_text', 'label' => 'Texte du bouton', 'name' => 'button_text', 'type' => 'text'],
+                                    ['key' => 'field_fb_cta_tab_btn_url', 'label' => 'Lien du bouton', 'name' => 'button_url', 'type' => 'url'],
+                                    ['key' => 'field_fb_cta_tab_features', 'label' => 'Fonctionnalités', 'name' => 'features', 'type' => 'textarea', 'rows' => 4, 'instructions' => 'Une fonctionnalité par ligne.'],
                                 ],
                             ],
                         ],
@@ -360,11 +663,148 @@ add_action('acf/include_fields', function () {
                                 'name' => 'layout',
                                 'type' => 'select',
                                 'choices' => [
-                                    'text_only' => 'Texte seul',
-                                    'image_right' => 'Image à droite',
-                                    'image_left' => 'Image à gauche',
+                                    'text_only'     => 'Texte seul',
+                                    'image_right'   => 'Image à droite',
+                                    'image_left'    => 'Image à gauche',
+                                    'video'         => 'Vidéo intégrée',
+                                    'gallery'       => 'Galerie d\'images',
+                                    'two_columns'   => 'Deux colonnes',
+                                    'social_proof'  => 'Chiffres clés',
+                                    'cards'         => 'Cartes avec images',
+                                    'features_list' => 'Liste de caractéristiques',
                                 ],
                                 'default_value' => 'text_only',
+                            ],
+                            [
+                                'key' => 'field_fb_content_video_url',
+                                'label' => 'URL de la vidéo',
+                                'name' => 'video_url',
+                                'type' => 'url',
+                                'instructions' => 'URL YouTube ou Vimeo.',
+                                'conditional_logic' => [
+                                    [[ 'field' => 'field_fb_content_layout', 'operator' => '==', 'value' => 'video' ]],
+                                ],
+                            ],
+                            [
+                                'key' => 'field_fb_content_images',
+                                'label' => 'Galerie d\'images',
+                                'name' => 'images',
+                                'type' => 'gallery',
+                                'return_format' => 'array',
+                                'min' => 1,
+                                'max' => 12,
+                                'conditional_logic' => [
+                                    [[ 'field' => 'field_fb_content_layout', 'operator' => '==', 'value' => 'gallery' ]],
+                                ],
+                            ],
+                            [
+                                'key' => 'field_fb_content_body_right',
+                                'label' => 'Contenu colonne droite',
+                                'name' => 'body_right',
+                                'type' => 'wysiwyg',
+                                'media_upload' => 1,
+                                'conditional_logic' => [
+                                    [[ 'field' => 'field_fb_content_layout', 'operator' => '==', 'value' => 'two_columns' ]],
+                                ],
+                            ],
+                            [
+                                'key' => 'field_fb_content_stats',
+                                'label' => 'Chiffres clés',
+                                'name' => 'content_stats',
+                                'type' => 'repeater',
+                                'min' => 1,
+                                'max' => 6,
+                                'layout' => 'table',
+                                'conditional_logic' => [
+                                    [[ 'field' => 'field_fb_content_layout', 'operator' => '==', 'value' => 'social_proof' ]],
+                                ],
+                                'sub_fields' => [
+                                    [
+                                        'key' => 'field_fb_content_stat_value',
+                                        'label' => 'Valeur',
+                                        'name' => 'value',
+                                        'type' => 'text',
+                                    ],
+                                    [
+                                        'key' => 'field_fb_content_stat_label',
+                                        'label' => 'Libellé',
+                                        'name' => 'label',
+                                        'type' => 'text',
+                                    ],
+                                ],
+                            ],
+                            [
+                                'key' => 'field_fb_content_cards',
+                                'label' => 'Cartes',
+                                'name' => 'content_cards',
+                                'type' => 'repeater',
+                                'min' => 1,
+                                'max' => 6,
+                                'layout' => 'block',
+                                'conditional_logic' => [
+                                    [[ 'field' => 'field_fb_content_layout', 'operator' => '==', 'value' => 'cards' ]],
+                                ],
+                                'sub_fields' => [
+                                    [
+                                        'key' => 'field_fb_content_card_image',
+                                        'label' => 'Image',
+                                        'name' => 'image',
+                                        'type' => 'image',
+                                        'return_format' => 'array',
+                                    ],
+                                    [
+                                        'key' => 'field_fb_content_card_title',
+                                        'label' => 'Titre',
+                                        'name' => 'title',
+                                        'type' => 'text',
+                                    ],
+                                    [
+                                        'key' => 'field_fb_content_card_description',
+                                        'label' => 'Description',
+                                        'name' => 'description',
+                                        'type' => 'textarea',
+                                    ],
+                                ],
+                            ],
+                            [
+                                'key' => 'field_fb_content_features',
+                                'label' => 'Caractéristiques',
+                                'name' => 'content_features',
+                                'type' => 'repeater',
+                                'min' => 1,
+                                'max' => 12,
+                                'layout' => 'table',
+                                'conditional_logic' => [
+                                    [[ 'field' => 'field_fb_content_layout', 'operator' => '==', 'value' => 'features_list' ]],
+                                ],
+                                'sub_fields' => [
+                                    [
+                                        'key' => 'field_fb_content_feature_text',
+                                        'label' => 'Texte',
+                                        'name' => 'text',
+                                        'type' => 'text',
+                                    ],
+                                ],
+                            ],
+                            [
+                                'key' => 'field_fb_content_cta_text',
+                                'label' => 'Texte du bouton',
+                                'name' => 'cta_text',
+                                'type' => 'text',
+                                'conditional_logic' => [
+                                    [[ 'field' => 'field_fb_content_layout', 'operator' => '==', 'value' => 'cards' ]],
+                                    [[ 'field' => 'field_fb_content_layout', 'operator' => '==', 'value' => 'features_list' ]],
+                                ],
+                            ],
+                            [
+                                'key' => 'field_fb_content_cta_url',
+                                'label' => 'URL du bouton',
+                                'name' => 'cta_url',
+                                'type' => 'url',
+                                'conditional_logic' => [
+                                    [[ 'field' => 'field_fb_content_layout', 'operator' => '==', 'value' => 'cards' ]],
+                                    [[ 'field' => 'field_fb_content_layout', 'operator' => '==', 'value' => 'features_list' ]],
+                                ],
                             ],
                         ],
                     ],
@@ -395,10 +835,36 @@ add_action('acf/include_fields', function () {
                                 'wrapper'           => ['width' => '30'],
                             ],
                             [
+                                'key'               => 'field_fb_testimonials_variant',
+                                'label'             => 'Variante',
+                                'name'              => 'variant',
+                                'type'              => 'select',
+                                'choices'           => [
+                                    'grid'          => 'Grille (3 colonnes)',
+                                    'blockquote'    => 'Citation unique',
+                                    'cards'         => 'Cartes (2 colonnes)',
+                                    'tabs'          => 'Onglets',
+                                    'carousel'      => 'Carrousel',
+                                ],
+                                'default_value'     => 'grid',
+                                'instructions'      => 'Style d\'affichage des témoignages.',
+                                'show_in_graphql'   => 1,
+                                'wrapper'           => ['width' => '30'],
+                            ],
+                            [
                                 'key' => 'field_fb_testimonials_heading',
                                 'label' => 'Titre',
                                 'name' => 'heading',
                                 'type' => 'text',
+                            ],
+                            [
+                                'key' => 'field_fb_testimonials_description',
+                                'label' => 'Description',
+                                'name' => 'description',
+                                'type' => 'textarea',
+                                'rows' => 2,
+                                'instructions' => 'Sous-titre optionnel.',
+                                'show_in_graphql' => 1,
                             ],
                             [
                                 'key' => 'field_fb_testimonials_items',
@@ -601,6 +1067,25 @@ add_action('acf/include_fields', function () {
                                 'wrapper'           => ['width' => '30'],
                             ],
                             [
+                                'key'               => 'field_fb_faq_variant',
+                                'label'             => 'Variante',
+                                'name'              => 'variant',
+                                'type'              => 'select',
+                                'choices'           => [
+                                    'default'           => 'Grille 2 colonnes (icônes)',
+                                    'search_links'      => 'Barre de recherche + liens',
+                                    'side_description'  => 'Description à gauche',
+                                    'accordion'         => 'Accordéon',
+                                    'three_columns'     => 'Grille 3 colonnes',
+                                    'help_center'       => 'Centre d\'aide (cartes)',
+                                    'cards'             => 'Cartes',
+                                ],
+                                'default_value'     => 'accordion',
+                                'instructions'      => 'Style d\'affichage de la section FAQ.',
+                                'show_in_graphql'   => 1,
+                                'wrapper'           => ['width' => '30'],
+                            ],
+                            [
                                 'key' => 'field_fb_faq_heading',
                                 'label' => 'Titre',
                                 'name' => 'heading',
@@ -662,6 +1147,20 @@ add_action('acf/include_fields', function () {
                                 ],
                                 'default_value'     => '',
                                 'instructions'      => 'Combinaison de couleurs (définie dans Réglages du thème → Variations).',
+                                'show_in_graphql'   => 1,
+                                'wrapper'           => ['width' => '30'],
+                            ],
+                            [
+                                'key'               => 'field_fb_team_variant',
+                                'label'             => 'Variante',
+                                'name'              => 'variant',
+                                'type'              => 'select',
+                                'choices'           => [
+                                    'default'       => 'Cards horizontales',
+                                    'grid'          => 'Grille avatars ronds',
+                                ],
+                                'default_value'     => 'default',
+                                'instructions'      => 'Style d\'affichage de la section équipe.',
                                 'show_in_graphql'   => 1,
                                 'wrapper'           => ['width' => '30'],
                             ],
@@ -846,6 +1345,22 @@ add_action('acf/include_fields', function () {
                         'display' => 'block',
                         'sub_fields' => [
                             [
+                                'key'               => 'field_fb_newsletter_variant',
+                                'label'             => 'Variante',
+                                'name'              => 'variant',
+                                'type'              => 'select',
+                                'choices'           => [
+                                    'default'   => 'Par défaut',
+                                    'card'      => 'Carte',
+                                    'banner'    => 'Bandeau',
+                                    'popup'     => 'Popup',
+                                    'modal'     => 'Modale avec image',
+                                ],
+                                'default_value'     => 'default',
+                                'show_in_graphql'   => 1,
+                                'wrapper'           => ['width' => '35'],
+                            ],
+                            [
                                 'key'               => 'field_fb_newsletter_color_variation',
                                 'label'             => 'Variation de couleurs',
                                 'name'              => 'color_variation',
@@ -902,6 +1417,25 @@ add_action('acf/include_fields', function () {
                                 'type' => 'textarea',
                                 'rows' => 2,
                                 'instructions' => 'Texte relatif à la politique de confidentialité.',
+                            ],
+                            [
+                                'key' => 'field_fb_newsletter_image',
+                                'label' => 'Image',
+                                'name' => 'image',
+                                'type' => 'image',
+                                'return_format' => 'id',
+                                'preview_size' => 'medium',
+                                'instructions' => 'Image affichée dans la variante Modale.',
+                                'show_in_graphql' => 1,
+                                'conditional_logic' => [
+                                    [
+                                        [
+                                            'field' => 'field_fb_newsletter_variant',
+                                            'operator' => '==',
+                                            'value' => 'modal',
+                                        ],
+                                    ],
+                                ],
                             ],
                         ],
                     ],
@@ -1134,8 +1668,70 @@ add_action('acf/include_fields', function () {
                                     'cards' => 'Cartes',
                                     'inline' => 'En ligne',
                                     'with_background' => 'Avec fond sombre',
+                                    'illustration' => 'Illustration + stats',
+                                    'carousel' => 'Carrousel + stats',
+                                    'icons_cta' => 'Icônes + CTA',
                                 ],
                                 'default_value' => 'cards',
+                            ],
+                            [
+                                'key' => 'field_fb_sp_image',
+                                'label' => 'Image / Illustration',
+                                'name' => 'image',
+                                'type' => 'image',
+                                'return_format' => 'array',
+                                'preview_size' => 'medium',
+                                'instructions' => 'Image affichée à côté des statistiques (variante Illustration).',
+                                'show_in_graphql' => 1,
+                                'conditional_logic' => [
+                                    [[ 'field' => 'field_fb_sp_variant', 'operator' => '==', 'value' => 'illustration' ]],
+                                ],
+                            ],
+                            [
+                                'key' => 'field_fb_sp_images',
+                                'label' => 'Images du carrousel',
+                                'name' => 'images',
+                                'type' => 'gallery',
+                                'return_format' => 'array',
+                                'preview_size' => 'medium',
+                                'instructions' => 'Images pour le carrousel (variante Carrousel).',
+                                'show_in_graphql' => 1,
+                                'conditional_logic' => [
+                                    [[ 'field' => 'field_fb_sp_variant', 'operator' => '==', 'value' => 'carousel' ]],
+                                ],
+                            ],
+                            [
+                                'key' => 'field_fb_sp_subtitle',
+                                'label' => 'Sur-titre',
+                                'name' => 'subtitle',
+                                'type' => 'text',
+                                'instructions' => 'Petit texte au-dessus du titre (variante Icônes + CTA).',
+                                'show_in_graphql' => 1,
+                                'conditional_logic' => [
+                                    [[ 'field' => 'field_fb_sp_variant', 'operator' => '==', 'value' => 'icons_cta' ]],
+                                ],
+                            ],
+                            [
+                                'key' => 'field_fb_sp_cta_text',
+                                'label' => 'Texte du bouton',
+                                'name' => 'ctaText',
+                                'type' => 'text',
+                                'instructions' => 'Texte du lien CTA (variante Icônes + CTA).',
+                                'show_in_graphql' => 1,
+                                'conditional_logic' => [
+                                    [[ 'field' => 'field_fb_sp_variant', 'operator' => '==', 'value' => 'icons_cta' ]],
+                                ],
+                            ],
+                            [
+                                'key' => 'field_fb_sp_cta_url',
+                                'label' => 'URL du bouton',
+                                'name' => 'ctaUrl',
+                                'type' => 'url',
+                                'instructions' => 'URL du lien CTA (variante Icônes + CTA).',
+                                'show_in_graphql' => 1,
+                                'conditional_logic' => [
+                                    [[ 'field' => 'field_fb_sp_variant', 'operator' => '==', 'value' => 'icons_cta' ]],
+                                ],
                             ],
                         ],
                     ],
@@ -1206,6 +1802,22 @@ add_action('acf/include_fields', function () {
                                         'name' => 'url',
                                         'type' => 'url',
                                     ],
+                                    [
+                                        'key' => 'field_fb_logo_since',
+                                        'label' => 'Client depuis',
+                                        'name' => 'since',
+                                        'type' => 'text',
+                                        'instructions' => 'Ex : 2016. Affiché uniquement avec la variante "Cartes".',
+                                        'conditional_logic' => [
+                                            [
+                                                [
+                                                    'field' => 'field_fb_logos_variant',
+                                                    'operator' => '==',
+                                                    'value' => 'cards',
+                                                ],
+                                            ],
+                                        ],
+                                    ],
                                 ],
                             ],
                             [
@@ -1217,6 +1829,7 @@ add_action('acf/include_fields', function () {
                                     'grid' => 'Grille',
                                     'banner' => 'Bandeau',
                                     'with_cta' => 'Avec texte à gauche',
+                                    'cards' => 'Cartes avec description',
                                 ],
                                 'default_value' => 'grid',
                             ],
@@ -1345,6 +1958,8 @@ add_action('acf/include_fields', function () {
                                     'cards' => 'Cartes',
                                     'list' => 'Liste',
                                     'featured' => 'Article mis en avant',
+                                    'centered' => 'Centré',
+                                    'cards_image' => 'Cartes avec image',
                                 ],
                                 'default_value' => 'cards',
                             ],

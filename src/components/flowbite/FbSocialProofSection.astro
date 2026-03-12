@@ -3,7 +3,24 @@ import type { WPACFFbSocialProofSection } from '../../types/wp';
 
 interface Props extends WPACFFbSocialProofSection {}
 
-const { heading, description, items = [], variant = 'cards' } = Astro.props;
+const {
+  heading,
+  description,
+  items = [],
+  variant = 'cards',
+  image,
+  images = [],
+  subtitle,
+  ctaText,
+  ctaUrl,
+} = Astro.props;
+
+const imgSrc = image?.node?.sourceUrl || image?.sourceUrl;
+const imgAlt = image?.node?.altText || image?.altText || '';
+const carouselImages = (images?.nodes || images || []).map((img: any) => ({
+  src: img?.node?.sourceUrl || img?.sourceUrl || img?.src,
+  alt: img?.node?.altText || img?.altText || img?.alt || '',
+})).filter((img: any) => img.src);
 ---
 
 {variant === 'cards' && (
@@ -76,6 +93,151 @@ const { heading, description, items = [], variant = 'cards' } = Astro.props;
             <div class="text-lg font-semibold text-creme">{item.label}</div>
             {item.description && (
               <p class="mt-1 text-sm text-beige/60">{item.description}</p>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{/* 4. Illustration + stats (two-column layout with image) */}
+{variant === 'illustration' && (
+  <section class="bg-creme">
+    <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
+      <div class="font-light text-taupe/70 sm:text-lg">
+        {heading && (
+          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+            {heading}
+          </h2>
+        )}
+        {description && (
+          <p class="mb-8">{description}</p>
+        )}
+        <div class="flex flex-col space-y-6">
+          {items.map((item) => (
+            <div class="flex items-start gap-4">
+              <div class="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-mousse/10">
+                <svg class="w-5 h-5 text-mousse" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="text-2xl font-extrabold text-taupe">{item.value}</p>
+                <p class="text-taupe/70">{item.label}</p>
+                {item.description && (
+                  <p class="mt-1 text-sm text-taupe/50">{item.description}</p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      {imgSrc && (
+        <img
+          class="hidden lg:block w-full rounded-lg mt-8 lg:mt-0"
+          src={imgSrc}
+          alt={imgAlt}
+        />
+      )}
+    </div>
+  </section>
+)}
+
+{/* 5. Carousel + stats */}
+{variant === 'carousel' && (
+  <section class="bg-beige antialiased">
+    <div class="max-w-screen-xl px-4 py-8 mx-auto lg:px-6 sm:py-16 lg:py-24">
+      <div class="max-w-2xl mx-auto text-center">
+        {heading && (
+          <h2 class="text-3xl font-extrabold leading-tight tracking-tight text-taupe sm:text-4xl font-heading">
+            {heading}
+          </h2>
+        )}
+        {description && (
+          <p class="mt-4 text-base font-normal text-taupe/70 sm:text-xl">
+            {description}
+          </p>
+        )}
+      </div>
+      {carouselImages.length > 0 && (
+        <div class="mt-8 lg:mt-12">
+          <div id="social-proof-carousel" class="relative w-full" data-carousel="slide">
+            <div class="relative h-56 overflow-hidden rounded-lg sm:h-64 xl:h-80 2xl:h-96">
+              {carouselImages.map((img: any, i: number) => (
+                <div class="hidden duration-700 ease-in-out" data-carousel-item={i === 0 ? 'active' : ''}>
+                  <img
+                    src={img.src}
+                    class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-cover h-full"
+                    alt={img.alt}
+                  />
+                </div>
+              ))}
+            </div>
+            <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+              <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-taupe/30 group-hover:bg-taupe/50 group-focus:ring-4 group-focus:ring-taupe/50 group-focus:outline-none">
+                <svg class="w-4 h-4 text-creme" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                <span class="sr-only">Précédent</span>
+              </span>
+            </button>
+            <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+              <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-taupe/30 group-hover:bg-taupe/50 group-focus:ring-4 group-focus:ring-taupe/50 group-focus:outline-none">
+                <svg class="w-4 h-4 text-creme" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                <span class="sr-only">Suivant</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      )}
+      <dl class="grid max-w-screen-xl gap-8 mx-auto mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:mt-12 text-taupe">
+        {items.map((item) => (
+          <div class="flex flex-col items-center justify-center text-center">
+            <dt class="mb-2 text-3xl md:text-4xl font-extrabold text-mousse">{item.value}</dt>
+            <dd class="font-light text-taupe/70">{item.label}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+)}
+
+{/* 6. Icons + CTA */}
+{variant === 'icons_cta' && (
+  <section class="bg-creme">
+    <div class="items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6 gap-16">
+      <div class="max-w-screen-md">
+        {subtitle && (
+          <p class="mb-2 font-semibold text-mousse uppercase tracking-wide text-sm">{subtitle}</p>
+        )}
+        {heading && (
+          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-taupe font-heading">
+            {heading}
+          </h2>
+        )}
+        {description && (
+          <p class="mb-6 font-light text-taupe/70 sm:text-xl">{description}</p>
+        )}
+        {ctaText && ctaUrl && (
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a href={ctaUrl} class="inline-flex items-center font-medium text-mousse hover:text-mousse/80">
+              {ctaText}
+              <svg class="ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+              </svg>
+            </a>
+          </div>
+        )}
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-8 lg:mt-0">
+        {items.map((item) => (
+          <div>
+            <svg class="mb-2 w-10 h-10 text-mousse" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+            </svg>
+            <h3 class="mb-2 text-2xl font-bold text-taupe">{item.value}</h3>
+            <p class="font-light text-taupe/70">{item.label}</p>
+            {item.description && (
+              <p class="mt-1 text-sm text-taupe/50">{item.description}</p>
             )}
           </div>
         ))}

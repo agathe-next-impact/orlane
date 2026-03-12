@@ -65,6 +65,52 @@ const { heading, description, logos = [], variant = 'grid' } = Astro.props;
   </section>
 )}
 
+{variant === 'cards' && (
+  <section class="bg-creme">
+    <div class="py-8 lg:py-16 mx-auto max-w-screen-xl px-4">
+      {heading && (
+        <h2 class="mb-4 text-3xl tracking-tight font-extrabold text-taupe font-heading text-center">
+          {heading}
+        </h2>
+      )}
+      {description && (
+        <p class="mb-8 font-light text-taupe/70 text-center sm:text-xl">
+          {description}
+        </p>
+      )}
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+        {logos.map((logo) => (
+          <a
+            href={logo.url || '#'}
+            class="flex flex-col items-center p-6 bg-beige/50 rounded-lg hover:bg-beige transition-colors group"
+            target={logo.url ? '_blank' : undefined}
+            rel={logo.url ? 'noopener noreferrer' : undefined}
+          >
+            {logo.image ? (
+              <img
+                src={logo.image.sourceUrl}
+                alt={logo.name || logo.image.altText || ''}
+                class="h-12 mb-4 grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all"
+              />
+            ) : (
+              <span class="text-xl font-bold text-taupe/50 mb-4 group-hover:text-taupe transition-colors">{logo.name}</span>
+            )}
+            {logo.since && (
+              <p class="text-sm text-taupe/50 mb-3">client depuis {logo.since}</p>
+            )}
+            <span class="inline-flex items-center text-sm font-medium text-mousse group-hover:text-mousse/80 transition-colors">
+              Visiter le site
+              <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+              </svg>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
 {variant === 'with_cta' && (
   <section class="bg-creme">
     <div class="py-8 lg:py-16 mx-auto max-w-screen-xl px-4">
