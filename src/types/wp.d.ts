@@ -9,12 +9,15 @@ export interface WPThemeSettings {
   variation1Bg: string | null;
   variation1Title: string | null;
   variation1Text: string | null;
+  variation1Accent: string | null;
   variation2Bg: string | null;
   variation2Title: string | null;
   variation2Text: string | null;
+  variation2Accent: string | null;
   variation3Bg: string | null;
   variation3Title: string | null;
   variation3Text: string | null;
+  variation3Accent: string | null;
   contentWidth: string;
   fontBody: string | null;
   fontHeading: string | null;
@@ -123,7 +126,9 @@ export interface WPACFFbHeroSection extends WPACFBase {
 
 export interface WPACFFbFeatureItem {
   image?: WPImage;
+  icon?: string;
   title?: string;
+  subtitle?: string;
   description?: string;
   link?: string;
 }
@@ -131,9 +136,10 @@ export interface WPACFFbFeatureItem {
 export interface WPACFFbFeaturesSection extends WPACFBase {
   heading?: string;
   description?: string;
+  headerImage?: WPImage;
   items?: WPACFFbFeatureItem[];
   columns?: '2' | '3' | '4';
-  variant?: 'default' | 'image_right' | 'image_left' | 'with_ctas' | 'checklist' | 'icons_cta' | 'split_description' | 'cards' | 'alternating' | 'rounded_icons' | 'centered' | 'numbered' | 'two_col_large' | 'dark' | 'horizontal' | 'icon_cards';
+  variant?: 'default' | 'image_right' | 'with_ctas' | 'icons_cta' | 'split_description' | 'alternating' | 'rounded_icons' | 'numbered' | 'dark' | 'horizontal';
   image?: WPImage;
   ctaText?: string;
   ctaUrl?: string;

@@ -11,6 +11,9 @@
     --color-sauge-rgb: 168 191 163;
     --color-mousse-rgb: 122 149 117;
 
+    /* Default block accent — overridden by color variations */
+    --block-accent: var(--color-sauge, #A8BFA3);
+
     /* ── Flowbite v4 CSS variables — mapped to WP theme palette ──
        These mirror node_modules/flowbite/src/themes/default.css
        but use concrete values since @theme / Tailwind v4 vars aren't available.
@@ -129,4 +132,49 @@
 
 .color-variation :where(p, li, span, td, label, blockquote) {
   color: var(--block-text);
+}
+
+/* Block accent utilities — use --block-accent from variation or default sauge */
+.accent-border { border-color: var(--block-accent) !important; }
+.accent-text { color: var(--block-accent) !important; }
+.accent-bg { background-color: var(--block-accent) !important; }
+.accent-bg-soft { background-color: color-mix(in srgb, var(--block-accent) 15%, transparent) !important; }
+
+/* Feature item cards: always creme bg + taupe text, even inside color variations */
+.feature-card {
+  background-color: rgb(var(--color-creme-rgb)) !important;
+  color: rgb(var(--color-taupe-rgb)) !important;
+}
+.feature-card h1, .feature-card h2, .feature-card h3, .feature-card h4, .feature-card h5, .feature-card h6 {
+  color: rgb(var(--color-taupe-rgb));
+}
+.feature-card p, .feature-card li, .feature-card span, .feature-card div {
+  color: rgb(var(--color-taupe-rgb) / 0.7);
+}
+
+/* Check icon for all lists inside prose blocks */
+.prose ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.prose ul > li {
+  position: relative;
+  padding-left: 1.75em;
+}
+
+.prose ul > li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.2em;
+  width: 1.1em;
+  height: 1.1em;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor'%3E%3Cpath fill-rule='evenodd' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' clip-rule='evenodd'/%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor'%3E%3Cpath fill-rule='evenodd' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' clip-rule='evenodd'/%3E%3C/svg%3E");
+  mask-size: contain;
+  -webkit-mask-size: contain;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  background-color: currentColor;
 }

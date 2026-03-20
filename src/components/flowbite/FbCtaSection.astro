@@ -21,7 +21,7 @@ const tabs = rawTabs?.map((tab) => ({
 {/* 1. Default CTA — two buttons */}
 {variant === 'default' && (
   <section class="bg-beige">
-    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+    <div class="py-16 px-4 mx-auto max-w-screen-xl sm:py-24 lg:px-6">
       <div class="mx-auto max-w-screen-sm text-center">
         {heading && (
           <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold leading-tight text-taupe font-heading">
@@ -54,7 +54,7 @@ const tabs = rawTabs?.map((tab) => ({
 {/* 2. Image with CTA */}
 {variant === 'with_image' && (
   <section class="bg-creme">
-    <div class="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
+    <div class="gap-8 items-center py-16 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-24 lg:px-6">
       {image && (
         <img class="w-full rounded-lg object-cover aspect-video" src={image.sourceUrl} alt={image.altText || heading || ''} />
       )}
@@ -83,7 +83,7 @@ const tabs = rawTabs?.map((tab) => ({
 {/* 3. Heading with CTA (minimal centered) */}
 {variant === 'centered' && (
   <section class="bg-beige">
-    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+    <div class="py-16 px-4 mx-auto max-w-screen-xl sm:py-24 lg:px-6">
       <div class="mx-auto max-w-screen-sm text-center">
         {heading && (
           <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold leading-tight text-taupe font-heading">
@@ -108,7 +108,7 @@ const tabs = rawTabs?.map((tab) => ({
 {/* 4. QR Code CTA */}
 {variant === 'qr_code' && (
   <section class="bg-beige">
-    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+    <div class="py-16 px-4 mx-auto max-w-screen-xl sm:py-24 lg:px-6">
       <div class="mx-auto max-w-screen-sm text-center">
         {heading && (
           <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold leading-tight text-taupe font-heading">
@@ -133,7 +133,7 @@ const tabs = rawTabs?.map((tab) => ({
 {/* 5. Card CTAs with icons */}
 {variant === 'icon_cards' && (
   <section class="bg-creme">
-    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+    <div class="py-16 px-4 mx-auto max-w-screen-xl sm:py-24 lg:px-6">
       {heading && (
         <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-center text-taupe font-heading">
           {heading}
@@ -178,7 +178,7 @@ const tabs = rawTabs?.map((tab) => ({
 {/* 6. Table/data CTA */}
 {variant === 'table_cta' && (
   <section class="bg-beige">
-    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+    <div class="py-16 px-4 mx-auto max-w-screen-xl sm:py-24 lg:px-6">
       <div class="mx-auto max-w-screen-md mb-8 text-center">
         {heading && (
           <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
@@ -228,7 +228,7 @@ const tabs = rawTabs?.map((tab) => ({
 {/* 7. Newsletter/email sign-up CTA */}
 {variant === 'newsletter' && (
   <section class="bg-creme">
-    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+    <div class="py-16 px-4 mx-auto max-w-screen-xl sm:py-24 lg:px-6">
       <div class="mx-auto max-w-screen-md text-center">
         {heading && (
           <h2 class="mb-4 text-3xl tracking-tight font-extrabold text-taupe sm:text-4xl font-heading">
@@ -265,7 +265,7 @@ const tabs = rawTabs?.map((tab) => ({
 {/* 8. App download with mockup */}
 {variant === 'app_download' && (
   <section class="bg-beige">
-    <div class="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
+    <div class="gap-8 items-center py-16 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-24 lg:px-6">
       <div>
         {heading && (
           <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
@@ -308,7 +308,7 @@ const tabs = rawTabs?.map((tab) => ({
 {/* 9. Two cards with images */}
 {variant === 'image_cards' && (
   <section class="bg-creme">
-    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+    <div class="py-16 px-4 mx-auto max-w-screen-xl sm:py-24 lg:px-6">
       {heading && (
         <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-center text-taupe font-heading">
           {heading}
@@ -353,7 +353,7 @@ const tabs = rawTabs?.map((tab) => ({
 {/* 10. Tabs with mobile preview */}
 {variant === 'tabs_mobile' && (
   <section class="bg-beige">
-    <div class="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
+    <div class="gap-8 items-center py-16 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-24 lg:px-6">
       <div>
         {heading && (
           <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
@@ -406,7 +406,7 @@ const tabs = rawTabs?.map((tab) => ({
 {/* Dark variant (bonus — color variant of centered) */}
 {variant === 'dark' && (
   <section class="bg-taupe">
-    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+    <div class="py-16 px-4 mx-auto max-w-screen-xl sm:py-24 lg:px-6">
       <div class="mx-auto max-w-screen-sm text-center">
         {heading && (
           <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold leading-tight text-creme font-heading">

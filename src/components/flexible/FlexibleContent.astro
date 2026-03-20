@@ -129,6 +129,7 @@ const componentMap: Record<string, any> = {
         `--block-bg: var(--variation-${n}-bg)`,
         `--block-title: var(--variation-${n}-title)`,
         `--block-text: var(--variation-${n}-text)`,
+        `--block-accent: var(--variation-${n}-accent, var(--color-sauge, #A8BFA3))`,
       ].join('; ');
       return (
         <div class={`color-variation ${variation}`} style={style}>

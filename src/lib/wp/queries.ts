@@ -642,12 +642,15 @@ export async function getThemeSettings(): Promise<WPThemeSettings> {
           variation1Bg
           variation1Title
           variation1Text
+          variation1Accent
           variation2Bg
           variation2Title
           variation2Text
+          variation2Accent
           variation3Bg
           variation3Title
           variation3Text
+          variation3Accent
           fontBody
           fontHeading
           socialFacebook
@@ -700,12 +703,15 @@ export async function getThemeSettings(): Promise<WPThemeSettings> {
     variation1Bg: null,
     variation1Title: null,
     variation1Text: null,
+    variation1Accent: null,
     variation2Bg: null,
     variation2Title: null,
     variation2Text: null,
+    variation2Accent: null,
     variation3Bg: null,
     variation3Title: null,
     variation3Text: null,
+    variation3Accent: null,
     fontBody: null,
     fontHeading: null,
     socialFacebook: null,
@@ -770,12 +776,15 @@ export async function getThemeSettings(): Promise<WPThemeSettings> {
       variation1Bg: (raw.variation1Bg as string) || null,
       variation1Title: (raw.variation1Title as string) || null,
       variation1Text: (raw.variation1Text as string) || null,
+      variation1Accent: (raw.variation1Accent as string) || null,
       variation2Bg: (raw.variation2Bg as string) || null,
       variation2Title: (raw.variation2Title as string) || null,
       variation2Text: (raw.variation2Text as string) || null,
+      variation2Accent: (raw.variation2Accent as string) || null,
       variation3Bg: (raw.variation3Bg as string) || null,
       variation3Title: (raw.variation3Title as string) || null,
       variation3Text: (raw.variation3Text as string) || null,
+      variation3Accent: (raw.variation3Accent as string) || null,
       fontBody: (raw.fontBody as string) || null,
       fontHeading: (raw.fontHeading as string) || null,
       socialFacebook: (raw.socialFacebook as string) || null,

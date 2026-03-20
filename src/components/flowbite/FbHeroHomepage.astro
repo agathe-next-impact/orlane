@@ -7,7 +7,7 @@ interface Props extends WPACFFbHeroHomepage {}
 const { heading, highlight, subtitle, ctaText, ctaUrl, cta2Text, cta2Url, images = [], showHeartAnimation = true } = Astro.props;
 ---
 
-<section class="relative w-fullhero bg-gradient-to-br from-beige to-creme py-12 md:py-12 overflow-hidden">
+<section class="relative h-[calc(100vh-4rem)] w-fullhero bg-gradient-to-br from-beige py-6 to-creme overflow-hidden">
   {showHeartAnimation && (
     <div class="absolute bottom-8 left-0 w-full max-w-4xl pointer-events-none">
       <AnimatedHeartSVG />

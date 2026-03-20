@@ -26,7 +26,7 @@ function toEmbedUrl(url: string): string {
 {/* 1. Heading with description */}
 {layout === 'text_only' && (
   <section class="bg-creme">
-    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+    <div class="py-16 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       <div class="max-w-screen-lg mx-auto">
         {heading && (
           <h2 class="mb-6 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
@@ -44,7 +44,7 @@ function toEmbedUrl(url: string): string {
 {/* 2. Images with heading and description (image right) */}
 {layout === 'image_right' && (
   <section class="bg-creme">
-    <div class="items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 lg:py-16 lg:px-6">
+    <div class="items-center py-16 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 lg:py-16 lg:px-6">
       <div>
         {heading && (
           <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
@@ -67,7 +67,7 @@ function toEmbedUrl(url: string): string {
 {/* 3. Images with heading and description (image left) */}
 {layout === 'image_left' && (
   <section class="bg-creme">
-    <div class="items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 lg:py-16 lg:px-6">
+    <div class="items-center py-16 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 lg:py-16 lg:px-6">
       {image && (
         <div class="mb-8 lg:mb-0">
           <img class="w-full rounded-lg shadow-lg object-cover aspect-[4/3]" src={image.sourceUrl} alt={image.altText || heading || ''} />
@@ -90,7 +90,7 @@ function toEmbedUrl(url: string): string {
 {/* 4. Video embed content */}
 {layout === 'video' && (
   <section class="bg-creme">
-    <div class="items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 lg:py-16 lg:px-6">
+    <div class="items-center py-16 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 lg:py-16 lg:px-6">
       <div>
         {heading && (
           <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
@@ -121,7 +121,7 @@ function toEmbedUrl(url: string): string {
 {/* 5. Image gallery */}
 {layout === 'gallery' && (
   <section class="bg-creme">
-    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+    <div class="py-16 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       {heading && (
         <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
           {heading}
@@ -152,7 +152,7 @@ function toEmbedUrl(url: string): string {
 {/* 6. Heading with description - two columns */}
 {layout === 'two_columns' && (
   <section class="bg-creme">
-    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+    <div class="py-16 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       {heading && (
         <h2 class="mb-8 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
           {heading}
@@ -173,7 +173,7 @@ function toEmbedUrl(url: string): string {
 {/* 7. Social proof content (stats) */}
 {layout === 'social_proof' && (
   <section class="bg-creme">
-    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+    <div class="py-16 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       <div class="max-w-screen-lg mx-auto mb-8">
         {heading && (
           <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
@@ -201,7 +201,7 @@ function toEmbedUrl(url: string): string {
 {/* 8. Content card images */}
 {layout === 'cards' && (
   <section class="bg-creme">
-    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+    <div class="py-16 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       <div class="flex flex-wrap items-center justify-between mb-8">
         {heading && (
           <h2 class="text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
@@ -241,7 +241,7 @@ function toEmbedUrl(url: string): string {
 {/* 9. Content section with image and feature list */}
 {layout === 'features_list' && (
   <section class="bg-creme">
-    <div class="items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 lg:py-16 lg:px-6">
+    <div class="items-center py-16 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 lg:py-16 lg:px-6">
       <div>
         {heading && (
           <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">

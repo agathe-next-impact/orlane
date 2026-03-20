@@ -21,7 +21,7 @@ const col3 = items.slice(third * 2);
 {/* -- Variant 1: Default – Two-column grid with question mark icons -- */}
 {variant === 'default' && (
   <section class="bg-[var(--block-bg,transparent)]">
-    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+    <div class="py-16 px-4 mx-auto max-w-screen-xl sm:py-24 lg:px-6">
       {heading && (
         <h2 class="mb-8 text-3xl lg:text-4xl tracking-tight font-extrabold text-[var(--block-title,var(--tw-text-taupe))] text-taupe font-heading">
           {heading}
@@ -66,7 +66,7 @@ const col3 = items.slice(third * 2);
 {/* -- Variant 2: Search Bar with Links – Search input + Q&A as link lists -- */}
 {variant === 'search_links' && (
   <section class="bg-[var(--block-bg,transparent)]">
-    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+    <div class="py-16 px-4 mx-auto max-w-screen-xl sm:py-24 lg:px-6">
       <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
         {heading && (
           <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-[var(--block-title,var(--tw-text-taupe))] text-taupe font-heading">
@@ -108,7 +108,7 @@ const col3 = items.slice(third * 2);
 {/* -- Variant 3: Side description – Description left, Q&A accordion right -- */}
 {variant === 'side_description' && (
   <section class="bg-[var(--block-bg,transparent)]">
-    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+    <div class="py-16 px-4 mx-auto max-w-screen-xl sm:py-24 lg:px-6">
       <div class="grid gap-8 lg:grid-cols-3">
         <div class="lg:col-span-1">
           {heading && (
@@ -159,7 +159,7 @@ const col3 = items.slice(third * 2);
 {/* -- Variant 3: Accordion – Collapsible FAQ (original) -- */}
 {variant === 'accordion' && (
   <section class="bg-[var(--block-bg,theme(colors.creme))]">
-    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+    <div class="py-16 px-4 mx-auto max-w-screen-xl sm:py-24 lg:px-6">
       {(heading || description) && (
         <div class="mx-auto max-w-screen-md text-center mb-8">
           {heading && (
@@ -210,7 +210,7 @@ const col3 = items.slice(third * 2);
 {/* -- Variant 4: Three columns – Q&A in three-column grid -- */}
 {variant === 'three_columns' && (
   <section class="bg-[var(--block-bg,transparent)]">
-    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+    <div class="py-16 px-4 mx-auto max-w-screen-xl sm:py-24 lg:px-6">
       {(heading || description) && (
         <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
           {heading && (
@@ -276,7 +276,7 @@ const col3 = items.slice(third * 2);
 {/* -- Variant 6: Help Center – Search bar + icon cards per Q&A -- */}
 {variant === 'help_center' && (
   <section class="bg-[var(--block-bg,transparent)]">
-    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+    <div class="py-16 px-4 mx-auto max-w-screen-xl sm:py-24 lg:px-6">
       <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
         {heading && (
           <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-[var(--block-title,var(--tw-text-taupe))] text-taupe font-heading">
@@ -320,7 +320,7 @@ const col3 = items.slice(third * 2);
 {/* -- Variant 7: Cards – Q&A in bordered cards -- */}
 {variant === 'cards' && (
   <section class="bg-[var(--block-bg,transparent)]">
-    <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
+    <div class="py-16 px-4 mx-auto max-w-screen-xl sm:py-24 lg:px-6">
       {(heading || description) && (
         <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
           {heading && (

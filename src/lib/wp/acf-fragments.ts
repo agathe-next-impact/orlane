@@ -45,6 +45,11 @@ export const flexibleContentFragment = `
       columns
       variant
       colorVariation
+      headerImage {
+        node {
+          ${imageNodeFields}
+        }
+      }
       image {
         node {
           ${imageNodeFields}
@@ -58,7 +63,9 @@ export const flexibleContentFragment = `
             ${imageNodeFields}
           }
         }
+        icon
         title
+        subtitle
         description
         link
       }
