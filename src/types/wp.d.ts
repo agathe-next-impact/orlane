@@ -1,11 +1,11 @@
 export interface WPThemeSettings {
   logo: WPImage | null;
   logoFooter: WPImage | null;
-  colorBeige: string | null;
-  colorCreme: string | null;
-  colorTaupe: string | null;
-  colorSauge: string | null;
-  colorMousse: string | null;
+  colorSurface: string | null;
+  colorCanvas: string | null;
+  colorInk: string | null;
+  colorPrimary: string | null;
+  colorSecondary: string | null;
   variation1Bg: string | null;
   variation1Title: string | null;
   variation1Text: string | null;
@@ -45,6 +45,15 @@ export interface WPThemeSettings {
   navbarCtaText: string | null;
   navbarCtaUrl: string | null;
   navbarSearchPlaceholder: string | null;
+  // Appearance
+  btnRadius: string | null;
+  btnSize: string | null;
+  btnFontWeight: string | null;
+  btnUppercase: boolean;
+  btnShadow: string | null;
+  btn2Style: string | null;
+  inputRadius: string | null;
+  inputStyle: string | null;
 }
 
 export interface WPImage {
@@ -131,6 +140,8 @@ export interface WPACFFbFeatureItem {
   subtitle?: string;
   description?: string;
   link?: string;
+  ctaText?: string;
+  ctaUrl?: string;
 }
 
 export interface WPACFFbFeaturesSection extends WPACFBase {

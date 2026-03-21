@@ -12,7 +12,7 @@ const {
 
 {/* Variant 1 — Default: horizontal nav links + copyright */}
 {variant === 'default' && (
-  <footer class="bg-taupe text-creme">
+  <footer class="bg-ink text-canvas">
     <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
       <div class="flex flex-col items-center">
         {logo && (
@@ -21,19 +21,19 @@ const {
           </a>
         )}
         {description && (
-          <p class="text-beige/70 text-sm mb-6 text-center max-w-lg">{description}</p>
+          <p class="text-surface/70 text-sm mb-6 text-center max-w-lg">{description}</p>
         )}
         {navLinks.length > 0 && (
-          <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-beige/70">
+          <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-surface/70">
             {navLinks.map((link) => (
               <li>
-                <a href={link.url || '#'} class="hover:text-sauge transition-colors me-4 md:me-6">{link.label}</a>
+                <a href={link.url || '#'} class="accent-text-hover transition-colors me-4 md:me-6">{link.label}</a>
               </li>
             ))}
           </ul>
         )}
         {copyright && (
-          <span class="text-sm text-beige/60 text-center">{copyright}</span>
+          <span class="text-sm text-surface/60 text-center">{copyright}</span>
         )}
       </div>
     </div>
@@ -42,7 +42,7 @@ const {
 
 {/* Variant 2 — Columns: sitemap with logo and social media */}
 {variant === 'columns' && (
-  <footer class="bg-taupe text-creme">
+  <footer class="bg-ink text-canvas">
     <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
       <div class="md:flex md:justify-between">
         <div class="mb-6 md:mb-0 md:max-w-xs">
@@ -52,19 +52,19 @@ const {
             </a>
           )}
           {description && (
-            <p class="text-beige/70 text-sm">{description}</p>
+            <p class="text-surface/70 text-sm">{description}</p>
           )}
         </div>
         <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
           {columns.map((col) => (
             <div>
               {col.title && (
-                <h3 class="mb-4 text-sm font-semibold uppercase text-creme">{col.title}</h3>
+                <h3 class="mb-4 text-sm font-semibold uppercase text-canvas">{col.title}</h3>
               )}
-              <ul class="text-beige/70 font-medium space-y-3">
+              <ul class="text-surface/70 font-medium space-y-3">
                 {col.links?.map((link) => (
                   <li>
-                    <a href={link.url || '#'} class="hover:text-sauge transition-colors text-sm">{link.label}</a>
+                    <a href={link.url || '#'} class="accent-text-hover transition-colors text-sm">{link.label}</a>
                   </li>
                 ))}
               </ul>
@@ -72,15 +72,15 @@ const {
           ))}
         </div>
       </div>
-      <hr class="my-6 border-taupe/50 sm:mx-auto lg:my-8" />
+      <hr class="my-6 border-ink/50 sm:mx-auto lg:my-8" />
       <div class="sm:flex sm:items-center sm:justify-between">
         {copyright && (
-          <span class="text-sm text-beige/60 sm:text-center">{copyright}</span>
+          <span class="text-sm text-surface/60 sm:text-center">{copyright}</span>
         )}
         {socialLinks && socialLinks.length > 0 && (
           <div class="flex mt-4 sm:justify-center sm:mt-0 space-x-5">
             {socialLinks.map((social) => (
-              <a href={social.url} class="text-beige/60 hover:text-sauge transition-colors" target="_blank" rel="noopener noreferrer">
+              <a href={social.url} class="text-surface/60 accent-text-hover transition-colors" target="_blank" rel="noopener noreferrer">
                 {social.icon ? (
                   <Fragment set:html={social.icon} />
                 ) : (
@@ -97,7 +97,7 @@ const {
 
 {/* Variant 3 — Simple: logo + copyright only */}
 {variant === 'simple' && (
-  <footer class="bg-taupe text-creme">
+  <footer class="bg-ink text-canvas">
     <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
       <div class="sm:flex sm:items-center sm:justify-between">
         {logo && (
@@ -106,7 +106,7 @@ const {
           </a>
         )}
         {copyright && (
-          <span class="text-sm text-beige/60">{copyright}</span>
+          <span class="text-sm text-surface/60">{copyright}</span>
         )}
       </div>
     </div>
@@ -115,7 +115,7 @@ const {
 
 {/* Variant 4 — With newsletter: columns + newsletter form */}
 {variant === 'with_newsletter' && (
-  <footer class="bg-taupe text-creme">
+  <footer class="bg-ink text-canvas">
     <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
       <div class="lg:flex lg:justify-between lg:gap-16">
         <div class="mb-8 lg:mb-0 lg:max-w-sm">
@@ -125,19 +125,19 @@ const {
             </a>
           )}
           {description && (
-            <p class="text-beige/70 text-sm mb-4">{description}</p>
+            <p class="text-surface/70 text-sm mb-4">{description}</p>
           )}
         </div>
         <div class="grid grid-cols-2 gap-8 sm:grid-cols-3">
           {columns.map((col) => (
             <div>
               {col.title && (
-                <h3 class="mb-4 text-sm font-semibold uppercase text-creme">{col.title}</h3>
+                <h3 class="mb-4 text-sm font-semibold uppercase text-canvas">{col.title}</h3>
               )}
-              <ul class="text-beige/70 font-medium space-y-3">
+              <ul class="text-surface/70 font-medium space-y-3">
                 {col.links?.map((link) => (
                   <li>
-                    <a href={link.url || '#'} class="hover:text-sauge transition-colors text-sm">{link.label}</a>
+                    <a href={link.url || '#'} class="accent-text-hover transition-colors text-sm">{link.label}</a>
                   </li>
                 ))}
               </ul>
@@ -145,13 +145,13 @@ const {
           ))}
         </div>
       </div>
-      <hr class="my-6 border-taupe/50 lg:my-8" />
+      <hr class="my-6 border-ink/50 lg:my-8" />
       <div class="sm:flex sm:items-center sm:justify-between">
-        {copyright && <span class="text-sm text-beige/60">{copyright}</span>}
+        {copyright && <span class="text-sm text-surface/60">{copyright}</span>}
         {socialLinks && socialLinks.length > 0 && (
           <div class="flex mt-4 sm:mt-0 space-x-5">
             {socialLinks.map((social) => (
-              <a href={social.url} class="text-beige/60 hover:text-sauge transition-colors" target="_blank" rel="noopener noreferrer">
+              <a href={social.url} class="text-surface/60 accent-text-hover transition-colors" target="_blank" rel="noopener noreferrer">
                 {social.icon ? <Fragment set:html={social.icon} /> : <span class="text-sm">{social.platform}</span>}
               </a>
             ))}
@@ -164,50 +164,50 @@ const {
 
 {/* Variant 5 — Addresses: newsletter + address blocks */}
 {variant === 'addresses' && (
-  <footer class="bg-taupe text-creme">
+  <footer class="bg-ink text-canvas">
     <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
       <div class="grid gap-8 lg:grid-cols-4">
         {addresses.map((addr) => (
           <div>
             {addr.city && (
-              <h3 class="mb-2 text-sm font-semibold uppercase text-creme">{addr.city}</h3>
+              <h3 class="mb-2 text-sm font-semibold uppercase text-canvas">{addr.city}</h3>
             )}
             {addr.address && (
-              <p class="text-beige/70 text-sm mb-2">{addr.address}</p>
+              <p class="text-surface/70 text-sm mb-2">{addr.address}</p>
             )}
             {addr.phone && (
-              <p class="text-beige/70 text-sm">
-                <a href={`tel:${addr.phone.replace(/\s/g, '')}`} class="hover:text-sauge transition-colors">{addr.phone}</a>
+              <p class="text-surface/70 text-sm">
+                <a href={`tel:${addr.phone.replace(/\s/g, '')}`} class="accent-text-hover transition-colors">{addr.phone}</a>
               </p>
             )}
             {addr.email && (
-              <p class="text-beige/70 text-sm">
-                <a href={`mailto:${addr.email}`} class="hover:text-sauge transition-colors">{addr.email}</a>
+              <p class="text-surface/70 text-sm">
+                <a href={`mailto:${addr.email}`} class="accent-text-hover transition-colors">{addr.email}</a>
               </p>
             )}
           </div>
         ))}
         <div>
           {newsletterHeading && (
-            <h3 class="mb-2 text-sm font-semibold uppercase text-creme">{newsletterHeading}</h3>
+            <h3 class="mb-2 text-sm font-semibold uppercase text-canvas">{newsletterHeading}</h3>
           )}
           {newsletterDescription && (
-            <p class="text-beige/70 text-sm mb-4">{newsletterDescription}</p>
+            <p class="text-surface/70 text-sm mb-4">{newsletterDescription}</p>
           )}
           <form class="flex gap-2">
-            <input type="email" placeholder="Votre email" class="bg-taupe/50 border border-taupe/30 text-creme placeholder-beige/40 text-sm rounded-lg focus:ring-sauge focus:border-sauge block w-full p-2.5" required />
-            <button type="submit" class="px-4 py-2.5 text-sm font-medium text-taupe bg-sauge rounded-lg hover:bg-sauge/80 transition-colors whitespace-nowrap">S'inscrire</button>
+            <input type="email" placeholder="Votre email" class="bg-ink/50 border border-ink/30 text-canvas placeholder-surface/40 text-sm rounded-lg accent-ring accent-border block w-full p-2.5" required />
+            <button type="submit" class="px-4 py-2.5 text-sm font-medium text-ink accent-bg rounded-lg accent-bg-hover transition-colors whitespace-nowrap">S'inscrire</button>
           </form>
         </div>
       </div>
-      <hr class="my-6 border-taupe/50 lg:my-8" />
+      <hr class="my-6 border-ink/50 lg:my-8" />
       <div class="sm:flex sm:items-center sm:justify-between">
-        {copyright && <span class="text-sm text-beige/60">{copyright}</span>}
+        {copyright && <span class="text-sm text-surface/60">{copyright}</span>}
         {navLinks.length > 0 && (
-          <ul class="flex flex-wrap items-center mt-4 sm:mt-0 text-sm font-medium text-beige/70">
+          <ul class="flex flex-wrap items-center mt-4 sm:mt-0 text-sm font-medium text-surface/70">
             {navLinks.map((link) => (
               <li>
-                <a href={link.url || '#'} class="hover:text-sauge transition-colors me-4 md:me-6">{link.label}</a>
+                <a href={link.url || '#'} class="accent-text-hover transition-colors me-4 md:me-6">{link.label}</a>
               </li>
             ))}
           </ul>
@@ -219,19 +219,19 @@ const {
 
 {/* Variant 6 — Pre-footer CTA: CTA section + sitemap columns */}
 {variant === 'pre_footer_cta' && (
-  <footer class="bg-taupe text-creme">
+  <footer class="bg-ink text-canvas">
     <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
       {/* CTA Banner */}
-      <div class="bg-mousse/10 rounded-lg p-8 md:p-12 mb-8 text-center">
+      <div class="accent-bg-soft rounded-lg p-8 md:p-12 mb-8 text-center">
         {description && (
-          <p class="text-lg md:text-xl font-semibold text-creme mb-6">{description}</p>
+          <p class="text-lg md:text-xl font-semibold text-canvas mb-6">{description}</p>
         )}
         <div class="flex flex-wrap justify-center gap-4">
           {ctaText && (
-            <a href={ctaUrl || '#'} class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-taupe bg-sauge rounded-lg hover:bg-sauge/80 transition-colors">{ctaText}</a>
+            <a href={ctaUrl || '#'} class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-ink accent-bg rounded-lg accent-bg-hover transition-colors">{ctaText}</a>
           )}
           {cta2Text && (
-            <a href={cta2Url || '#'} class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-creme border border-creme/30 rounded-lg hover:bg-creme/10 transition-colors">{cta2Text}</a>
+            <a href={cta2Url || '#'} class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-canvas border border-canvas/30 rounded-lg hover:bg-canvas/10 transition-colors">{cta2Text}</a>
           )}
         </div>
       </div>
@@ -240,25 +240,25 @@ const {
         {columns.map((col) => (
           <div>
             {col.title && (
-              <h3 class="mb-4 text-sm font-semibold uppercase text-creme">{col.title}</h3>
+              <h3 class="mb-4 text-sm font-semibold uppercase text-canvas">{col.title}</h3>
             )}
-            <ul class="text-beige/70 font-medium space-y-3">
+            <ul class="text-surface/70 font-medium space-y-3">
               {col.links?.map((link) => (
                 <li>
-                  <a href={link.url || '#'} class="hover:text-sauge transition-colors text-sm">{link.label}</a>
+                  <a href={link.url || '#'} class="accent-text-hover transition-colors text-sm">{link.label}</a>
                 </li>
               ))}
             </ul>
           </div>
         ))}
       </div>
-      <hr class="my-6 border-taupe/50 lg:my-8" />
+      <hr class="my-6 border-ink/50 lg:my-8" />
       <div class="sm:flex sm:items-center sm:justify-between">
-        {copyright && <span class="text-sm text-beige/60">{copyright}</span>}
+        {copyright && <span class="text-sm text-surface/60">{copyright}</span>}
         {socialLinks && socialLinks.length > 0 && (
           <div class="flex mt-4 sm:mt-0 space-x-5">
             {socialLinks.map((social) => (
-              <a href={social.url} class="text-beige/60 hover:text-sauge transition-colors" target="_blank" rel="noopener noreferrer">
+              <a href={social.url} class="text-surface/60 accent-text-hover transition-colors" target="_blank" rel="noopener noreferrer">
                 {social.icon ? <Fragment set:html={social.icon} /> : <span class="text-sm">{social.platform}</span>}
               </a>
             ))}
@@ -271,25 +271,25 @@ const {
 
 {/* Variant 7 — Sitemap centered: 5-column grid, centered logo + social below */}
 {variant === 'sitemap_centered' && (
-  <footer class="bg-taupe text-creme">
+  <footer class="bg-ink text-canvas">
     <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
       <div class="grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-5">
         {columns.map((col) => (
           <div>
             {col.title && (
-              <h3 class="mb-4 text-sm font-semibold uppercase text-creme">{col.title}</h3>
+              <h3 class="mb-4 text-sm font-semibold uppercase text-canvas">{col.title}</h3>
             )}
-            <ul class="text-beige/70 font-medium space-y-3">
+            <ul class="text-surface/70 font-medium space-y-3">
               {col.links?.map((link) => (
                 <li>
-                  <a href={link.url || '#'} class="hover:text-sauge transition-colors text-sm">{link.label}</a>
+                  <a href={link.url || '#'} class="accent-text-hover transition-colors text-sm">{link.label}</a>
                 </li>
               ))}
             </ul>
           </div>
         ))}
       </div>
-      <hr class="my-6 border-taupe/50 lg:my-8" />
+      <hr class="my-6 border-ink/50 lg:my-8" />
       <div class="flex flex-col items-center">
         {logo && (
           <a href="/" class="flex items-center mb-4">
@@ -297,12 +297,12 @@ const {
           </a>
         )}
         {copyright && (
-          <span class="text-sm text-beige/60 mb-4 text-center">{copyright}</span>
+          <span class="text-sm text-surface/60 mb-4 text-center">{copyright}</span>
         )}
         {socialLinks && socialLinks.length > 0 && (
           <div class="flex space-x-5">
             {socialLinks.map((social) => (
-              <a href={social.url} class="text-beige/60 hover:text-sauge transition-colors" target="_blank" rel="noopener noreferrer">
+              <a href={social.url} class="text-surface/60 accent-text-hover transition-colors" target="_blank" rel="noopener noreferrer">
                 {social.icon ? <Fragment set:html={social.icon} /> : <span class="text-sm">{social.platform}</span>}
               </a>
             ))}

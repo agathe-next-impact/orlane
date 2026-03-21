@@ -63,7 +63,7 @@ if (!resolved) {
           </div>
         ) : (
           <div class="text-center py-16">
-            <p class="text-xl text-taupe/70">No {resolved.contentType.name.toLowerCase()} found.</p>
+            <p class="text-xl text-ink/70">No {resolved.contentType.name.toLowerCase()} found.</p>
           </div>
         )}
       </div>
@@ -106,22 +106,22 @@ if (!resolved) {
 {resolved.type === 'post' && (
   <Layout title={decodeWPEntities(resolved.data.title)} seo={resolved.data.seo} type="article">
     <article class="blog-post">
-      <div class="post-header bg-gradient-to-br from-beige to-creme py-8 lg:py-12">
+      <div class="post-header bg-gradient-to-br from-surface to-canvas py-8 lg:py-12">
         <div class="container mx-auto px-4">
           <div class="max-w-4xl mx-auto">
             {resolved.data.categories?.nodes && resolved.data.categories.nodes.length > 0 && (
               <div class="flex flex-wrap gap-2 mb-3">
                 {resolved.data.categories.nodes.slice(0, 3).map((category) => (
-                  <span class="text-xs bg-beige text-taupe px-3 py-1 rounded-full">
+                  <span class="text-xs bg-surface text-ink px-3 py-1 rounded-full">
                     {decodeWPEntities(category.name)}
                   </span>
                 ))}
               </div>
             )}
 
-            <h1 class="text-3xl lg:text-4xl font-bold mb-4 text-taupe font-heading">{decodeWPEntities(resolved.data.title)}</h1>
+            <h1 class="text-3xl lg:text-4xl font-bold mb-4 text-ink font-heading">{decodeWPEntities(resolved.data.title)}</h1>
 
-            <div class="flex flex-wrap items-center gap-4 text-sm text-taupe/70">
+            <div class="flex flex-wrap items-center gap-4 text-sm text-ink/70">
               {resolved.data.author && (
                 <div class="flex items-center gap-2">
                   {resolved.data.author.node.avatar?.url && (
@@ -169,7 +169,7 @@ if (!resolved) {
             <div class="border-t pt-8 mt-12">
               <div class="flex flex-wrap gap-2">
                 {resolved.data.tags.nodes.map((tag) => (
-                  <span class="text-sm bg-beige text-taupe px-3 py-1 rounded-full">
+                  <span class="text-sm bg-surface text-ink px-3 py-1 rounded-full">
                     {decodeWPEntities(tag.name)}
                   </span>
                 ))}
@@ -185,13 +185,13 @@ if (!resolved) {
 {resolved.type === 'cpt-single' && (
   <Layout title={decodeWPEntities(resolved.data.title)} seo={resolved.data.seo} type="article">
     <article class="single-post">
-      <div class="post-header bg-gradient-to-br from-beige to-creme py-8 lg:py-12">
+      <div class="post-header bg-gradient-to-br from-surface to-canvas py-8 lg:py-12">
         <div class="container mx-auto px-4">
           <div class="max-w-4xl mx-auto">
             <div class="mb-3">
               <a
                 href={getCPTArchiveUrl(resolved.contentType)}
-                class="text-sm text-sauge hover:text-taupe inline-flex items-center gap-1 transition-colors"
+                class="text-sm accent-text hover:text-ink inline-flex items-center gap-1 transition-colors"
               >
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -200,9 +200,9 @@ if (!resolved) {
               </a>
             </div>
 
-            <h1 class="text-3xl lg:text-4xl font-bold mb-4 text-taupe font-heading">{decodeWPEntities(resolved.data.title)}</h1>
+            <h1 class="text-3xl lg:text-4xl font-bold mb-4 text-ink font-heading">{decodeWPEntities(resolved.data.title)}</h1>
 
-            <div class="flex flex-wrap items-center gap-4 text-sm text-taupe/70">
+            <div class="flex flex-wrap items-center gap-4 text-sm text-ink/70">
               {resolved.data.author && (
                 <div class="flex items-center gap-2">
                   {resolved.data.author.node.avatar?.url && (

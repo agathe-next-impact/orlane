@@ -25,16 +25,16 @@ function toEmbedUrl(url: string): string {
 
 {/* 1. Heading with description */}
 {layout === 'text_only' && (
-  <section class="bg-creme">
+  <section class="bg-canvas">
     <div class="py-16 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       <div class="max-w-screen-lg mx-auto">
         {heading && (
-          <h2 class="mb-6 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          <h2 class="mb-6 text-3xl lg:text-4xl tracking-tight font-extrabold text-ink font-heading">
             {heading}
           </h2>
         )}
         {body && (
-          <div class="prose max-w-none text-taupe/80" set:html={sanitizeHTML(body)} />
+          <div class="prose max-w-none text-ink/80" set:html={sanitizeHTML(body)} />
         )}
       </div>
     </div>
@@ -43,16 +43,16 @@ function toEmbedUrl(url: string): string {
 
 {/* 2. Images with heading and description (image right) */}
 {layout === 'image_right' && (
-  <section class="bg-creme">
+  <section class="bg-canvas">
     <div class="items-center py-16 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 lg:py-16 lg:px-6">
       <div>
         {heading && (
-          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-ink font-heading">
             {heading}
           </h2>
         )}
         {body && (
-          <div class="prose max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
+          <div class="prose max-w-none text-ink/70" set:html={sanitizeHTML(body)} />
         )}
       </div>
       {image && (
@@ -66,7 +66,7 @@ function toEmbedUrl(url: string): string {
 
 {/* 3. Images with heading and description (image left) */}
 {layout === 'image_left' && (
-  <section class="bg-creme">
+  <section class="bg-canvas">
     <div class="items-center py-16 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 lg:py-16 lg:px-6">
       {image && (
         <div class="mb-8 lg:mb-0">
@@ -75,12 +75,12 @@ function toEmbedUrl(url: string): string {
       )}
       <div>
         {heading && (
-          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-ink font-heading">
             {heading}
           </h2>
         )}
         {body && (
-          <div class="prose max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
+          <div class="prose max-w-none text-ink/70" set:html={sanitizeHTML(body)} />
         )}
       </div>
     </div>
@@ -89,16 +89,16 @@ function toEmbedUrl(url: string): string {
 
 {/* 4. Video embed content */}
 {layout === 'video' && (
-  <section class="bg-creme">
+  <section class="bg-canvas">
     <div class="items-center py-16 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 lg:py-16 lg:px-6">
       <div>
         {heading && (
-          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-ink font-heading">
             {heading}
           </h2>
         )}
         {body && (
-          <div class="prose max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
+          <div class="prose max-w-none text-ink/70" set:html={sanitizeHTML(body)} />
         )}
       </div>
       {videoUrl && (
@@ -120,15 +120,15 @@ function toEmbedUrl(url: string): string {
 
 {/* 5. Image gallery */}
 {layout === 'gallery' && (
-  <section class="bg-creme">
+  <section class="bg-canvas">
     <div class="py-16 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       {heading && (
-        <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
+        <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-ink font-heading">
           {heading}
         </h2>
       )}
       {body && (
-        <div class="mb-8 prose max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
+        <div class="mb-8 prose max-w-none text-ink/70" set:html={sanitizeHTML(body)} />
       )}
       {images && images.length > 0 && (
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -151,19 +151,19 @@ function toEmbedUrl(url: string): string {
 
 {/* 6. Heading with description - two columns */}
 {layout === 'two_columns' && (
-  <section class="bg-creme">
+  <section class="bg-canvas">
     <div class="py-16 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       {heading && (
-        <h2 class="mb-8 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
+        <h2 class="mb-8 text-3xl lg:text-4xl tracking-tight font-extrabold text-ink font-heading">
           {heading}
         </h2>
       )}
       <div class={`grid gap-12 ${bodyRight ? 'lg:grid-cols-2' : ''}`}>
         {body && (
-          <div class="prose max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
+          <div class="prose max-w-none text-ink/70" set:html={sanitizeHTML(body)} />
         )}
         {bodyRight && (
-          <div class="prose max-w-none text-taupe/70" set:html={sanitizeHTML(bodyRight)} />
+          <div class="prose max-w-none text-ink/70" set:html={sanitizeHTML(bodyRight)} />
         )}
       </div>
     </div>
@@ -172,24 +172,24 @@ function toEmbedUrl(url: string): string {
 
 {/* 7. Social proof content (stats) */}
 {layout === 'social_proof' && (
-  <section class="bg-creme">
+  <section class="bg-canvas">
     <div class="py-16 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       <div class="max-w-screen-lg mx-auto mb-8">
         {heading && (
-          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-ink font-heading">
             {heading}
           </h2>
         )}
         {body && (
-          <div class="prose max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
+          <div class="prose max-w-none text-ink/70" set:html={sanitizeHTML(body)} />
         )}
       </div>
       {contentStats && contentStats.length > 0 && (
         <dl class="grid gap-8 sm:grid-cols-3 max-w-screen-md mx-auto text-center">
           {contentStats.map((stat) => (
             <div class="flex flex-col items-center">
-              <dt class="mb-2 text-3xl md:text-4xl font-extrabold text-sauge">{stat.value}</dt>
-              <dd class="text-taupe/70">{stat.label}</dd>
+              <dt class="mb-2 text-3xl md:text-4xl font-extrabold accent-text">{stat.value}</dt>
+              <dd class="text-ink/70">{stat.label}</dd>
             </div>
           ))}
         </dl>
@@ -200,16 +200,16 @@ function toEmbedUrl(url: string): string {
 
 {/* 8. Content card images */}
 {layout === 'cards' && (
-  <section class="bg-creme">
+  <section class="bg-canvas">
     <div class="py-16 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       <div class="flex flex-wrap items-center justify-between mb-8">
         {heading && (
-          <h2 class="text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          <h2 class="text-3xl lg:text-4xl tracking-tight font-extrabold text-ink font-heading">
             {heading}
           </h2>
         )}
         {ctaText && ctaUrl && (
-          <a href={ctaUrl} class="inline-flex items-center font-medium text-sauge hover:underline">
+          <a href={ctaUrl} class="inline-flex items-center font-medium accent-text hover:underline">
             {ctaText}
             <svg class="ml-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
           </a>
@@ -218,16 +218,16 @@ function toEmbedUrl(url: string): string {
       {contentCards && contentCards.length > 0 && (
         <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {contentCards.map((card) => (
-            <article class="rounded-lg overflow-hidden shadow-md bg-creme">
+            <article class="rounded-lg overflow-hidden shadow-md bg-canvas">
               {card.image && (
                 <img class="w-full h-48 object-cover" src={card.image.sourceUrl} alt={card.image.altText || card.title || ''} loading="lazy" />
               )}
               <div class="p-5">
                 {card.title && (
-                  <h3 class="mb-2 text-xl font-bold tracking-tight text-taupe font-heading">{card.title}</h3>
+                  <h3 class="mb-2 text-xl font-bold tracking-tight text-ink font-heading">{card.title}</h3>
                 )}
                 {card.description && (
-                  <p class="text-taupe/70">{card.description}</p>
+                  <p class="text-ink/70">{card.description}</p>
                 )}
               </div>
             </article>
@@ -240,31 +240,31 @@ function toEmbedUrl(url: string): string {
 
 {/* 9. Content section with image and feature list */}
 {layout === 'features_list' && (
-  <section class="bg-creme">
+  <section class="bg-canvas">
     <div class="items-center py-16 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 lg:py-16 lg:px-6">
       <div>
         {heading && (
-          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-ink font-heading">
             {heading}
           </h2>
         )}
         {body && (
-          <div class="mb-6 prose max-w-none text-taupe/70" set:html={sanitizeHTML(body)} />
+          <div class="mb-6 prose max-w-none text-ink/70" set:html={sanitizeHTML(body)} />
         )}
         {contentFeatures && contentFeatures.length > 0 && (
           <ul class="space-y-3 mb-6">
             {contentFeatures.map((feat) => (
               <li class="flex items-center space-x-3">
-                <svg class="flex-shrink-0 w-5 h-5 text-sauge" fill="currentColor" viewBox="0 0 20 20">
+                <svg class="flex-shrink-0 w-5 h-5 accent-text" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                 </svg>
-                <span class="text-taupe/80">{feat.text}</span>
+                <span class="text-ink/80">{feat.text}</span>
               </li>
             ))}
           </ul>
         )}
         {ctaText && ctaUrl && (
-          <a href={ctaUrl} class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-creme bg-sauge rounded-lg hover:bg-mousse transition-colors">
+          <a href={ctaUrl} class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-canvas accent-bg rounded-lg accent-bg-hover transition-colors">
             {ctaText}
             <svg class="ml-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
           </a>

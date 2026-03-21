@@ -12,7 +12,7 @@ interface Props {
 const { post, basePath = '/blog' } = Astro.props;
 ---
 
-<article class="post-card bg-creme rounded-lg border border-beige overflow-hidden hover:shadow-md transition-shadow">
+<article class="post-card bg-canvas rounded-lg border border-surface overflow-hidden hover:shadow-md transition-shadow">
   {post.featuredImage && (
     <a href={`${basePath}/${post.slug}`} class="block">
       <WPImage
@@ -29,7 +29,7 @@ const { post, basePath = '/blog' } = Astro.props;
     {post.categories?.nodes && post.categories.nodes.length > 0 && (
       <div class="flex flex-wrap gap-2 mb-2">
         {post.categories.nodes.slice(0, 2).map((category) => (
-          <span class="text-xs bg-beige text-taupe px-2.5 py-0.5 rounded-full">
+          <span class="text-xs bg-surface text-ink px-2.5 py-0.5 rounded-full">
             {decodeWPEntities(category.name)}
           </span>
         ))}
@@ -37,16 +37,16 @@ const { post, basePath = '/blog' } = Astro.props;
     )}
 
     <h2 class="text-xl font-bold mb-2">
-      <a href={`${basePath}/${post.slug}`} class="hover:text-sauge transition-colors">
+      <a href={`${basePath}/${post.slug}`} class="accent-text-hover transition-colors">
         {decodeWPEntities(post.title)}
       </a>
     </h2>
 
     {post.excerpt && (
-      <div class="text-sm text-taupe/70 mb-3 line-clamp-3" set:html={sanitizeExcerpt(post.excerpt)} />
+      <div class="text-sm text-ink/70 mb-3 line-clamp-3" set:html={sanitizeExcerpt(post.excerpt)} />
     )}
 
-    <div class="flex items-center gap-4 text-sm text-taupe/60">
+    <div class="flex items-center gap-4 text-sm text-ink/60">
       {post.date && (
         <div class="flex items-center gap-1">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

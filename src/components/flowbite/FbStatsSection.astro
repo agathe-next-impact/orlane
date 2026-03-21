@@ -6,29 +6,29 @@ interface Props extends WPACFFbStatsSection {}
 const { heading, description, items = [], variant = 'light' } = Astro.props;
 
 const bgClass: Record<string, string> = {
-  light: 'bg-creme',
-  dark: 'bg-taupe',
-  accent: 'bg-sauge',
+  light: 'bg-canvas',
+  dark: 'bg-ink',
+  accent: 'accent-bg',
 };
 const headingClass: Record<string, string> = {
-  light: 'text-taupe',
-  dark: 'text-creme',
-  accent: 'text-creme',
+  light: 'text-ink',
+  dark: 'text-canvas',
+  accent: 'text-canvas',
 };
 const descClass: Record<string, string> = {
-  light: 'text-taupe/70',
-  dark: 'text-beige/80',
-  accent: 'text-creme/80',
+  light: 'text-ink/70',
+  dark: 'text-surface/80',
+  accent: 'text-canvas/80',
 };
 const valueClass: Record<string, string> = {
-  light: 'text-mousse',
-  dark: 'text-sauge',
-  accent: 'text-creme',
+  light: 'accent-text',
+  dark: 'accent-text',
+  accent: 'text-canvas',
 };
 const labelClass: Record<string, string> = {
-  light: 'text-taupe',
-  dark: 'text-creme',
-  accent: 'text-creme',
+  light: 'text-ink',
+  dark: 'text-canvas',
+  accent: 'text-canvas',
 };
 ---
 

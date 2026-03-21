@@ -5,30 +5,31 @@
 @layer base {
   :root {
     /* RGB triplets for Tailwind opacity modifier support */
-    --color-beige-rgb: 232 220 203;
-    --color-creme-rgb: 250 248 245;
-    --color-taupe-rgb: 107 98 87;
-    --color-sauge-rgb: 168 191 163;
-    --color-mousse-rgb: 122 149 117;
+    /* Fallbacks monochromes (Tailwind gray) si WordPress non configuré */
+    --color-surface-rgb: 229 231 235;
+    --color-canvas-rgb: 249 250 251;
+    --color-ink-rgb: 55 65 81;
+    --color-primary-rgb: 107 114 128;
+    --color-secondary-rgb: 75 85 99;
 
     /* Default block accent — overridden by color variations */
-    --block-accent: var(--color-sauge, #A8BFA3);
+    --block-accent: var(--color-primary, #6B7280);
 
     /* ── Flowbite v4 CSS variables — mapped to WP theme palette ──
        These mirror node_modules/flowbite/src/themes/default.css
        but use concrete values since @theme / Tailwind v4 vars aren't available.
-       WP overrides cascade: Layout.astro injects --color-taupe etc. on <body>,
+       WP overrides cascade: Layout.astro injects --color-ink etc. on <body>,
        and these variables reference them via var(). ── */
 
     /* Text colors */
-    --color-body: var(--color-taupe, #6B6257);
-    --color-body-subtle: var(--color-taupe, #6B6257);
-    --color-heading: var(--color-taupe, #6B6257);
+    --color-body: var(--color-ink, #374151);
+    --color-body-subtle: var(--color-ink, #374151);
+    --color-heading: var(--color-ink, #374151);
 
     /* Brand foreground (accent = sauge / mousse) */
-    --color-fg-brand-subtle: var(--color-sauge, #A8BFA3);
-    --color-fg-brand: var(--color-mousse, #7A9575);
-    --color-fg-brand-strong: var(--color-mousse, #7A9575);
+    --color-fg-brand-subtle: var(--color-primary, #6B7280);
+    --color-fg-brand: var(--color-secondary, #4B5563);
+    --color-fg-brand-strong: var(--color-secondary, #4B5563);
 
     /* Status foreground — keep standard semantic colors */
     --color-fg-success: #047857;
@@ -41,28 +42,28 @@
     --color-fg-disabled: #9ca3af;
 
     /* Neutral backgrounds — palette tones */
-    --color-neutral-primary-soft: var(--color-creme, #FAF8F5);
-    --color-neutral-primary: var(--color-creme, #FAF8F5);
-    --color-neutral-primary-medium: var(--color-creme, #FAF8F5);
-    --color-neutral-primary-strong: var(--color-beige, #E8DCCB);
-    --color-neutral-secondary-soft: var(--color-creme, #FAF8F5);
-    --color-neutral-secondary: var(--color-creme, #FAF8F5);
-    --color-neutral-secondary-medium: var(--color-beige, #E8DCCB);
-    --color-neutral-secondary-strong: var(--color-beige, #E8DCCB);
-    --color-neutral-secondary-strongest: var(--color-beige, #E8DCCB);
-    --color-neutral-tertiary-soft: var(--color-beige, #E8DCCB);
-    --color-neutral-tertiary: var(--color-beige, #E8DCCB);
-    --color-neutral-tertiary-medium: var(--color-taupe, #6B6257);
-    --color-neutral-quaternary: var(--color-taupe, #6B6257);
-    --color-neutral-quaternary-medium: var(--color-taupe, #6B6257);
+    --color-neutral-primary-soft: var(--color-canvas, #F9FAFB);
+    --color-neutral-primary: var(--color-canvas, #F9FAFB);
+    --color-neutral-primary-medium: var(--color-canvas, #F9FAFB);
+    --color-neutral-primary-strong: var(--color-surface, #E5E7EB);
+    --color-neutral-secondary-soft: var(--color-canvas, #F9FAFB);
+    --color-neutral-secondary: var(--color-canvas, #F9FAFB);
+    --color-neutral-secondary-medium: var(--color-surface, #E5E7EB);
+    --color-neutral-secondary-strong: var(--color-surface, #E5E7EB);
+    --color-neutral-secondary-strongest: var(--color-surface, #E5E7EB);
+    --color-neutral-tertiary-soft: var(--color-surface, #E5E7EB);
+    --color-neutral-tertiary: var(--color-surface, #E5E7EB);
+    --color-neutral-tertiary-medium: var(--color-ink, #374151);
+    --color-neutral-quaternary: var(--color-ink, #374151);
+    --color-neutral-quaternary-medium: var(--color-ink, #374151);
     --color-gray: #d1d5db;
 
     /* Brand backgrounds */
-    --color-brand-softer: var(--color-creme, #FAF8F5);
-    --color-brand-soft: var(--color-beige, #E8DCCB);
-    --color-brand: var(--color-mousse, #7A9575);
-    --color-brand-medium: var(--color-sauge, #A8BFA3);
-    --color-brand-strong: var(--color-mousse, #7A9575);
+    --color-brand-softer: var(--color-canvas, #F9FAFB);
+    --color-brand-soft: var(--color-surface, #E5E7EB);
+    --color-brand: var(--color-secondary, #4B5563);
+    --color-brand-medium: var(--color-primary, #6B7280);
+    --color-brand-strong: var(--color-secondary, #4B5563);
 
     /* Status backgrounds — semantic colors */
     --color-success-soft: #ecfdf5;
@@ -77,30 +78,30 @@
     --color-warning: #f97316;
     --color-warning-medium: #ffedd5;
     --color-warning-strong: #c2410c;
-    --color-dark-soft: var(--color-taupe, #6B6257);
-    --color-dark: var(--color-taupe, #6B6257);
-    --color-dark-strong: var(--color-taupe, #6B6257);
-    --color-disabled: var(--color-beige, #E8DCCB);
+    --color-dark-soft: var(--color-ink, #374151);
+    --color-dark: var(--color-ink, #374151);
+    --color-dark-strong: var(--color-ink, #374151);
+    --color-disabled: var(--color-surface, #E5E7EB);
 
     /* Border colors */
-    --color-buffer: var(--color-creme, #FAF8F5);
-    --color-buffer-medium: var(--color-creme, #FAF8F5);
-    --color-buffer-strong: var(--color-creme, #FAF8F5);
-    --color-muted: var(--color-creme, #FAF8F5);
-    --color-light-subtle: var(--color-beige, #E8DCCB);
-    --color-light: var(--color-beige, #E8DCCB);
-    --color-light-medium: var(--color-beige, #E8DCCB);
-    --color-default-subtle: var(--color-beige, #E8DCCB);
-    --color-default: var(--color-beige, #E8DCCB);
-    --color-default-medium: var(--color-beige, #E8DCCB);
-    --color-default-strong: var(--color-beige, #E8DCCB);
+    --color-buffer: var(--color-canvas, #F9FAFB);
+    --color-buffer-medium: var(--color-canvas, #F9FAFB);
+    --color-buffer-strong: var(--color-canvas, #F9FAFB);
+    --color-muted: var(--color-canvas, #F9FAFB);
+    --color-light-subtle: var(--color-surface, #E5E7EB);
+    --color-light: var(--color-surface, #E5E7EB);
+    --color-light-medium: var(--color-surface, #E5E7EB);
+    --color-default-subtle: var(--color-surface, #E5E7EB);
+    --color-default: var(--color-surface, #E5E7EB);
+    --color-default-medium: var(--color-surface, #E5E7EB);
+    --color-default-strong: var(--color-surface, #E5E7EB);
     --color-success-subtle: #a7f3d0;
     --color-danger-subtle: #fecdd3;
     --color-warning-subtle: #fed7aa;
-    --color-brand-subtle: var(--color-sauge, #A8BFA3);
-    --color-brand-light: var(--color-mousse, #7A9575);
-    --color-dark-subtle: var(--color-taupe, #6B6257);
-    --color-dark-backdrop: var(--color-taupe, #6B6257);
+    --color-brand-subtle: var(--color-primary, #6B7280);
+    --color-brand-light: var(--color-secondary, #4B5563);
+    --color-dark-subtle: var(--color-ink, #374151);
+    --color-dark-backdrop: var(--color-ink, #374151);
 
     /* Border radius */
     --radius-0: 0px;
@@ -111,6 +112,19 @@
     --radius-base: 12px;
     --radius-lg: 16px;
     --default-border-width: 1px;
+
+    /* Appearance — Buttons (defaults, overridden by Layout.astro) */
+    --btn-radius: 12px;
+    --btn-padding: 0.75rem 1.25rem;
+    --btn-font-weight: 500;
+    --btn-text-transform: none;
+    --btn-letter-spacing: normal;
+    --btn-shadow: none;
+    --btn2-style: outlined;
+
+    /* Appearance — Inputs */
+    --input-radius: 12px;
+    --input-style: default;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -119,8 +133,8 @@
 }
 
 /* Color variations — applied by FlexibleContent wrapper.
-   Uses :where() for zero specificity so Tailwind utilities (e.g. text-mousse,
-   text-taupe/70) can still override when a specific accent is needed. */
+   Uses :where() for zero specificity so Tailwind utilities can still
+   override when a specific accent is needed. */
 .color-variation > section,
 .color-variation > div > section {
   background: var(--block-bg) !important;
@@ -139,17 +153,165 @@
 .accent-text { color: var(--block-accent) !important; }
 .accent-bg { background-color: var(--block-accent) !important; }
 .accent-bg-soft { background-color: color-mix(in srgb, var(--block-accent) 15%, transparent) !important; }
+.accent-ring { --tw-ring-color: var(--block-accent) !important; }
+.accent-text-hover:hover { color: var(--block-accent) !important; }
+.accent-bg-hover:hover { background-color: color-mix(in srgb, var(--block-accent) 85%, black) !important; }
+.accent-bg-soft-hover:hover { background-color: color-mix(in srgb, var(--block-accent) 20%, transparent) !important; }
+
+/* Navigation & Footer — variation-driven color classes */
+.nav-variation-bg { background-color: var(--nav-bg) !important; }
+.nav-variation-text { color: var(--nav-text) !important; }
+.nav-variation-accent { color: var(--nav-accent) !important; }
+.nav-variation-accent-hover:hover { color: var(--nav-accent) !important; }
+.nav-variation-accent-bg { background-color: var(--nav-accent) !important; }
+.nav-variation-accent-bg-hover:hover { background-color: color-mix(in srgb, var(--nav-accent) 85%, black) !important; }
+.nav-variation-border { border-color: color-mix(in srgb, var(--nav-text) 20%, transparent) !important; }
+.nav-variation-search {
+  background-color: color-mix(in srgb, var(--nav-bg) 80%, white) !important;
+  border-color: color-mix(in srgb, var(--nav-text) 20%, transparent) !important;
+  color: var(--nav-text) !important;
+}
+.nav-variation-search::placeholder { color: color-mix(in srgb, var(--nav-text) 50%, transparent) !important; }
+.nav-variation-search:focus { --tw-ring-color: var(--nav-accent) !important; border-color: var(--nav-accent) !important; }
+
+.footer-variation-bg { background-color: var(--footer-bg) !important; }
+.footer-variation-text { color: var(--footer-text) !important; }
+.footer-variation-title { color: var(--footer-title) !important; }
+.footer-variation-text-muted { color: color-mix(in srgb, var(--footer-text) 70%, transparent) !important; }
+.footer-variation-text-faint { color: color-mix(in srgb, var(--footer-text) 60%, transparent) !important; }
+.footer-variation-accent { color: var(--footer-accent) !important; }
+.footer-variation-accent-hover:hover { color: var(--footer-accent) !important; }
+.footer-variation-accent-bg { background-color: var(--footer-accent) !important; }
+.footer-variation-accent-bg-hover:hover { background-color: color-mix(in srgb, var(--footer-accent) 85%, black) !important; }
+.footer-variation-border { border-color: color-mix(in srgb, var(--footer-text) 20%, transparent) !important; }
+.footer-variation-input {
+  background-color: color-mix(in srgb, var(--footer-bg) 80%, white) !important;
+  border-color: color-mix(in srgb, var(--footer-text) 30%, transparent) !important;
+  color: var(--footer-text) !important;
+}
+.footer-variation-input::placeholder { color: color-mix(in srgb, var(--footer-text) 40%, transparent) !important; }
+.footer-variation-input:focus { --tw-ring-color: var(--footer-accent) !important; border-color: var(--footer-accent) !important; }
+.footer-variation-accent-bg-soft { background-color: color-mix(in srgb, var(--footer-accent) 15%, transparent) !important; }
 
 /* Feature item cards: always creme bg + taupe text, even inside color variations */
 .feature-card {
-  background-color: rgb(var(--color-creme-rgb)) !important;
-  color: rgb(var(--color-taupe-rgb)) !important;
+  background-color: rgb(255 255 255 / 0.6) !important;
+  color: rgb(var(--color-ink-rgb)) !important;
 }
 .feature-card h1, .feature-card h2, .feature-card h3, .feature-card h4, .feature-card h5, .feature-card h6 {
-  color: rgb(var(--color-taupe-rgb));
+  color: rgb(var(--color-ink-rgb));
 }
 .feature-card p, .feature-card li, .feature-card span, .feature-card div {
-  color: rgb(var(--color-taupe-rgb) / 0.7);
+  color: rgb(var(--color-ink-rgb) / 0.7);
+}
+
+/* ── Theme-driven button styles ──────────────────────────────────────── */
+
+/* Primary CTA button */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--btn-padding);
+  font-weight: var(--btn-font-weight);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-transform: var(--btn-text-transform);
+  letter-spacing: var(--btn-letter-spacing);
+  border-radius: var(--btn-radius);
+  box-shadow: var(--btn-shadow);
+  transition: background-color 0.15s, box-shadow 0.15s;
+  /* Colors via accent utilities — add accent-bg accent-bg-hover text-canvas */
+}
+
+/* Secondary CTA button — outlined (default) */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--btn-padding);
+  font-weight: var(--btn-font-weight);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-transform: var(--btn-text-transform);
+  letter-spacing: var(--btn-letter-spacing);
+  border-radius: var(--btn-radius);
+  box-shadow: var(--btn-shadow);
+  transition: background-color 0.15s, box-shadow 0.15s;
+}
+
+/* Secondary style variants — applied automatically via --btn2-style */
+.btn-secondary--outlined {
+  border: 1px solid;
+  border-color: rgb(var(--color-ink-rgb) / 0.3);
+  color: rgb(var(--color-ink-rgb));
+  background: transparent;
+}
+.btn-secondary--outlined:hover {
+  background: rgb(var(--color-ink-rgb) / 0.1);
+}
+
+.btn-secondary--ghost {
+  border: none;
+  color: rgb(var(--color-ink-rgb));
+  background: transparent;
+}
+.btn-secondary--ghost:hover {
+  background: rgb(var(--color-ink-rgb) / 0.08);
+}
+
+.btn-secondary--filled {
+  border: none;
+  color: rgb(var(--color-ink-rgb));
+  background: rgb(var(--color-surface-rgb) / 0.6);
+}
+.btn-secondary--filled:hover {
+  background: rgb(var(--color-surface-rgb) / 0.9);
+}
+
+.btn-secondary--link {
+  border: none;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.btn-secondary--link:hover {
+  opacity: 0.7;
+}
+
+/* ── Theme-driven input styles ──────────────────────────────────────── */
+
+.input-themed {
+  border-radius: var(--input-radius);
+}
+
+/* Input style: underline */
+.input-themed--underline {
+  border: none;
+  border-bottom: 2px solid rgb(var(--color-surface-rgb));
+  border-radius: 0;
+  background: transparent;
+  padding-left: 0;
+  padding-right: 0;
+}
+.input-themed--underline:focus {
+  border-bottom-color: var(--block-accent, var(--color-primary, #6B7280));
+  box-shadow: none;
+  outline: none;
+}
+
+/* Input style: filled */
+.input-themed--filled {
+  border: none;
+  background: rgb(var(--color-surface-rgb) / 0.4);
+}
+.input-themed--filled:focus {
+  background: rgb(var(--color-surface-rgb) / 0.6);
+  box-shadow: none;
+  outline: 2px solid var(--block-accent, var(--color-primary, #6B7280));
+  outline-offset: -2px;
 }
 
 /* Check icon for all lists inside prose blocks */

@@ -6,7 +6,7 @@ import { env } from '../lib/env';
 
 interface Props {
   variantOverride?: 'default' | 'with_cta' | 'with_search' | 'centered' | 'transparent';
-  colorSchemeOverride?: 'light' | 'dark' | 'white' | 'sauge' | 'transparent';
+  colorSchemeOverride?: 'variation-1' | 'variation-2' | 'variation-3' | 'transparent';
 }
 
 const { variantOverride, colorSchemeOverride } = Astro.props;
@@ -17,82 +17,56 @@ const theme = await getThemeSettings();
 const currentPath = Astro.url.pathname;
 
 const variant = variantOverride || theme.navbarVariant || 'default';
-const colorScheme = colorSchemeOverride || theme.navbarColorScheme || 'light';
+const colorScheme = colorSchemeOverride || theme.navbarColorScheme || 'variation-1';
 const isSticky = theme.navbarSticky !== false;
 const ctaText = theme.navbarCtaText || 'Contact';
 const ctaUrl = theme.navbarCtaUrl || '/contact';
 const searchPlaceholder = theme.navbarSearchPlaceholder || 'Rechercher…';
 
-// ── Color scheme classes ────────────────────────────────────────
-const colorMap: Record<string, { nav: string; link: string; linkActive: string; linkHover: string; mobileBg: string; hamburger: string; cta: string; dropdown: string; dropdownLink: string; border: string; search: string }> = {
-  light: {
-    nav: 'bg-beige',
-    link: 'text-taupe',
-    linkActive: 'text-sauge',
-    linkHover: 'hover:text-sauge',
-    mobileBg: 'bg-beige',
-    hamburger: 'text-taupe hover:bg-taupe/10',
-    cta: 'bg-sauge text-white hover:bg-mousse',
-    dropdown: 'bg-creme border-beige',
-    dropdownLink: 'text-taupe hover:bg-beige hover:text-taupe',
-    border: 'border-b border-beige',
-    search: 'bg-creme border-beige text-taupe placeholder:text-taupe/50 focus:ring-sauge focus:border-sauge',
-  },
-  dark: {
-    nav: 'bg-taupe',
-    link: 'text-creme/80',
-    linkActive: 'text-white',
-    linkHover: 'hover:text-white',
-    mobileBg: 'bg-taupe',
-    hamburger: 'text-creme/80 hover:bg-white/10',
-    cta: 'bg-sauge text-white hover:bg-mousse',
-    dropdown: 'bg-taupe border-creme/20',
-    dropdownLink: 'text-creme/80 hover:bg-white/10 hover:text-white',
-    border: 'border-b border-creme/10',
-    search: 'bg-white/10 border-creme/20 text-creme placeholder:text-creme/50 focus:ring-sauge focus:border-sauge',
-  },
-  white: {
-    nav: 'bg-creme',
-    link: 'text-taupe',
-    linkActive: 'text-sauge',
-    linkHover: 'hover:text-sauge',
-    mobileBg: 'bg-creme',
-    hamburger: 'text-taupe hover:bg-beige',
-    cta: 'bg-sauge text-white hover:bg-mousse',
-    dropdown: 'bg-white border-beige',
-    dropdownLink: 'text-taupe hover:bg-beige/50 hover:text-taupe',
-    border: 'border-b border-beige/50',
-    search: 'bg-beige/50 border-beige text-taupe placeholder:text-taupe/50 focus:ring-sauge focus:border-sauge',
-  },
-  sauge: {
-    nav: 'bg-sauge',
-    link: 'text-white/80',
-    linkActive: 'text-white',
-    linkHover: 'hover:text-white',
-    mobileBg: 'bg-sauge',
-    hamburger: 'text-white/80 hover:bg-white/10',
-    cta: 'bg-white text-sauge hover:bg-creme',
-    dropdown: 'bg-mousse border-white/20',
-    dropdownLink: 'text-white/80 hover:bg-white/10 hover:text-white',
-    border: 'border-b border-white/10',
-    search: 'bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:ring-white focus:border-white',
-  },
-  transparent: {
-    nav: 'bg-transparent',
-    link: 'text-white/80',
-    linkActive: 'text-white',
-    linkHover: 'hover:text-white',
-    mobileBg: 'bg-taupe/95',
-    hamburger: 'text-white/80 hover:bg-white/10',
-    cta: 'bg-sauge text-white hover:bg-mousse',
-    dropdown: 'bg-taupe/95 border-white/10',
-    dropdownLink: 'text-white/80 hover:bg-white/10 hover:text-white',
-    border: 'border-b border-white/10',
-    search: 'bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:ring-white focus:border-white',
-  },
-};
+// ── Variation-based color system ────────────────────────────────
+// Build inline style from the selected variation
+function getVariationStyle(scheme: string): string {
+  if (scheme === 'transparent') return '';
+  const match = scheme.match(/^variation-(\d)$/);
+  if (!match) return '';
+  const n = match[1];
+  return [
+    `--nav-bg: var(--variation-${n}-bg)`,
+    `--nav-title: var(--variation-${n}-title)`,
+    `--nav-text: var(--variation-${n}-text)`,
+    `--nav-accent: var(--variation-${n}-accent, var(--color-primary, #6B7280))`,
+  ].join('; ');
+}
 
-const colors = colorMap[colorScheme] || colorMap.light;
+const navStyle = getVariationStyle(colorScheme);
+const isTransparent = colorScheme === 'transparent';
+
+// Dynamic classes that reference CSS vars set via inline style
+const colors = isTransparent ? {
+  nav: 'bg-transparent',
+  link: 'text-white/80',
+  linkActive: 'text-white',
+  linkHover: 'hover:text-white',
+  mobileBg: 'bg-ink/95',
+  hamburger: 'text-white/80 hover:bg-white/10',
+  cta: 'accent-bg text-white accent-bg-hover',
+  dropdown: 'bg-ink/95 border-white/10',
+  dropdownLink: 'text-white/80 hover:bg-white/10 hover:text-white',
+  border: 'border-b border-white/10',
+  search: 'bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:ring-white focus:border-white',
+} : {
+  nav: 'nav-variation-bg',
+  link: 'nav-variation-text',
+  linkActive: 'nav-variation-accent',
+  linkHover: 'nav-variation-accent-hover',
+  mobileBg: 'nav-variation-bg',
+  hamburger: 'nav-variation-text hover:opacity-70',
+  cta: 'nav-variation-accent-bg text-white nav-variation-accent-bg-hover',
+  dropdown: 'nav-variation-bg nav-variation-border',
+  dropdownLink: 'nav-variation-text hover:opacity-70',
+  border: 'border-b nav-variation-border',
+  search: 'nav-variation-search',
+};
 
 // ── URL helpers ─────────────────────────────────────────────────
 function toRelativePath(item: WPMenuItem): string {
@@ -132,7 +106,7 @@ const logoAlt = theme.logo?.altText || siteSettings.title;
 
 {/* ── Variant: default ─────────────────────────────────────── */}
 {variant === 'default' && (
-  <nav class:list={[colors.nav, colors.border, isSticky ? 'sticky top-0 z-50' : '', 'w-full']}>
+  <nav class:list={[colors.nav, colors.border, isSticky ? 'sticky top-0 z-50' : '', 'w-full']} style={navStyle || undefined}>
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
       <a href="/" class="flex items-center space-x-3">
         {logoSrc ? (
@@ -196,7 +170,7 @@ const logoAlt = theme.logo?.altText || siteSettings.title;
 
 {/* ── Variant: with_cta ────────────────────────────────────── */}
 {variant === 'with_cta' && (
-  <nav class:list={[colors.nav, colors.border, isSticky ? 'sticky top-0 z-50' : '', 'w-full']}>
+  <nav class:list={[colors.nav, colors.border, isSticky ? 'sticky top-0 z-50' : '', 'w-full']} style={navStyle || undefined}>
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
       <a href="/" class="flex items-center space-x-3">
         {logoSrc ? (
@@ -265,7 +239,7 @@ const logoAlt = theme.logo?.altText || siteSettings.title;
 
 {/* ── Variant: with_search ─────────────────────────────────── */}
 {variant === 'with_search' && (
-  <nav class:list={[colors.nav, colors.border, isSticky ? 'sticky top-0 z-50' : '', 'w-full']}>
+  <nav class:list={[colors.nav, colors.border, isSticky ? 'sticky top-0 z-50' : '', 'w-full']} style={navStyle || undefined}>
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
       <a href="/" class="flex items-center space-x-3">
         {logoSrc ? (
@@ -351,7 +325,7 @@ const logoAlt = theme.logo?.altText || siteSettings.title;
 
 {/* ── Variant: centered ────────────────────────────────────── */}
 {variant === 'centered' && (
-  <nav class:list={[colors.nav, colors.border, isSticky ? 'sticky top-0 z-50' : '', 'w-full']}>
+  <nav class:list={[colors.nav, colors.border, isSticky ? 'sticky top-0 z-50' : '', 'w-full']} style={navStyle || undefined}>
     <div class="max-w-screen-xl mx-auto p-4">
       <div class="flex flex-wrap items-center justify-between md:justify-center">
         <a href="/" class="flex items-center space-x-3 md:absolute md:left-4">

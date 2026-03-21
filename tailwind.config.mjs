@@ -11,12 +11,13 @@ export default {
     },
     extend: {
       colors: {
-        // Couleurs principales — overridées par la page d'options WP via CSS custom properties
-        beige: 'var(--color-beige, #E8DCCB)',
-        creme: 'var(--color-creme, #FAF8F5)',
-        taupe: 'var(--color-taupe, #6B6257)',
-        sauge: 'var(--color-sauge, #A8BFA3)',
-        mousse: 'var(--color-mousse, #7A9575)',
+        // Couleurs fonctionnelles — overridées par la page d'options WP via CSS custom properties
+        // Fallbacks monochromes (gris neutres) si WordPress non configuré
+        surface: 'var(--color-surface, #E5E7EB)',
+        canvas: 'var(--color-canvas, #F9FAFB)',
+        ink: 'var(--color-ink, #374151)',
+        primary: 'var(--color-primary, #6B7280)',
+        secondary: 'var(--color-secondary, #4B5563)',
 
         // Flowbite semantic — expose les CSS variables comme utilities Tailwind
         // Permet d'écrire text-brand, bg-brand-soft, border-default, etc.

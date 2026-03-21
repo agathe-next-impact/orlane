@@ -9,7 +9,7 @@ const theme = await getThemeSettings();
 const footerMenus = await getFooterMenus();
 
 const variant = theme.footerVariant || 'columns';
-const colorScheme = theme.footerColorScheme || 'dark';
+const colorScheme = theme.footerColorScheme || 'variation-3';
 
 // Logo (footer-specific or fallback to main)
 const logo = theme.logoFooter || theme.logo;
@@ -52,71 +52,33 @@ function toRelativePath(url: string): string {
   return url;
 }
 
-// ── Color scheme classes ────────────────────────────────────────
-const colorMap: Record<string, { bg: string; text: string; textMuted: string; textFaint: string; heading: string; linkHover: string; border: string; input: string; btnPrimary: string; btnSecondary: string }> = {
-  dark: {
-    bg: 'bg-taupe',
-    text: 'text-creme',
-    textMuted: 'text-beige/70',
-    textFaint: 'text-beige/60',
-    heading: 'text-creme',
-    linkHover: 'hover:text-sauge',
-    border: 'border-taupe/50',
-    input: 'bg-taupe/50 border-taupe/30 text-creme placeholder-beige/40 focus:ring-sauge focus:border-sauge',
-    btnPrimary: 'text-taupe bg-sauge hover:bg-sauge/80',
-    btnSecondary: 'text-creme border border-creme/30 hover:bg-creme/10',
-  },
-  light: {
-    bg: 'bg-beige',
-    text: 'text-taupe',
-    textMuted: 'text-taupe/70',
-    textFaint: 'text-taupe/60',
-    heading: 'text-taupe',
-    linkHover: 'hover:text-mousse',
-    border: 'border-taupe/20',
-    input: 'bg-creme border-taupe/20 text-taupe placeholder-taupe/40 focus:ring-sauge focus:border-sauge',
-    btnPrimary: 'text-creme bg-mousse hover:bg-sauge',
-    btnSecondary: 'text-taupe border border-taupe/30 hover:bg-taupe/10',
-  },
-  white: {
-    bg: 'bg-creme',
-    text: 'text-taupe',
-    textMuted: 'text-taupe/70',
-    textFaint: 'text-taupe/60',
-    heading: 'text-taupe',
-    linkHover: 'hover:text-mousse',
-    border: 'border-beige',
-    input: 'bg-white border-beige text-taupe placeholder-taupe/40 focus:ring-sauge focus:border-sauge',
-    btnPrimary: 'text-creme bg-mousse hover:bg-sauge',
-    btnSecondary: 'text-taupe border border-taupe/30 hover:bg-beige',
-  },
-  sauge: {
-    bg: 'bg-sauge',
-    text: 'text-white',
-    textMuted: 'text-white/70',
-    textFaint: 'text-white/60',
-    heading: 'text-white',
-    linkHover: 'hover:text-creme',
-    border: 'border-white/20',
-    input: 'bg-white/10 border-white/20 text-white placeholder-white/40 focus:ring-white focus:border-white',
-    btnPrimary: 'text-sauge bg-white hover:bg-creme',
-    btnSecondary: 'text-white border border-white/30 hover:bg-white/10',
-  },
-  mousse: {
-    bg: 'bg-mousse',
-    text: 'text-white',
-    textMuted: 'text-white/70',
-    textFaint: 'text-white/60',
-    heading: 'text-white',
-    linkHover: 'hover:text-creme',
-    border: 'border-white/20',
-    input: 'bg-white/10 border-white/20 text-white placeholder-white/40 focus:ring-white focus:border-white',
-    btnPrimary: 'text-mousse bg-white hover:bg-creme',
-    btnSecondary: 'text-white border border-white/30 hover:bg-white/10',
-  },
-};
+// ── Variation-based color system ────────────────────────────────
+function getFooterVariationStyle(scheme: string): string {
+  const match = scheme.match(/^variation-(\d)$/);
+  if (!match) return '';
+  const n = match[1];
+  return [
+    `--footer-bg: var(--variation-${n}-bg)`,
+    `--footer-title: var(--variation-${n}-title)`,
+    `--footer-text: var(--variation-${n}-text)`,
+    `--footer-accent: var(--variation-${n}-accent, var(--color-primary, #6B7280))`,
+  ].join('; ');
+}
 
-const c = colorMap[colorScheme] || colorMap.dark;
+const footerStyle = getFooterVariationStyle(colorScheme);
+
+const c = {
+  bg: 'footer-variation-bg',
+  text: 'footer-variation-text',
+  textMuted: 'footer-variation-text-muted',
+  textFaint: 'footer-variation-text-faint',
+  heading: 'footer-variation-title',
+  linkHover: 'footer-variation-accent-hover',
+  border: 'footer-variation-border',
+  input: 'footer-variation-input',
+  btnPrimary: 'footer-variation-accent-bg footer-variation-accent-bg-hover',
+  btnSecondary: 'footer-variation-text border footer-variation-border hover:opacity-80',
+};
 const columns = footerMenus.map(col => ({
   ...col,
   links: col.links.map(link => ({
@@ -128,7 +90,7 @@ const columns = footerMenus.map(col => ({
 
 {/* Variant 1 — Default: horizontal nav links + copyright */}
 {variant === 'default' && (
-  <footer class:list={[c.bg, c.text, 'py-12 mt-20']}>
+  <footer class:list={[c.bg, c.text, 'py-12 mt-20']} style={footerStyle || undefined}>
     <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
       <div class="flex flex-col items-center">
         {logo && (
@@ -156,7 +118,7 @@ const columns = footerMenus.map(col => ({
 
 {/* Variant 2 — Columns: sitemap with logo and social media */}
 {variant === 'columns' && (
-  <footer class:list={[c.bg, c.text, 'py-12 mt-20']}>
+  <footer class:list={[c.bg, c.text, 'py-12 mt-20']} style={footerStyle || undefined}>
     <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
       <div class="md:flex md:justify-between">
         <div class="mb-6 md:mb-0 md:max-w-xs">
@@ -207,7 +169,7 @@ const columns = footerMenus.map(col => ({
 
 {/* Variant 3 — Simple: logo + copyright only */}
 {variant === 'simple' && (
-  <footer class:list={[c.bg, c.text, 'py-12 mt-20']}>
+  <footer class:list={[c.bg, c.text, 'py-12 mt-20']} style={footerStyle || undefined}>
     <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
       <div class="sm:flex sm:items-center sm:justify-between">
         {logo && (
@@ -223,7 +185,7 @@ const columns = footerMenus.map(col => ({
 
 {/* Variant 4 — With newsletter: columns + newsletter form */}
 {variant === 'with_newsletter' && (
-  <footer class:list={[c.bg, c.text, 'py-12 mt-20']}>
+  <footer class:list={[c.bg, c.text, 'py-12 mt-20']} style={footerStyle || undefined}>
     <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
       <div class="lg:flex lg:justify-between lg:gap-16">
         <div class="mb-8 lg:mb-0 lg:max-w-sm">
@@ -288,7 +250,7 @@ const columns = footerMenus.map(col => ({
 
 {/* Variant 5 — Addresses: newsletter + address blocks */}
 {variant === 'addresses' && (
-  <footer class:list={[c.bg, c.text, 'py-12 mt-20']}>
+  <footer class:list={[c.bg, c.text, 'py-12 mt-20']} style={footerStyle || undefined}>
     <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
       <div class:list={['grid gap-8', addresses.length > 0 ? `lg:grid-cols-${Math.min(addresses.length + 1, 4)}` : 'lg:grid-cols-1']}>
         {addresses.map((addr) => (
@@ -343,10 +305,10 @@ const columns = footerMenus.map(col => ({
 
 {/* Variant 6 — Pre-footer CTA: CTA section + sitemap columns */}
 {variant === 'pre_footer_cta' && (
-  <footer class:list={[c.bg, c.text, 'py-12 mt-20']}>
+  <footer class:list={[c.bg, c.text, 'py-12 mt-20']} style={footerStyle || undefined}>
     <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
       {(ctaText || ctaButtonText) && (
-        <div class="bg-mousse/10 rounded-lg p-8 md:p-12 mb-8 text-center">
+        <div class="accent-bg-soft rounded-lg p-8 md:p-12 mb-8 text-center">
           {ctaText && (
             <p class:list={['text-lg md:text-xl font-semibold mb-6', c.heading]}>{ctaText}</p>
           )}
@@ -397,7 +359,7 @@ const columns = footerMenus.map(col => ({
 
 {/* Variant 7 — Sitemap centered: columns grid, centered logo + social below */}
 {variant === 'sitemap_centered' && (
-  <footer class:list={[c.bg, c.text, 'py-12 mt-20']}>
+  <footer class:list={[c.bg, c.text, 'py-12 mt-20']} style={footerStyle || undefined}>
     <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
       {columns.length > 0 && (
         <div class:list={['grid grid-cols-2 gap-8 sm:grid-cols-3', columns.length >= 5 ? 'md:grid-cols-5' : columns.length === 4 ? 'md:grid-cols-4' : `md:grid-cols-${columns.length}`]}>

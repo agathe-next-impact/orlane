@@ -21,27 +21,64 @@ const fontsParam = [fontBody, fontHeading]
   .join('&');
 const googleFontsUrl = `https://fonts.googleapis.com/css2?${fontsParam}&display=swap`;
 
+// Convert a palette name (e.g. "canvas") or hex value to a CSS value
+// Palette names → var(--color-NAME), hex values → used as-is (backwards compat)
+function toCssColor(value: string | null): string | null {
+  if (!value) return null;
+  if (value.startsWith('#')) return value; // legacy hex value
+  return `var(--color-${value})`;
+}
+
+// Map appearance setting values to CSS values
+const radiusMap: Record<string, string> = {
+  none: '0px', sm: '4px', md: '8px', lg: '12px', xl: '16px', full: '9999px',
+};
+const btnSizeMap: Record<string, string> = {
+  sm: '0.5rem 1rem',    // py-2 px-4
+  md: '0.625rem 1.25rem', // py-2.5 px-5
+  lg: '0.75rem 1.25rem',  // py-3 px-5
+  xl: '0.875rem 1.5rem',  // py-3.5 px-6
+};
+const fontWeightMap: Record<string, string> = {
+  normal: '400', medium: '500', semibold: '600', bold: '700',
+};
+const shadowMap: Record<string, string> = {
+  none: 'none', sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+  md: '0 4px 6px -1px rgb(0 0 0 / 0.1)', lg: '0 10px 15px -3px rgb(0 0 0 / 0.1)',
+};
+
 // CSS custom properties for dynamic colors
 const colorVars = [
-  theme.colorBeige && `--color-beige: ${theme.colorBeige}`,
-  theme.colorCreme && `--color-creme: ${theme.colorCreme}`,
-  theme.colorTaupe && `--color-taupe: ${theme.colorTaupe}`,
-  theme.colorSauge && `--color-sauge: ${theme.colorSauge}`,
-  theme.colorMousse && `--color-mousse: ${theme.colorMousse}`,
+  theme.colorSurface && `--color-surface: ${theme.colorSurface}`,
+  theme.colorCanvas && `--color-canvas: ${theme.colorCanvas}`,
+  theme.colorInk && `--color-ink: ${theme.colorInk}`,
+  theme.colorPrimary && `--color-primary: ${theme.colorPrimary}`,
+  theme.colorSecondary && `--color-secondary: ${theme.colorSecondary}`,
   theme.fontBody && `--font-body: '${fontBody}', sans-serif`,
   theme.fontHeading && `--font-heading: '${fontHeading}', serif`,
-  theme.variation1Bg && `--variation-1-bg: ${theme.variation1Bg}`,
-  theme.variation1Title && `--variation-1-title: ${theme.variation1Title}`,
-  theme.variation1Text && `--variation-1-text: ${theme.variation1Text}`,
-  theme.variation1Accent && `--variation-1-accent: ${theme.variation1Accent}`,
-  theme.variation2Bg && `--variation-2-bg: ${theme.variation2Bg}`,
-  theme.variation2Title && `--variation-2-title: ${theme.variation2Title}`,
-  theme.variation2Text && `--variation-2-text: ${theme.variation2Text}`,
-  theme.variation2Accent && `--variation-2-accent: ${theme.variation2Accent}`,
-  theme.variation3Bg && `--variation-3-bg: ${theme.variation3Bg}`,
-  theme.variation3Title && `--variation-3-title: ${theme.variation3Title}`,
-  theme.variation3Text && `--variation-3-text: ${theme.variation3Text}`,
-  theme.variation3Accent && `--variation-3-accent: ${theme.variation3Accent}`,
+  toCssColor(theme.variation1Bg) && `--variation-1-bg: ${toCssColor(theme.variation1Bg)}`,
+  toCssColor(theme.variation1Title) && `--variation-1-title: ${toCssColor(theme.variation1Title)}`,
+  toCssColor(theme.variation1Text) && `--variation-1-text: ${toCssColor(theme.variation1Text)}`,
+  toCssColor(theme.variation1Accent) && `--variation-1-accent: ${toCssColor(theme.variation1Accent)}`,
+  toCssColor(theme.variation2Bg) && `--variation-2-bg: ${toCssColor(theme.variation2Bg)}`,
+  toCssColor(theme.variation2Title) && `--variation-2-title: ${toCssColor(theme.variation2Title)}`,
+  toCssColor(theme.variation2Text) && `--variation-2-text: ${toCssColor(theme.variation2Text)}`,
+  toCssColor(theme.variation2Accent) && `--variation-2-accent: ${toCssColor(theme.variation2Accent)}`,
+  toCssColor(theme.variation3Bg) && `--variation-3-bg: ${toCssColor(theme.variation3Bg)}`,
+  toCssColor(theme.variation3Title) && `--variation-3-title: ${toCssColor(theme.variation3Title)}`,
+  toCssColor(theme.variation3Text) && `--variation-3-text: ${toCssColor(theme.variation3Text)}`,
+  toCssColor(theme.variation3Accent) && `--variation-3-accent: ${toCssColor(theme.variation3Accent)}`,
+  // Appearance — Buttons
+  `--btn-radius: ${radiusMap[theme.btnRadius || 'lg']}`,
+  `--btn-padding: ${btnSizeMap[theme.btnSize || 'lg']}`,
+  `--btn-font-weight: ${fontWeightMap[theme.btnFontWeight || 'medium']}`,
+  `--btn-text-transform: ${theme.btnUppercase ? 'uppercase' : 'none'}`,
+  theme.btnUppercase && '--btn-letter-spacing: 0.05em',
+  `--btn-shadow: ${shadowMap[theme.btnShadow || 'none']}`,
+  `--btn2-style: ${theme.btn2Style || 'outlined'}`,
+  // Appearance — Inputs
+  `--input-radius: ${radiusMap[theme.inputRadius || 'lg']}`,
+  `--input-style: ${theme.inputStyle || 'default'}`,
 ].filter(Boolean).join('; ');
 
 interface Props {
@@ -75,7 +112,7 @@ const wpBlockCssUrl = `${wpBaseUrl}/wp-includes/css/dist/block-library/style.min
 		<link rel="stylesheet" href={wpBlockCssUrl} />
 		<SEO title={title} description={description} seo={seo} type={type} />
 	</head>
-	<body class="min-h-screen bg-creme text-taupe" style={colorVars || undefined}>
+	<body class="min-h-screen bg-canvas text-ink" style={colorVars || undefined}>
 		<Navigation />
 
 		<main class={theme.contentWidth === 'contained' ? 'max-w-7xl mx-auto' : ''}>

@@ -7,15 +7,15 @@ const { heading, description, projects = [], variant = 'cards', ctaText, ctaUrl 
 ---
 
 {variant === 'cards' && (
-  <section class="bg-creme">
+  <section class="bg-canvas">
     <div class="py-16 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       {(heading || description) && (
         <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-12">
           {heading && (
-            <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">{heading}</h2>
+            <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-ink font-heading">{heading}</h2>
           )}
           {description && (
-            <p class="font-light text-taupe/70 sm:text-lg">{description}</p>
+            <p class="font-light text-ink/70 sm:text-lg">{description}</p>
           )}
         </div>
       )}
@@ -27,17 +27,17 @@ const { heading, description, projects = [], variant = 'cards', ctaText, ctaUrl 
             )}
             <div class="absolute inset-0 bg-gradient-to-t from-taupe/80 to-transparent flex flex-col justify-end p-6">
               {project.category && (
-                <span class="text-xs font-medium text-sauge uppercase mb-1">{project.category}</span>
+                <span class="text-xs font-medium accent-text uppercase mb-1">{project.category}</span>
               )}
               {project.title && (
-                <h3 class="text-xl font-bold text-creme mb-1">
+                <h3 class="text-xl font-bold text-canvas mb-1">
                   {project.url ? (
-                    <a href={project.url} class="hover:text-sauge transition-colors">{project.title}</a>
+                    <a href={project.url} class="accent-text-hover transition-colors">{project.title}</a>
                   ) : project.title}
                 </h3>
               )}
               {project.description && (
-                <p class="text-sm text-beige/80 line-clamp-2">{project.description}</p>
+                <p class="text-sm text-surface/80 line-clamp-2">{project.description}</p>
               )}
             </div>
           </div>
@@ -45,7 +45,7 @@ const { heading, description, projects = [], variant = 'cards', ctaText, ctaUrl 
       </div>
       {ctaText && ctaUrl && (
         <div class="text-center mt-12">
-          <a href={ctaUrl} class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-creme rounded-lg bg-sauge hover:bg-mousse transition-colors focus:ring-4 focus:outline-none focus:ring-sauge/30">
+          <a href={ctaUrl} class="btn-primary text-canvas accent-bg accent-bg-hover focus:ring-4 focus:outline-none accent-ring">
             {ctaText}
           </a>
         </div>
@@ -55,10 +55,10 @@ const { heading, description, projects = [], variant = 'cards', ctaText, ctaUrl 
 )}
 
 {variant === 'minimal' && (
-  <section class="bg-creme">
+  <section class="bg-canvas">
     <div class="py-16 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       {heading && (
-        <h2 class="mb-8 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">{heading}</h2>
+        <h2 class="mb-8 text-3xl lg:text-4xl tracking-tight font-extrabold text-ink font-heading">{heading}</h2>
       )}
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map((project) => (
@@ -67,13 +67,13 @@ const { heading, description, projects = [], variant = 'cards', ctaText, ctaUrl 
               <img class="w-full h-48 object-cover rounded-lg mb-4 group-hover:opacity-90 transition-opacity" src={project.image.sourceUrl} alt={project.image.altText || project.title || ''} loading="lazy" />
             )}
             {project.category && (
-              <span class="text-xs font-medium text-mousse uppercase">{project.category}</span>
+              <span class="text-xs font-medium accent-text uppercase">{project.category}</span>
             )}
             {project.title && (
-              <h3 class="text-lg font-bold text-taupe group-hover:text-mousse transition-colors">{project.title}</h3>
+              <h3 class="text-lg font-bold text-ink accent-text-hover transition-colors">{project.title}</h3>
             )}
             {project.description && (
-              <p class="mt-1 text-sm text-taupe/70">{project.description}</p>
+              <p class="mt-1 text-sm text-ink/70">{project.description}</p>
             )}
           </a>
         ))}
@@ -83,12 +83,12 @@ const { heading, description, projects = [], variant = 'cards', ctaText, ctaUrl 
 )}
 
 {variant === 'masonry' && (
-  <section class="bg-creme">
+  <section class="bg-canvas">
     <div class="py-16 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
       {(heading || description) && (
         <div class="mx-auto max-w-screen-sm text-center mb-8 lg:mb-12">
-          {heading && <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">{heading}</h2>}
-          {description && <p class="font-light text-taupe/70 sm:text-lg">{description}</p>}
+          {heading && <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-ink font-heading">{heading}</h2>}
+          {description && <p class="font-light text-ink/70 sm:text-lg">{description}</p>}
         </div>
       )}
       <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
@@ -97,13 +97,13 @@ const { heading, description, projects = [], variant = 'cards', ctaText, ctaUrl 
             {project.image && (
               <img class="w-full object-cover" src={project.image.sourceUrl} alt={project.image.altText || project.title || ''} loading="lazy" />
             )}
-            <div class="p-4 bg-creme border border-t-0 border-beige rounded-b-lg">
+            <div class="p-4 bg-canvas border border-t-0 border-surface rounded-b-lg">
               {project.category && (
-                <span class="text-xs font-medium text-mousse uppercase">{project.category}</span>
+                <span class="text-xs font-medium accent-text uppercase">{project.category}</span>
               )}
               {project.title && (
-                <h3 class="text-lg font-bold text-taupe">
-                  {project.url ? <a href={project.url} class="hover:text-mousse transition-colors">{project.title}</a> : project.title}
+                <h3 class="text-lg font-bold text-ink">
+                  {project.url ? <a href={project.url} class="accent-text-hover transition-colors">{project.title}</a> : project.title}
                 </h3>
               )}
             </div>

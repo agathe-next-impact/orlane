@@ -634,11 +634,11 @@ export async function getThemeSettings(): Promise<WPThemeSettings> {
               }
             }
           }
-          colorBeige
-          colorCreme
-          colorTaupe
-          colorSauge
-          colorMousse
+          colorSurface
+          colorCanvas
+          colorInk
+          colorPrimary
+          colorSecondary
           variation1Bg
           variation1Title
           variation1Text
@@ -686,6 +686,14 @@ export async function getThemeSettings(): Promise<WPThemeSettings> {
           navbarCtaText
           navbarCtaUrl
           navbarSearchPlaceholder
+          btnRadius
+          btnSize
+          btnFontWeight
+          btnUppercase
+          btnShadow
+          btn2Style
+          inputRadius
+          inputStyle
         }
       }
     }
@@ -695,11 +703,11 @@ export async function getThemeSettings(): Promise<WPThemeSettings> {
     logo: null,
     logoFooter: null,
     contentWidth: 'contained',
-    colorBeige: null,
-    colorCreme: null,
-    colorTaupe: null,
-    colorSauge: null,
-    colorMousse: null,
+    colorSurface: null,
+    colorCanvas: null,
+    colorInk: null,
+    colorPrimary: null,
+    colorSecondary: null,
     variation1Bg: null,
     variation1Title: null,
     variation1Text: null,
@@ -738,6 +746,14 @@ export async function getThemeSettings(): Promise<WPThemeSettings> {
     navbarCtaText: null,
     navbarCtaUrl: null,
     navbarSearchPlaceholder: null,
+    btnRadius: null,
+    btnSize: null,
+    btnFontWeight: null,
+    btnUppercase: false,
+    btnShadow: null,
+    btn2Style: null,
+    inputRadius: null,
+    inputStyle: null,
   };
 
   try {
@@ -768,23 +784,23 @@ export async function getThemeSettings(): Promise<WPThemeSettings> {
     return {
       logo: normalizeImage(raw.logo),
       logoFooter: normalizeImage(raw.logoFooter),
-      colorBeige: (raw.colorBeige as string) || null,
-      colorCreme: (raw.colorCreme as string) || null,
-      colorTaupe: (raw.colorTaupe as string) || null,
-      colorSauge: (raw.colorSauge as string) || null,
-      colorMousse: (raw.colorMousse as string) || null,
-      variation1Bg: (raw.variation1Bg as string) || null,
-      variation1Title: (raw.variation1Title as string) || null,
-      variation1Text: (raw.variation1Text as string) || null,
-      variation1Accent: (raw.variation1Accent as string) || null,
-      variation2Bg: (raw.variation2Bg as string) || null,
-      variation2Title: (raw.variation2Title as string) || null,
-      variation2Text: (raw.variation2Text as string) || null,
-      variation2Accent: (raw.variation2Accent as string) || null,
-      variation3Bg: (raw.variation3Bg as string) || null,
-      variation3Title: (raw.variation3Title as string) || null,
-      variation3Text: (raw.variation3Text as string) || null,
-      variation3Accent: (raw.variation3Accent as string) || null,
+      colorSurface: (raw.colorSurface as string) || null,
+      colorCanvas: (raw.colorCanvas as string) || null,
+      colorInk: (raw.colorInk as string) || null,
+      colorPrimary: (raw.colorPrimary as string) || null,
+      colorSecondary: (raw.colorSecondary as string) || null,
+      variation1Bg: unwrapSelect(raw.variation1Bg),
+      variation1Title: unwrapSelect(raw.variation1Title),
+      variation1Text: unwrapSelect(raw.variation1Text),
+      variation1Accent: unwrapSelect(raw.variation1Accent),
+      variation2Bg: unwrapSelect(raw.variation2Bg),
+      variation2Title: unwrapSelect(raw.variation2Title),
+      variation2Text: unwrapSelect(raw.variation2Text),
+      variation2Accent: unwrapSelect(raw.variation2Accent),
+      variation3Bg: unwrapSelect(raw.variation3Bg),
+      variation3Title: unwrapSelect(raw.variation3Title),
+      variation3Text: unwrapSelect(raw.variation3Text),
+      variation3Accent: unwrapSelect(raw.variation3Accent),
       fontBody: (raw.fontBody as string) || null,
       fontHeading: (raw.fontHeading as string) || null,
       socialFacebook: (raw.socialFacebook as string) || null,
@@ -812,6 +828,14 @@ export async function getThemeSettings(): Promise<WPThemeSettings> {
       navbarCtaText: (raw.navbarCtaText as string) || null,
       navbarCtaUrl: (raw.navbarCtaUrl as string) || null,
       navbarSearchPlaceholder: (raw.navbarSearchPlaceholder as string) || null,
+      btnRadius: unwrapSelect(raw.btnRadius),
+      btnSize: unwrapSelect(raw.btnSize),
+      btnFontWeight: unwrapSelect(raw.btnFontWeight),
+      btnUppercase: raw.btnUppercase === true,
+      btnShadow: unwrapSelect(raw.btnShadow),
+      btn2Style: unwrapSelect(raw.btn2Style),
+      inputRadius: unwrapSelect(raw.inputRadius),
+      inputStyle: unwrapSelect(raw.inputStyle),
     };
   } catch (error) {
     if (import.meta.env.DEV) {

@@ -7,7 +7,7 @@ interface Props extends WPACFFbHeroHomepage {}
 const { heading, highlight, subtitle, ctaText, ctaUrl, cta2Text, cta2Url, images = [], showHeartAnimation = true } = Astro.props;
 ---
 
-<section class="relative h-[calc(100vh-4rem)] w-fullhero bg-gradient-to-br from-beige py-6 to-creme overflow-hidden">
+<section class="relative h-[calc(100vh-4rem)] w-fullhero bg-gradient-to-br from-surface py-6 to-canvas overflow-hidden">
   {showHeartAnimation && (
     <div class="absolute bottom-8 left-0 w-full max-w-4xl pointer-events-none">
       <AnimatedHeartSVG />
@@ -17,25 +17,26 @@ const { heading, highlight, subtitle, ctaText, ctaUrl, cta2Text, cta2Url, images
     <div class="grid gap-8 md:grid-cols-2 md:gap-12">
       <div class="max-w-3xl pt-20">
         {heading && (
-          <h1 class="text-3xl md:text-4xl font-bold mb-6 text-taupe/70 font-heading tracking-tight leading-none">
+          <h1 class="text-4xl md:text-5xl font-bold mb-6 font-heading tracking-tight leading-none">
             {highlight ? (
               <>
-                <span class="text-taupe">{heading}</span> {highlight}
+                <div class="text-ink">{heading}</div>
+                <div class="mt-2 text-ink/60">{highlight}</div>
               </>
             ) : (
-              heading
+              <span class="text-ink">{heading}</span>
             )}
           </h1>
         )}
         {subtitle && (
-          <p class="text-lg md:text-xl mb-8 text-mousse">{subtitle}</p>
+          <p class="text-lg md:text-xl mb-8 text-ink">{subtitle}</p>
         )}
         <div class="flex flex-wrap gap-4">
           {ctaText && ctaUrl && (
-            <a href={ctaUrl} class="inline-flex items-center justify-center px-5 py-3 text-sm font-semibold text-center text-taupe rounded-lg border border-taupe/20 hover:bg-beige transition-colors focus:ring-4 focus:ring-taupe/10">{ctaText}</a>
+            <a href={ctaUrl} class="btn-primary text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{ctaText}</a>
           )}
           {cta2Text && cta2Url && (
-            <a href={cta2Url} class="inline-block bg-sauge text-creme px-5 py-3 rounded-lg text-sm font-semibold hover:bg-taupe transition-colors">{cta2Text}</a>
+            <a href={cta2Url} class="btn-secondary btn-secondary--outlined accent-text accent-border focus:ring-4 accent-ring">{cta2Text}</a>
           )}
         </div>
       </div>

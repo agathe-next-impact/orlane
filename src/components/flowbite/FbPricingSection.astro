@@ -6,17 +6,17 @@ interface Props extends WPACFFbPricingSection {}
 const { heading, description, plans = [] } = Astro.props;
 ---
 
-<section class="bg-creme">
+<section class="bg-canvas">
   <div class="py-16 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
     {(heading || description) && (
       <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
         {heading && (
-          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-taupe font-heading">
+          <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-ink font-heading">
             {heading}
           </h2>
         )}
         {description && (
-          <p class="mb-5 font-light text-taupe/70 sm:text-lg">
+          <p class="mb-5 font-light text-ink/70 sm:text-lg">
             {description}
           </p>
         )}
@@ -24,17 +24,17 @@ const { heading, description, plans = [] } = Astro.props;
     )}
     <div class="space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-6 xl:gap-10 md:space-y-0">
       {plans.map((plan) => (
-        <div class={`flex flex-col p-6 mx-auto max-w-lg text-center rounded-lg border shadow-sm ${plan.highlighted ? 'border-sauge bg-beige/30 shadow-lg ring-2 ring-sauge relative z-10' : 'border-beige bg-creme'}`}>
+        <div class={`flex flex-col p-6 mx-auto max-w-lg text-center rounded-lg border shadow-sm ${plan.highlighted ? 'accent-border bg-surface/30 shadow-lg ring-2 accent-ring relative z-10' : 'border-surface bg-canvas'}`}>
           {plan.name && (
-            <h3 class="mb-4 text-2xl font-semibold text-taupe">{plan.name}</h3>
+            <h3 class="mb-4 text-2xl font-semibold text-ink">{plan.name}</h3>
           )}
           {plan.description && (
-            <p class="font-light text-taupe/70 sm:text-lg mb-4">{plan.description}</p>
+            <p class="font-light text-ink/70 sm:text-lg mb-4">{plan.description}</p>
           )}
           <div class="flex justify-center items-baseline my-8">
-            <span class="mr-2 text-4xl font-extrabold text-taupe">{plan.price}</span>
+            <span class="mr-2 text-4xl font-extrabold text-ink">{plan.price}</span>
             {plan.period && (
-              <span class="text-taupe/60">{plan.period}</span>
+              <span class="text-ink/60">{plan.period}</span>
             )}
           </div>
           {plan.features && plan.features.length > 0 && (
@@ -42,21 +42,21 @@ const { heading, description, plans = [] } = Astro.props;
               {plan.features.map((feature) => (
                 <li class="flex items-center space-x-3">
                   {feature.included ? (
-                    <svg class="flex-shrink-0 w-5 h-5 text-mousse" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="flex-shrink-0 w-5 h-5 accent-text" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                       <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                     </svg>
                   ) : (
-                    <svg class="flex-shrink-0 w-5 h-5 text-taupe/30" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="flex-shrink-0 w-5 h-5 text-ink/30" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                       <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                     </svg>
                   )}
-                  <span class={feature.included ? 'text-taupe' : 'text-taupe/40 line-through'}>{feature.text}</span>
+                  <span class={feature.included ? 'text-ink' : 'text-ink/40 line-through'}>{feature.text}</span>
                 </li>
               ))}
             </ul>
           )}
           {plan.ctaText && plan.ctaUrl && (
-            <a href={plan.ctaUrl} class={`mt-auto inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center rounded-lg transition-colors focus:ring-4 ${plan.highlighted ? 'text-creme bg-sauge hover:bg-mousse focus:ring-sauge/30' : 'text-taupe bg-beige hover:bg-taupe hover:text-creme focus:ring-taupe/10'}`}>
+            <a href={plan.ctaUrl} class={`btn-primary mt-auto focus:ring-4 ${plan.highlighted ? 'text-canvas accent-bg accent-bg-hover accent-ring' : 'text-ink bg-surface hover:bg-ink hover:text-canvas focus:ring-ink/10'}`}>
               {plan.ctaText}
             </a>
           )}

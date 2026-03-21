@@ -68,6 +68,8 @@ export const flexibleContentFragment = `
         subtitle
         description
         link
+        ctaText
+        ctaUrl
       }
     }
     ... on AcfFieldsFlexibleContentFbCtaSectionLayout {
