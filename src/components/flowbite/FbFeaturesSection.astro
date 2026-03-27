@@ -1,6 +1,7 @@
 ---
 import type { WPACFFbFeaturesSection } from '../../types/wp';
 import { Icon } from 'astro-icon/components';
+import { linkAttrs } from '../../lib/link-attrs';
 
 interface Props extends WPACFFbFeaturesSection {}
 
@@ -14,6 +15,7 @@ const {
   image,
   ctaText,
   ctaUrl,
+  ctaUrlTarget,
 } = Astro.props;
 
 const gridClass: Record<string, string> = {
@@ -40,6 +42,9 @@ const itemClass = isDark ? 'bg-ink/80' : 'feature-card';
           <div class={headerImage ? 'flex-1' : 'max-w-screen-md'}>
             {heading && <h2 class={`mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
             {description && <p class={`sm:text-lg ${textClass}`}>{description}</p>}
+            {ctaText && ctaUrl && (
+              <a href={ctaUrl} {...linkAttrs(ctaUrlTarget)} class="btn-primary inline-block mt-6 text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{ctaText}</a>
+            )}
           </div>
           {headerImage && (
             <img src={headerImage.sourceUrl} alt={headerImage.altText || ''} class="mt-6 md:mt-0 w-full md:w-1/3 max-w-xs rounded-2xl object-cover aspect-[4/3] shadow-lg" />
@@ -59,16 +64,11 @@ const itemClass = isDark ? 'bg-ink/80' : 'feature-card';
             <div class="h-4 w-1/2 mt-4 border-t-2 accent-border"></div>
             {item.description && <div class={`prose prose-sm max-w-none ${textClass}`} set:html={item.description} />}
             {item.ctaText && item.ctaUrl && (
-              <a href={item.ctaUrl} class="btn-primary mt-4 text-sm text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{item.ctaText}</a>
+              <a href={item.ctaUrl} {...linkAttrs(item.ctaUrlTarget)} class="btn-primary mt-4 text-sm text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{item.ctaText}</a>
             )}
           </div>
         ))}
       </div>
-      {ctaText && ctaUrl && (
-        <div class="mt-12 text-center">
-          <a href={ctaUrl} class="btn-primary text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{ctaText}</a>
-        </div>
-      )}
     </div>
   </section>
 )}
@@ -82,6 +82,9 @@ const itemClass = isDark ? 'bg-ink/80' : 'feature-card';
           <div class={headerImage ? 'flex-1' : ''}>
             {heading && <h2 class={`mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
             {description && <p class={`sm:text-lg ${textClass}`}>{description}</p>}
+            {ctaText && ctaUrl && (
+              <a href={ctaUrl} {...linkAttrs(ctaUrlTarget)} class="btn-primary inline-block mt-6 text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{ctaText}</a>
+            )}
           </div>
           {headerImage && (
             <img src={headerImage.sourceUrl} alt={headerImage.altText || ''} class="mt-6 md:mt-0 w-full md:w-1/3 max-w-xs rounded-2xl object-cover aspect-[4/3] shadow-lg" />
@@ -101,7 +104,7 @@ const itemClass = isDark ? 'bg-ink/80' : 'feature-card';
                 <div class="h-4 w-1/2 mt-4 border-t-2 accent-border"></div>
                 {item.description && <div class={`prose prose-sm max-w-none ${textClass}`} set:html={item.description} />}
                 {item.ctaText && item.ctaUrl && (
-                  <a href={item.ctaUrl} class="btn-primary mt-4 text-sm text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{item.ctaText}</a>
+                  <a href={item.ctaUrl} {...linkAttrs(item.ctaUrlTarget)} class="btn-primary mt-4 text-sm text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{item.ctaText}</a>
                 )}
               </div>
             </div>
@@ -110,11 +113,6 @@ const itemClass = isDark ? 'bg-ink/80' : 'feature-card';
       </div>
       {image && (
         <img class="w-full rounded-lg shadow-xl object-cover aspect-[4/3]" src={image.sourceUrl} alt={image.altText || ''} width={image.mediaDetails?.width} height={image.mediaDetails?.height} />
-      )}
-      {ctaText && ctaUrl && (
-        <div class="mt-12 text-center">
-          <a href={ctaUrl} class="btn-primary text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{ctaText}</a>
-        </div>
       )}
     </div>
   </section>
@@ -129,6 +127,9 @@ const itemClass = isDark ? 'bg-ink/80' : 'feature-card';
           <div class={headerImage ? 'flex-1' : 'max-w-screen-md'}>
             {heading && <h2 class={`mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
             {description && <p class={`sm:text-lg ${textClass}`}>{description}</p>}
+            {ctaText && ctaUrl && (
+              <a href={ctaUrl} {...linkAttrs(ctaUrlTarget)} class="btn-primary inline-block mt-6 text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{ctaText}</a>
+            )}
           </div>
           {headerImage && (
             <img src={headerImage.sourceUrl} alt={headerImage.altText || ''} class="mt-6 md:mt-0 w-full md:w-1/3 max-w-xs rounded-2xl object-cover aspect-[4/3] shadow-lg" />
@@ -147,9 +148,9 @@ const itemClass = isDark ? 'bg-ink/80' : 'feature-card';
             {item.subtitle && <p class={`mb-1 text-lg font-medium ${textClass}`}>{item.subtitle}</p>}
             {item.description && <div class={`prose prose-sm max-w-none mt-6 mb-3 ${textClass}`} set:html={item.description} />}
             {item.ctaText && item.ctaUrl ? (
-              <a href={item.ctaUrl} class="btn-primary mt-4 text-sm text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{item.ctaText}</a>
+              <a href={item.ctaUrl} {...linkAttrs(item.ctaUrlTarget)} class="btn-primary mt-4 text-sm text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{item.ctaText}</a>
             ) : item.link && (
-              <a href={item.link} class="inline-flex items-center accent-text hover:opacity-80 font-medium transition-colors">
+              <a href={item.link} {...linkAttrs(item.linkTarget)} class="inline-flex items-center accent-text hover:opacity-80 font-medium transition-colors">
                 En savoir plus
                 <svg class="ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
               </a>
@@ -157,11 +158,6 @@ const itemClass = isDark ? 'bg-ink/80' : 'feature-card';
           </div>
         ))}
       </div>
-      {ctaText && ctaUrl && (
-        <div class="mt-12 text-center">
-          <a href={ctaUrl} class="btn-primary text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{ctaText}</a>
-        </div>
-      )}
     </div>
   </section>
 )}
@@ -175,6 +171,9 @@ const itemClass = isDark ? 'bg-ink/80' : 'feature-card';
           <div class={headerImage ? 'flex-1' : 'max-w-screen-md'}>
             {heading && <h2 class={`mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
             {description && <p class={`sm:text-lg ${textClass}`}>{description}</p>}
+            {ctaText && ctaUrl && (
+              <a href={ctaUrl} {...linkAttrs(ctaUrlTarget)} class="btn-primary inline-block mt-6 text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{ctaText}</a>
+            )}
           </div>
           {headerImage && (
             <img src={headerImage.sourceUrl} alt={headerImage.altText || ''} class="mt-6 md:mt-0 w-full md:w-1/3 max-w-xs rounded-2xl object-cover aspect-[4/3] shadow-lg" />
@@ -193,16 +192,11 @@ const itemClass = isDark ? 'bg-ink/80' : 'feature-card';
             {item.subtitle && <p class={`mb-1 text-sm font-medium ${textClass}`}>{item.subtitle}</p>}
             {item.description && <div class={`prose prose-sm max-w-none mb-4 ${textClass}`} set:html={item.description} />}
             {item.ctaText && item.ctaUrl && (
-              <a href={item.ctaUrl} class="btn-primary mt-4 text-sm text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{item.ctaText}</a>
+              <a href={item.ctaUrl} {...linkAttrs(item.ctaUrlTarget)} class="btn-primary mt-4 text-sm text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{item.ctaText}</a>
             )}
           </div>
         ))}
       </div>
-      {ctaText && ctaUrl && (
-        <div class="mt-12 text-center">
-          <a href={ctaUrl} class="btn-primary text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{ctaText}</a>
-        </div>
-      )}
     </div>
   </section>
 )}
@@ -215,7 +209,7 @@ const itemClass = isDark ? 'bg-ink/80' : 'feature-card';
         {heading && <h2 class={`mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
         {description && <p class={`sm:text-lg ${textClass}`}>{description}</p>}
         {ctaText && ctaUrl && (
-          <a href={ctaUrl} class="btn-primary mt-6 text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{ctaText}</a>
+          <a href={ctaUrl} {...linkAttrs(ctaUrlTarget)} class="btn-primary mt-6 text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{ctaText}</a>
         )}
         {headerImage && (
           <img src={headerImage.sourceUrl} alt={headerImage.altText || ''} class="w-full max-w-xs rounded-2xl object-cover aspect-[4/3] shadow-lg mb-6 mt-20" />
@@ -235,7 +229,7 @@ const itemClass = isDark ? 'bg-ink/80' : 'feature-card';
               <div class="h-4 w-1/2 mt-4 border-t-2 accent-border"></div>
               {item.description && <div class={`prose prose-sm max-w-none ${textClass}`} set:html={item.description} />}
               {item.ctaText && item.ctaUrl && (
-                <a href={item.ctaUrl} class="btn-primary mt-4 text-sm text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{item.ctaText}</a>
+                <a href={item.ctaUrl} {...linkAttrs(item.ctaUrlTarget)} class="btn-primary mt-4 text-sm text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{item.ctaText}</a>
               )}
             </div>
           </div>
@@ -254,6 +248,9 @@ const itemClass = isDark ? 'bg-ink/80' : 'feature-card';
           <div class={headerImage ? 'flex-1' : 'max-w-screen-md'}>
             {heading && <h2 class={`mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
             {description && <p class={`sm:text-lg ${textClass}`}>{description}</p>}
+            {ctaText && ctaUrl && (
+              <a href={ctaUrl} {...linkAttrs(ctaUrlTarget)} class="btn-primary inline-block mt-6 text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{ctaText}</a>
+            )}
           </div>
           {headerImage && (
             <img src={headerImage.sourceUrl} alt={headerImage.altText || ''} class="mt-6 md:mt-0 w-full md:w-1/3 max-w-xs rounded-2xl object-cover aspect-[4/3] shadow-lg" />
@@ -277,7 +274,7 @@ const itemClass = isDark ? 'bg-ink/80' : 'feature-card';
                     {item.subtitle && <p class={`mb-1 text-lg font-medium ${textClass}`}>{item.subtitle}</p>}
                     {item.description && <div class={`prose prose-sm max-w-none ${textClass}`} set:html={item.description} />}
                     {item.ctaText && item.ctaUrl && (
-                      <a href={item.ctaUrl} class="btn-primary mt-3 text-sm text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{item.ctaText}</a>
+                      <a href={item.ctaUrl} {...linkAttrs(item.ctaUrlTarget)} class="btn-primary mt-3 text-sm text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{item.ctaText}</a>
                     )}
                   </div>
                 </div>
@@ -300,7 +297,7 @@ const itemClass = isDark ? 'bg-ink/80' : 'feature-card';
                     {item.subtitle && <p class={`mb-1 text-lg font-medium ${textClass}`}>{item.subtitle}</p>}
                     {item.description && <div class={`prose prose-sm max-w-none ${textClass}`} set:html={item.description} />}
                     {item.ctaText && item.ctaUrl && (
-                      <a href={item.ctaUrl} class="btn-primary mt-3 text-sm text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{item.ctaText}</a>
+                      <a href={item.ctaUrl} {...linkAttrs(item.ctaUrlTarget)} class="btn-primary mt-3 text-sm text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{item.ctaText}</a>
                     )}
                   </div>
                 </div>
@@ -323,7 +320,7 @@ const itemClass = isDark ? 'bg-ink/80' : 'feature-card';
                   {item.subtitle && <p class={`mb-1 text-sm font-medium ${textClass}`}>{item.subtitle}</p>}
                   {item.description && <div class={`prose prose-sm max-w-none ${textClass}`} set:html={item.description} />}
                   {item.ctaText && item.ctaUrl && (
-                    <a href={item.ctaUrl} class="btn-primary mt-3 text-sm text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{item.ctaText}</a>
+                    <a href={item.ctaUrl} {...linkAttrs(item.ctaUrlTarget)} class="btn-primary mt-3 text-sm text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{item.ctaText}</a>
                   )}
                 </div>
               </div>
@@ -331,11 +328,6 @@ const itemClass = isDark ? 'bg-ink/80' : 'feature-card';
           </div>
         )}
       </div>
-      {ctaText && ctaUrl && (
-        <div class="mt-12 text-center">
-          <a href={ctaUrl} class="btn-primary text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{ctaText}</a>
-        </div>
-      )}
     </div>
   </section>
 )}
@@ -349,6 +341,9 @@ const itemClass = isDark ? 'bg-ink/80' : 'feature-card';
           <div class={headerImage ? 'flex-1' : 'max-w-screen-md'}>
             {heading && <h2 class={`mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
             {description && <p class={`sm:text-lg ${textClass}`}>{description}</p>}
+            {ctaText && ctaUrl && (
+              <a href={ctaUrl} {...linkAttrs(ctaUrlTarget)} class="btn-primary inline-block mt-6 text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{ctaText}</a>
+            )}
           </div>
           {headerImage && (
             <img src={headerImage.sourceUrl} alt={headerImage.altText || ''} class="mt-6 md:mt-0 w-full md:w-1/3 max-w-xs rounded-2xl object-cover aspect-[4/3] shadow-lg" />
@@ -370,16 +365,11 @@ const itemClass = isDark ? 'bg-ink/80' : 'feature-card';
             <div class="h-4 w-1/2 mt-4 border-t-2 accent-border"></div>
             {item.description && <div class={`prose prose-sm max-w-none ${textClass}`} set:html={item.description} />}
             {item.ctaText && item.ctaUrl && (
-              <a href={item.ctaUrl} class="btn-primary mt-4 text-sm text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{item.ctaText}</a>
+              <a href={item.ctaUrl} {...linkAttrs(item.ctaUrlTarget)} class="btn-primary mt-4 text-sm text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{item.ctaText}</a>
             )}
           </div>
         ))}
       </div>
-      {ctaText && ctaUrl && (
-        <div class="mt-12 text-center">
-          <a href={ctaUrl} class="btn-primary text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{ctaText}</a>
-        </div>
-      )}
     </div>
   </section>
 )}
@@ -393,6 +383,9 @@ const itemClass = isDark ? 'bg-ink/80' : 'feature-card';
           <div class={headerImage ? 'flex-1' : 'max-w-screen-md'}>
             {heading && <h2 class={`mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
             {description && <p class={`sm:text-lg ${textClass}`}>{description}</p>}
+            {ctaText && ctaUrl && (
+              <a href={ctaUrl} {...linkAttrs(ctaUrlTarget)} class="btn-primary inline-block mt-6 text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{ctaText}</a>
+            )}
           </div>
           {headerImage && (
             <img src={headerImage.sourceUrl} alt={headerImage.altText || ''} class="mt-6 md:mt-0 w-full md:w-1/3 max-w-xs rounded-2xl object-cover aspect-[4/3] shadow-lg" />
@@ -409,16 +402,11 @@ const itemClass = isDark ? 'bg-ink/80' : 'feature-card';
             {item.subtitle && <p class={`mb-1 text-sm font-medium ${textClass}`}>{item.subtitle}</p>}
             {item.description && <div class={`prose prose-sm max-w-none ${textClass}`} set:html={item.description} />}
             {item.ctaText && item.ctaUrl && (
-              <a href={item.ctaUrl} class="btn-primary mt-4 text-sm text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{item.ctaText}</a>
+              <a href={item.ctaUrl} {...linkAttrs(item.ctaUrlTarget)} class="btn-primary mt-4 text-sm text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{item.ctaText}</a>
             )}
           </div>
         ))}
       </div>
-      {ctaText && ctaUrl && (
-        <div class="mt-12 text-center">
-          <a href={ctaUrl} class="btn-primary text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{ctaText}</a>
-        </div>
-      )}
     </div>
   </section>
 )}
@@ -432,6 +420,9 @@ const itemClass = isDark ? 'bg-ink/80' : 'feature-card';
           <div class={headerImage ? 'flex-1' : 'max-w-screen-md'}>
             {heading && <h2 class={`mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
             {description && <p class={`sm:text-lg ${textClass}`}>{description}</p>}
+            {ctaText && ctaUrl && (
+              <a href={ctaUrl} {...linkAttrs(ctaUrlTarget)} class="btn-primary inline-block mt-6 text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{ctaText}</a>
+            )}
           </div>
           {headerImage && (
             <img src={headerImage.sourceUrl} alt={headerImage.altText || ''} class="mt-6 md:mt-0 w-full md:w-1/3 max-w-xs rounded-2xl object-cover aspect-[4/3] shadow-lg" />
@@ -451,16 +442,11 @@ const itemClass = isDark ? 'bg-ink/80' : 'feature-card';
             {item.subtitle && <p class={`mb-1 text-sm font-medium ${textClass}`}>{item.subtitle}</p>}
             {item.description && <div class={`prose prose-sm max-w-none ${textClass}`} set:html={item.description} />}
             {item.ctaText && item.ctaUrl && (
-              <a href={item.ctaUrl} class="btn-primary mt-4 text-sm text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{item.ctaText}</a>
+              <a href={item.ctaUrl} {...linkAttrs(item.ctaUrlTarget)} class="btn-primary mt-4 text-sm text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{item.ctaText}</a>
             )}
           </div>
         ))}
       </div>
-      {ctaText && ctaUrl && (
-        <div class="mt-12 text-center">
-          <a href={ctaUrl} class="btn-primary text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{ctaText}</a>
-        </div>
-      )}
     </div>
   </section>
 )}
@@ -474,6 +460,9 @@ const itemClass = isDark ? 'bg-ink/80' : 'feature-card';
           <div class={headerImage ? 'flex-1' : 'max-w-screen-md'}>
             {heading && <h2 class={`mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold font-heading ${titleClass}`}>{heading}</h2>}
             {description && <p class={`sm:text-lg ${textClass}`}>{description}</p>}
+            {ctaText && ctaUrl && (
+              <a href={ctaUrl} {...linkAttrs(ctaUrlTarget)} class="btn-primary inline-block mt-6 text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{ctaText}</a>
+            )}
           </div>
           {headerImage && (
             <img src={headerImage.sourceUrl} alt={headerImage.altText || ''} class="mt-6 md:mt-0 w-full md:w-1/3 max-w-xs rounded-2xl object-cover aspect-[4/3] shadow-lg" />
@@ -495,22 +484,17 @@ const itemClass = isDark ? 'bg-ink/80' : 'feature-card';
               {item.subtitle && <p class={`mt-0.5 text-sm font-medium ${textClass}`}>{item.subtitle}</p>}
               {item.description && <div class={`prose prose-sm max-w-none mt-1 ${textClass}`} set:html={item.description} />}
               {item.ctaText && item.ctaUrl && (
-                <a href={item.ctaUrl} class="btn-primary mt-3 text-sm text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{item.ctaText}</a>
+                <a href={item.ctaUrl} {...linkAttrs(item.ctaUrlTarget)} class="btn-primary mt-3 text-sm text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{item.ctaText}</a>
               )}
             </div>
             {!item.ctaText && item.link && (
-              <a href={item.link} class="flex-shrink-0 accent-text hover:opacity-80 transition-colors">
+              <a href={item.link} {...linkAttrs(item.linkTarget)} class="flex-shrink-0 accent-text hover:opacity-80 transition-colors">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
               </a>
             )}
           </div>
         ))}
       </div>
-      {ctaText && ctaUrl && (
-        <div class="mt-12">
-          <a href={ctaUrl} class="btn-primary text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{ctaText}</a>
-        </div>
-      )}
     </div>
   </section>
 )}

@@ -1,12 +1,13 @@
 ---
 import type { WPACFFbFooterSection } from '../../types/wp';
+import { linkAttrs } from '../../lib/link-attrs';
 
 interface Props extends WPACFFbFooterSection {}
 
 const {
   logo, logoAlt, description, columns = [], copyright, socialLinks,
   navLinks = [], addresses = [], newsletterHeading, newsletterDescription,
-  ctaText, ctaUrl, cta2Text, cta2Url, variant = 'columns'
+  ctaText, ctaUrl, ctaUrlTarget, cta2Text, cta2Url, cta2UrlTarget, variant = 'columns'
 } = Astro.props;
 ---
 
@@ -27,7 +28,7 @@ const {
           <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-surface/70">
             {navLinks.map((link) => (
               <li>
-                <a href={link.url || '#'} class="accent-text-hover transition-colors me-4 md:me-6">{link.label}</a>
+                <a href={link.url || '#'} class="accent-text-hover transition-colors me-4 md:me-6" {...linkAttrs(link.urlTarget)}>{link.label}</a>
               </li>
             ))}
           </ul>
@@ -64,7 +65,7 @@ const {
               <ul class="text-surface/70 font-medium space-y-3">
                 {col.links?.map((link) => (
                   <li>
-                    <a href={link.url || '#'} class="accent-text-hover transition-colors text-sm">{link.label}</a>
+                    <a href={link.url || '#'} class="accent-text-hover transition-colors text-sm" {...linkAttrs(link.urlTarget)}>{link.label}</a>
                   </li>
                 ))}
               </ul>
@@ -137,7 +138,7 @@ const {
               <ul class="text-surface/70 font-medium space-y-3">
                 {col.links?.map((link) => (
                   <li>
-                    <a href={link.url || '#'} class="accent-text-hover transition-colors text-sm">{link.label}</a>
+                    <a href={link.url || '#'} class="accent-text-hover transition-colors text-sm" {...linkAttrs(link.urlTarget)}>{link.label}</a>
                   </li>
                 ))}
               </ul>
@@ -207,7 +208,7 @@ const {
           <ul class="flex flex-wrap items-center mt-4 sm:mt-0 text-sm font-medium text-surface/70">
             {navLinks.map((link) => (
               <li>
-                <a href={link.url || '#'} class="accent-text-hover transition-colors me-4 md:me-6">{link.label}</a>
+                <a href={link.url || '#'} class="accent-text-hover transition-colors me-4 md:me-6" {...linkAttrs(link.urlTarget)}>{link.label}</a>
               </li>
             ))}
           </ul>
@@ -228,10 +229,10 @@ const {
         )}
         <div class="flex flex-wrap justify-center gap-4">
           {ctaText && (
-            <a href={ctaUrl || '#'} class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-ink accent-bg rounded-lg accent-bg-hover transition-colors">{ctaText}</a>
+            <a href={ctaUrl || '#'} class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-ink accent-bg rounded-lg accent-bg-hover transition-colors" {...linkAttrs(ctaUrlTarget)}>{ctaText}</a>
           )}
           {cta2Text && (
-            <a href={cta2Url || '#'} class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-canvas border border-canvas/30 rounded-lg hover:bg-canvas/10 transition-colors">{cta2Text}</a>
+            <a href={cta2Url || '#'} class="btn-secondary text-canvas focus:ring-4 focus:ring-canvas/10" {...linkAttrs(cta2UrlTarget)}>{cta2Text}</a>
           )}
         </div>
       </div>
@@ -245,7 +246,7 @@ const {
             <ul class="text-surface/70 font-medium space-y-3">
               {col.links?.map((link) => (
                 <li>
-                  <a href={link.url || '#'} class="accent-text-hover transition-colors text-sm">{link.label}</a>
+                  <a href={link.url || '#'} {...linkAttrs(link.urlTarget)} class="accent-text-hover transition-colors text-sm">{link.label}</a>
                 </li>
               ))}
             </ul>
@@ -282,7 +283,7 @@ const {
             <ul class="text-surface/70 font-medium space-y-3">
               {col.links?.map((link) => (
                 <li>
-                  <a href={link.url || '#'} class="accent-text-hover transition-colors text-sm">{link.label}</a>
+                  <a href={link.url || '#'} {...linkAttrs(link.urlTarget)} class="accent-text-hover transition-colors text-sm">{link.label}</a>
                 </li>
               ))}
             </ul>

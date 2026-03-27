@@ -33,8 +33,10 @@ export interface WPThemeSettings {
   footerCtaText: string | null;
   footerCtaButtonText: string | null;
   footerCtaButtonUrl: string | null;
+  footerCtaButtonUrlTarget: string | null;
   footerCtaButton2Text: string | null;
   footerCtaButton2Url: string | null;
+  footerCtaButton2UrlTarget: string | null;
   footerNewsletterHeading: string | null;
   footerNewsletterDescription: string | null;
   footerAddresses: WPACFFbFooterAddress[] | null;
@@ -44,6 +46,7 @@ export interface WPThemeSettings {
   navbarSticky: boolean;
   navbarCtaText: string | null;
   navbarCtaUrl: string | null;
+  navbarCtaUrlTarget: string | null;
   navbarSearchPlaceholder: string | null;
   // Appearance
   btnRadius: string | null;
@@ -96,6 +99,13 @@ export interface WPSEO {
   };
 }
 
+/** Raw ACF link field as returned by GraphQL (before normalization). */
+export interface WPACFLink {
+  url?: string;
+  title?: string;
+  target?: string;
+}
+
 export interface WPACFBase {
   __typename?: string;
   fieldGroupName?: string;
@@ -126,8 +136,10 @@ export interface WPACFFbHeroSection extends WPACFBase {
   image?: WPImage;
   ctaText?: string;
   ctaUrl?: string;
+  ctaUrlTarget?: string | null;
   cta2Text?: string;
   cta2Url?: string;
+  cta2UrlTarget?: string | null;
   variant?: 'centered' | 'image_right' | 'image_left' | 'fullscreen' | 'video' | 'cover_split';
   badge?: string;
   videoUrl?: string;
@@ -140,8 +152,10 @@ export interface WPACFFbFeatureItem {
   subtitle?: string;
   description?: string;
   link?: string;
+  linkTarget?: string | null;
   ctaText?: string;
   ctaUrl?: string;
+  ctaUrlTarget?: string | null;
 }
 
 export interface WPACFFbFeaturesSection extends WPACFBase {
@@ -154,6 +168,7 @@ export interface WPACFFbFeaturesSection extends WPACFBase {
   image?: WPImage;
   ctaText?: string;
   ctaUrl?: string;
+  ctaUrlTarget?: string | null;
 }
 
 export interface WPACFFbCtaCardItem {
@@ -163,6 +178,7 @@ export interface WPACFFbCtaCardItem {
   value?: string;
   buttonText?: string;
   buttonUrl?: string;
+  buttonUrlTarget?: string | null;
 }
 
 export interface WPACFFbCtaIconItem {
@@ -170,6 +186,7 @@ export interface WPACFFbCtaIconItem {
   title?: string;
   description?: string;
   link?: string;
+  linkTarget?: string | null;
 }
 
 export interface WPACFFbCtaTabItem {
@@ -177,6 +194,7 @@ export interface WPACFFbCtaTabItem {
   description?: string;
   buttonText?: string;
   buttonUrl?: string;
+  buttonUrlTarget?: string | null;
   features?: string[];
 }
 
@@ -186,6 +204,7 @@ export interface WPACFFbCtaTableRow {
   change?: string;
   buttonText?: string;
   buttonUrl?: string;
+  buttonUrlTarget?: string | null;
 }
 
 export interface WPACFFbCtaSection extends WPACFBase {
@@ -193,8 +212,10 @@ export interface WPACFFbCtaSection extends WPACFBase {
   description?: string;
   buttonText?: string;
   buttonUrl?: string;
+  buttonUrlTarget?: string | null;
   button2Text?: string;
   button2Url?: string;
+  button2UrlTarget?: string | null;
   variant?: 'default' | 'with_image' | 'centered' | 'qr_code' | 'icon_cards' | 'table_cta' | 'newsletter' | 'app_download' | 'image_cards' | 'tabs_mobile' | 'dark';
   image?: WPImage;
   iconItems?: WPACFFbCtaIconItem[];
@@ -234,6 +255,7 @@ export interface WPACFFbContentSection extends WPACFBase {
   contentFeatures?: WPACFFbContentFeatureItem[];
   ctaText?: string;
   ctaUrl?: string;
+  ctaUrlTarget?: string | null;
 }
 
 export interface WPACFFbTestimonialItem {
@@ -264,6 +286,7 @@ export interface WPACFFbPlan {
   features?: WPACFFbPlanFeature[];
   ctaText?: string;
   ctaUrl?: string;
+  ctaUrlTarget?: string | null;
   highlighted?: boolean;
 }
 
@@ -292,7 +315,9 @@ export interface WPACFFbTeamMember {
   photo?: WPImage;
   social?: {
     linkedin?: string;
+    linkedinTarget?: string | null;
     twitter?: string;
+    twitterTarget?: string | null;
     email?: string;
   };
 }
@@ -362,12 +387,14 @@ export interface WPACFFbSocialProofSection extends WPACFBase {
   subtitle?: string;
   ctaText?: string;
   ctaUrl?: string;
+  ctaUrlTarget?: string | null;
 }
 
 export interface WPACFFbCustomerLogo {
   name?: string;
   image?: WPImage;
   url?: string;
+  urlTarget?: string | null;
   since?: string;
 }
 
@@ -383,6 +410,7 @@ export interface WPACFFbBlogPost {
   excerpt?: string;
   image?: WPImage;
   url?: string;
+  urlTarget?: string | null;
   category?: string;
   author?: string;
   authorAvatar?: WPImage;
@@ -395,6 +423,7 @@ export interface WPACFFbBlogSection extends WPACFBase {
   posts?: WPACFFbBlogPost[];
   ctaText?: string;
   ctaUrl?: string;
+  ctaUrlTarget?: string | null;
   variant?: 'cards' | 'list' | 'featured' | 'centered' | 'cards_image';
 }
 
@@ -403,6 +432,7 @@ export interface WPACFFbPortfolioProject {
   description?: string;
   image?: WPImage;
   url?: string;
+  urlTarget?: string | null;
   category?: string;
 }
 
@@ -412,6 +442,7 @@ export interface WPACFFbPortfolioSection extends WPACFBase {
   projects?: WPACFFbPortfolioProject[];
   ctaText?: string;
   ctaUrl?: string;
+  ctaUrlTarget?: string | null;
   variant?: 'cards' | 'minimal' | 'masonry';
 }
 
@@ -420,6 +451,7 @@ export interface WPACFFbBannerSection extends WPACFBase {
   icon?: string;
   ctaText?: string;
   ctaUrl?: string;
+  ctaUrlTarget?: string | null;
   dismissible?: boolean;
   variant?: 'top' | 'bottom' | 'info';
 }
@@ -432,6 +464,7 @@ export interface WPACFFbEvent {
   location?: string;
   ctaText?: string;
   ctaUrl?: string;
+  ctaUrlTarget?: string | null;
 }
 
 export interface WPACFFbEventScheduleSection extends WPACFBase {
@@ -446,6 +479,7 @@ export interface WPACFFbEventScheduleSection extends WPACFBase {
 export interface WPACFFbFooterLink {
   label?: string;
   url?: string;
+  urlTarget?: string | null;
 }
 
 export interface WPACFFbFooterColumn {
@@ -479,8 +513,10 @@ export interface WPACFFbFooterSection extends WPACFBase {
   newsletterDescription?: string;
   ctaText?: string;
   ctaUrl?: string;
+  ctaUrlTarget?: string | null;
   cta2Text?: string;
   cta2Url?: string;
+  cta2UrlTarget?: string | null;
   variant?: 'columns' | 'simple' | 'with_newsletter' | 'default' | 'addresses' | 'pre_footer_cta' | 'sitemap_centered';
 }
 
@@ -498,8 +534,10 @@ export interface WPACFFbPopup extends WPACFBase {
   image?: WPImage;
   ctaText?: string;
   ctaUrl?: string;
+  ctaUrlTarget?: string | null;
   cta2Text?: string;
   cta2Url?: string;
+  cta2UrlTarget?: string | null;
   variant?: 'centered' | 'with_image';
 }
 
@@ -509,6 +547,7 @@ export interface WPACFFbErrorPage extends WPACFBase {
   description?: string;
   ctaText?: string;
   ctaUrl?: string;
+  ctaUrlTarget?: string | null;
   variant?: 'centered' | 'illustration' | 'maintenance';
 }
 
@@ -544,8 +583,10 @@ export interface WPACFFbHeroHomepage extends WPACFBase {
   subtitle?: string;
   ctaText?: string;
   ctaUrl?: string;
+  ctaUrlTarget?: string | null;
   cta2Text?: string;
   cta2Url?: string;
+  cta2UrlTarget?: string | null;
   images?: WPImage[];
   showHeartAnimation?: boolean;
 }

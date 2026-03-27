@@ -1,4 +1,5 @@
 ---
+import { linkAttrs } from '../../lib/link-attrs';
 import type { WPACFFbPricingSection } from '../../types/wp';
 
 interface Props extends WPACFFbPricingSection {}
@@ -56,7 +57,7 @@ const { heading, description, plans = [] } = Astro.props;
             </ul>
           )}
           {plan.ctaText && plan.ctaUrl && (
-            <a href={plan.ctaUrl} class={`btn-primary mt-auto focus:ring-4 ${plan.highlighted ? 'text-canvas accent-bg accent-bg-hover accent-ring' : 'text-ink bg-surface hover:bg-ink hover:text-canvas focus:ring-ink/10'}`}>
+            <a href={plan.ctaUrl} {...linkAttrs(plan.ctaUrlTarget)} class={`btn-primary mt-auto focus:ring-4 ${plan.highlighted ? 'text-canvas accent-bg accent-bg-hover accent-ring' : 'btn-secondary accent-ring'}`}>
               {plan.ctaText}
             </a>
           )}

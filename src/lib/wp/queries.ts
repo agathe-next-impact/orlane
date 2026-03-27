@@ -664,10 +664,16 @@ export async function getThemeSettings(): Promise<WPThemeSettings> {
           footerColorScheme
           footerDescription
           footerCtaText
-          footerCtaButtonText
-          footerCtaButtonUrl
-          footerCtaButton2Text
-          footerCtaButton2Url
+          footerCtaButtonUrl {
+            url
+            title
+            target
+          }
+          footerCtaButton2Url {
+            url
+            title
+            target
+          }
           footerNewsletterHeading
           footerNewsletterDescription
           footerAddresses {
@@ -678,13 +684,20 @@ export async function getThemeSettings(): Promise<WPThemeSettings> {
           }
           footerNavLinks {
             label
-            url
+            url {
+              url
+              title
+              target
+            }
           }
           navbarVariant
           navbarColorScheme
           navbarSticky
-          navbarCtaText
-          navbarCtaUrl
+          navbarCtaUrl {
+            url
+            title
+            target
+          }
           navbarSearchPlaceholder
           btnRadius
           btnSize
@@ -734,8 +747,10 @@ export async function getThemeSettings(): Promise<WPThemeSettings> {
     footerCtaText: null,
     footerCtaButtonText: null,
     footerCtaButtonUrl: null,
+    footerCtaButtonUrlTarget: null,
     footerCtaButton2Text: null,
     footerCtaButton2Url: null,
+    footerCtaButton2UrlTarget: null,
     footerNewsletterHeading: null,
     footerNewsletterDescription: null,
     footerAddresses: null,
@@ -745,6 +760,7 @@ export async function getThemeSettings(): Promise<WPThemeSettings> {
     navbarSticky: true,
     navbarCtaText: null,
     navbarCtaUrl: null,
+    navbarCtaUrlTarget: null,
     navbarSearchPlaceholder: null,
     btnRadius: null,
     btnSize: null,
@@ -814,19 +830,28 @@ export async function getThemeSettings(): Promise<WPThemeSettings> {
       footerColorScheme: unwrapSelect(raw.footerColorScheme),
       footerDescription: (raw.footerDescription as string) || null,
       footerCtaText: (raw.footerCtaText as string) || null,
-      footerCtaButtonText: (raw.footerCtaButtonText as string) || null,
-      footerCtaButtonUrl: (raw.footerCtaButtonUrl as string) || null,
-      footerCtaButton2Text: (raw.footerCtaButton2Text as string) || null,
-      footerCtaButton2Url: (raw.footerCtaButton2Url as string) || null,
+      footerCtaButtonText: (raw.footerCtaButtonUrl as any)?.title || null,
+      footerCtaButtonUrl: (raw.footerCtaButtonUrl as any)?.url || null,
+      footerCtaButtonUrlTarget: (raw.footerCtaButtonUrl as any)?.target || null,
+      footerCtaButton2Text: (raw.footerCtaButton2Url as any)?.title || null,
+      footerCtaButton2Url: (raw.footerCtaButton2Url as any)?.url || null,
+      footerCtaButton2UrlTarget: (raw.footerCtaButton2Url as any)?.target || null,
       footerNewsletterHeading: (raw.footerNewsletterHeading as string) || null,
       footerNewsletterDescription: (raw.footerNewsletterDescription as string) || null,
       footerAddresses: (raw.footerAddresses as WPThemeSettings['footerAddresses']) || null,
-      footerNavLinks: (raw.footerNavLinks as WPThemeSettings['footerNavLinks']) || null,
+      footerNavLinks: Array.isArray(raw.footerNavLinks)
+        ? (raw.footerNavLinks as any[]).map((link: any) => ({
+            label: link.label || link.url?.title || null,
+            url: link.url?.url || null,
+            urlTarget: link.url?.target || null,
+          }))
+        : null,
       navbarVariant: unwrapSelect(raw.navbarVariant),
       navbarColorScheme: unwrapSelect(raw.navbarColorScheme),
       navbarSticky: raw.navbarSticky !== false,
-      navbarCtaText: (raw.navbarCtaText as string) || null,
-      navbarCtaUrl: (raw.navbarCtaUrl as string) || null,
+      navbarCtaText: (raw.navbarCtaUrl as any)?.title || null,
+      navbarCtaUrl: (raw.navbarCtaUrl as any)?.url || null,
+      navbarCtaUrlTarget: (raw.navbarCtaUrl as any)?.target || null,
       navbarSearchPlaceholder: (raw.navbarSearchPlaceholder as string) || null,
       btnRadius: unwrapSelect(raw.btnRadius),
       btnSize: unwrapSelect(raw.btnSize),

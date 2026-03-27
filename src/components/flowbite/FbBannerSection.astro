@@ -1,9 +1,10 @@
 ---
+import { linkAttrs } from '../../lib/link-attrs';
 import type { WPACFFbBannerSection } from '../../types/wp';
 
 interface Props extends WPACFFbBannerSection {}
 
-const { text, ctaText, ctaUrl, variant = 'top', dismissible = true, icon } = Astro.props;
+const { text, ctaText, ctaUrl, ctaUrlTarget, variant = 'top', dismissible = true, icon } = Astro.props;
 ---
 
 {variant === 'top' && (
@@ -18,7 +19,7 @@ const { text, ctaText, ctaUrl, variant = 'top', dismissible = true, icon } = Ast
         <p class="text-sm font-medium text-canvas">
           {text}
           {ctaText && ctaUrl && (
-            <a href={ctaUrl} class="inline font-medium accent-text underline underline-offset-2 accent-border hover:no-underline ms-1">
+            <a href={ctaUrl} {...linkAttrs(ctaUrlTarget)} class="inline font-medium accent-text underline underline-offset-2 accent-border hover:no-underline ms-1">
               {ctaText}
             </a>
           )}
@@ -50,7 +51,7 @@ const { text, ctaText, ctaUrl, variant = 'top', dismissible = true, icon } = Ast
         </p>
       )}
       {ctaText && ctaUrl && (
-        <a href={ctaUrl} class="ms-4 btn-primary text-sm text-canvas accent-bg accent-bg-hover flex-shrink-0">
+        <a href={ctaUrl} {...linkAttrs(ctaUrlTarget)} class="ms-4 btn-primary text-sm text-canvas accent-bg accent-bg-hover flex-shrink-0">
           {ctaText}
         </a>
       )}
@@ -83,7 +84,7 @@ const { text, ctaText, ctaUrl, variant = 'top', dismissible = true, icon } = Ast
           <span class="text-sm font-medium text-ink">{text}</span>
         )}
         {ctaText && ctaUrl && (
-          <a href={ctaUrl} class="text-sm font-medium accent-text underline hover:no-underline ms-2">{ctaText}</a>
+          <a href={ctaUrl} {...linkAttrs(ctaUrlTarget)} class="text-sm font-medium accent-text underline hover:no-underline ms-2">{ctaText}</a>
         )}
       </div>
       {dismissible && (

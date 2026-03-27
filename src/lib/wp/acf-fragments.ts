@@ -7,6 +7,7 @@
  * - No fieldGroupName on layouts — use __typename instead
  * - Single image fields: image { node { sourceUrl altText mediaDetails { width height } } }
  * - Gallery fields: images { nodes { sourceUrl altText mediaDetails { width height } } }
+ * - Link fields return { url title target } objects (ACF link type)
  */
 
 const imageNodeFields = `
@@ -17,6 +18,12 @@ const imageNodeFields = `
     height
   }
 `;
+
+const linkFields = `{
+  url
+  title
+  target
+}`;
 
 export const flexibleContentFragment = `
   flexibleContent {
@@ -30,10 +37,8 @@ export const flexibleContentFragment = `
           ${imageNodeFields}
         }
       }
-      ctaText
-      ctaUrl
-      cta2Text
-      cta2Url
+      ctaUrl ${linkFields}
+      cta2Url ${linkFields}
       variant
       badge
       videoUrl
@@ -55,8 +60,7 @@ export const flexibleContentFragment = `
           ${imageNodeFields}
         }
       }
-      ctaText
-      ctaUrl
+      ctaUrl ${linkFields}
       items {
         image {
           node {
@@ -67,18 +71,15 @@ export const flexibleContentFragment = `
         title
         subtitle
         description
-        link
-        ctaText
-        ctaUrl
+        link ${linkFields}
+        ctaUrl ${linkFields}
       }
     }
     ... on AcfFieldsFlexibleContentFbCtaSectionLayout {
       heading
       description
-      buttonText
-      buttonUrl
-      button2Text
-      button2Url
+      buttonUrl ${linkFields}
+      button2Url ${linkFields}
       variant
       colorVariation
       image {
@@ -90,14 +91,13 @@ export const flexibleContentFragment = `
         icon
         title
         description
-        link
+        link ${linkFields}
       }
       cards {
         title
         description
         value
-        buttonText
-        buttonUrl
+        buttonUrl ${linkFields}
         image {
           node {
             ${imageNodeFields}
@@ -108,14 +108,12 @@ export const flexibleContentFragment = `
         label
         value
         change
-        buttonText
-        buttonUrl
+        buttonUrl ${linkFields}
       }
       tabs {
         label
         description
-        buttonText
-        buttonUrl
+        buttonUrl ${linkFields}
         features
       }
       formAction
@@ -155,8 +153,7 @@ export const flexibleContentFragment = `
       contentFeatures {
         text
       }
-      ctaText
-      ctaUrl
+      ctaUrl ${linkFields}
     }
     ... on AcfFieldsFlexibleContentFbTestimonialsSectionLayout {
       heading
@@ -174,8 +171,7 @@ export const flexibleContentFragment = `
         period
         description
         highlighted
-        ctaText
-        ctaUrl
+        ctaUrl ${linkFields}
         features {
           text
           included
@@ -203,8 +199,8 @@ export const flexibleContentFragment = `
           }
         }
         social {
-          linkedin
-          twitter
+          linkedin ${linkFields}
+          twitter ${linkFields}
           email
         }
       }
@@ -258,8 +254,7 @@ export const flexibleContentFragment = `
       variant
       colorVariation
       subtitle
-      ctaText
-      ctaUrl
+      ctaUrl ${linkFields}
       image {
         node {
           ${imageNodeFields}
@@ -278,7 +273,7 @@ export const flexibleContentFragment = `
       colorVariation
       logos {
         name
-        url
+        url ${linkFields}
         since
         image {
           node {
@@ -290,14 +285,13 @@ export const flexibleContentFragment = `
     ... on AcfFieldsFlexibleContentFbBlogSectionLayout {
       heading
       description
-      ctaText
-      ctaUrl
+      ctaUrl ${linkFields}
       variant
       colorVariation
       posts {
         title
         excerpt
-        url
+        url ${linkFields}
         category
         author
         date
@@ -316,14 +310,13 @@ export const flexibleContentFragment = `
     ... on AcfFieldsFlexibleContentFbPortfolioSectionLayout {
       heading
       description
-      ctaText
-      ctaUrl
+      ctaUrl ${linkFields}
       variant
       colorVariation
       projects {
         title
         description
-        url
+        url ${linkFields}
         category
         image {
           node {
@@ -335,8 +328,7 @@ export const flexibleContentFragment = `
     ... on AcfFieldsFlexibleContentFbBannerSectionLayout {
       text
       icon
-      ctaText
-      ctaUrl
+      ctaUrl ${linkFields}
       dismissible
       variant
       colorVariation
@@ -352,18 +344,15 @@ export const flexibleContentFragment = `
         time
         description
         location
-        ctaText
-        ctaUrl
+        ctaUrl ${linkFields}
       }
     }
     ... on AcfFieldsFlexibleContentFbHeroHomepageLayout {
       heading
       highlight
       subtitle
-      ctaText
-      ctaUrl
-      cta2Text
-      cta2Url
+      ctaUrl ${linkFields}
+      cta2Url ${linkFields}
       images {
         nodes {
           ${imageNodeFields}

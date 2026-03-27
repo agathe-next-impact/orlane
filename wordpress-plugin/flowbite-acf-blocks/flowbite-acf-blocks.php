@@ -164,28 +164,18 @@ add_action('acf/include_fields', function () {
                                 'return_format' => 'array',
                             ],
                             [
-                                'key' => 'field_fb_hero_cta_text',
-                                'label' => 'Texte du bouton principal',
-                                'name' => 'cta_text',
-                                'type' => 'text',
-                            ],
-                            [
                                 'key' => 'field_fb_hero_cta_url',
-                                'label' => 'Lien du bouton principal',
+                                'label' => 'Bouton principal',
                                 'name' => 'cta_url',
-                                'type' => 'url',
-                            ],
-                            [
-                                'key' => 'field_fb_hero_cta2_text',
-                                'label' => 'Texte du bouton secondaire',
-                                'name' => 'cta2_text',
-                                'type' => 'text',
+                                'type' => 'link',
+                                'return_format' => 'array',
                             ],
                             [
                                 'key' => 'field_fb_hero_cta2_url',
-                                'label' => 'Lien du bouton secondaire',
+                                'label' => 'Bouton secondaire',
                                 'name' => 'cta2_url',
-                                'type' => 'url',
+                                'type' => 'link',
+                                'return_format' => 'array',
                             ],
                             [
                                 'key' => 'field_fb_hero_variant',
@@ -198,7 +188,6 @@ add_action('acf/include_fields', function () {
                                     'image_left' => '3. Image à gauche',
                                     'fullscreen' => '4. Plein écran avec fond',
                                     'video' => '5. Vidéo + texte',
-                                    'cover_split' => '6. Image latérale + détails',
                                 ],
                                 'default_value' => 'centered',
                             ],
@@ -306,17 +295,12 @@ add_action('acf/include_fields', function () {
                                 'instructions' => 'Image de section (utilisée dans les variantes avec image).',
                             ],
                             [
-                                'key' => 'field_fb_features_cta_text',
-                                'label' => 'Texte du bouton',
-                                'name' => 'cta_text',
-                                'type' => 'text',
-                                'instructions' => 'Bouton CTA (variantes 4, 6).',
-                            ],
-                            [
                                 'key' => 'field_fb_features_cta_url',
-                                'label' => 'Lien du bouton',
+                                'label' => 'Bouton CTA',
                                 'name' => 'cta_url',
-                                'type' => 'url',
+                                'type' => 'link',
+                                'return_format' => 'array',
+                                'instructions' => 'Bouton CTA (variantes 4, 6).',
                             ],
                             [
                                 'key' => 'field_fb_features_items',
@@ -478,21 +462,17 @@ add_action('acf/include_fields', function () {
                                         'key' => 'field_fb_feature_link',
                                         'label' => 'Lien',
                                         'name' => 'link',
-                                        'type' => 'url',
-                                        'instructions' => 'URL optionnelle (variante « En savoir plus »).',
-                                    ],
-                                    [
-                                        'key' => 'field_fb_feature_cta_text',
-                                        'label' => 'Texte du bouton',
-                                        'name' => 'cta_text',
-                                        'type' => 'text',
-                                        'instructions' => 'Bouton CTA pour cette fonctionnalité.',
+                                        'type' => 'link',
+                                        'return_format' => 'array',
+                                        'instructions' => 'Lien optionnel (variante « En savoir plus »).',
                                     ],
                                     [
                                         'key' => 'field_fb_feature_cta_url',
-                                        'label' => 'Lien du bouton',
+                                        'label' => 'Bouton CTA',
                                         'name' => 'cta_url',
-                                        'type' => 'url',
+                                        'type' => 'link',
+                                        'return_format' => 'array',
+                                        'instructions' => 'Bouton CTA pour cette fonctionnalité.',
                                     ],
                                 ],
                             ],
@@ -552,16 +532,11 @@ add_action('acf/include_fields', function () {
                                 'rows' => 3,
                             ],
                             [
-                                'key' => 'field_fb_cta_button_text',
-                                'label' => 'Texte du bouton',
-                                'name' => 'button_text',
-                                'type' => 'text',
-                            ],
-                            [
                                 'key' => 'field_fb_cta_button_url',
-                                'label' => 'Lien du bouton',
+                                'label' => 'Bouton principal',
                                 'name' => 'button_url',
-                                'type' => 'url',
+                                'type' => 'link',
+                                'return_format' => 'array',
                             ],
                             [
                                 'key' => 'field_fb_cta_variant',
@@ -585,20 +560,11 @@ add_action('acf/include_fields', function () {
                             ],
                             // Bouton secondaire (default, app_download)
                             [
-                                'key' => 'field_fb_cta_button2_text',
-                                'label' => 'Texte du bouton secondaire',
-                                'name' => 'button2_text',
-                                'type' => 'text',
-                                'conditional_logic' => [
-                                    [['field' => 'field_fb_cta_variant', 'operator' => '==', 'value' => 'default']],
-                                    [['field' => 'field_fb_cta_variant', 'operator' => '==', 'value' => 'app_download']],
-                                ],
-                            ],
-                            [
                                 'key' => 'field_fb_cta_button2_url',
-                                'label' => 'Lien du bouton secondaire',
+                                'label' => 'Bouton secondaire',
                                 'name' => 'button2_url',
-                                'type' => 'url',
+                                'type' => 'link',
+                                'return_format' => 'array',
                                 'conditional_logic' => [
                                     [['field' => 'field_fb_cta_variant', 'operator' => '==', 'value' => 'default']],
                                     [['field' => 'field_fb_cta_variant', 'operator' => '==', 'value' => 'app_download']],
@@ -636,7 +602,7 @@ add_action('acf/include_fields', function () {
                                     ['key' => 'field_fb_cta_icon_item_icon', 'label' => 'Icône', 'name' => 'icon', 'type' => 'text', 'instructions' => 'Nom de l\'icône (ex: chart, star, heart)'],
                                     ['key' => 'field_fb_cta_icon_item_title', 'label' => 'Titre', 'name' => 'title', 'type' => 'text'],
                                     ['key' => 'field_fb_cta_icon_item_desc', 'label' => 'Description', 'name' => 'description', 'type' => 'textarea', 'rows' => 2],
-                                    ['key' => 'field_fb_cta_icon_item_link', 'label' => 'Lien', 'name' => 'link', 'type' => 'url'],
+                                    ['key' => 'field_fb_cta_icon_item_link', 'label' => 'Lien', 'name' => 'link', 'type' => 'link', 'return_format' => 'array'],
                                 ],
                             ],
                             // Table rows repeater (table_cta)
@@ -657,8 +623,7 @@ add_action('acf/include_fields', function () {
                                     ['key' => 'field_fb_cta_table_label', 'label' => 'Libellé', 'name' => 'label', 'type' => 'text'],
                                     ['key' => 'field_fb_cta_table_value', 'label' => 'Valeur', 'name' => 'value', 'type' => 'text'],
                                     ['key' => 'field_fb_cta_table_change', 'label' => 'Variation', 'name' => 'change', 'type' => 'text'],
-                                    ['key' => 'field_fb_cta_table_btn_text', 'label' => 'Bouton', 'name' => 'button_text', 'type' => 'text'],
-                                    ['key' => 'field_fb_cta_table_btn_url', 'label' => 'Lien', 'name' => 'button_url', 'type' => 'url'],
+                                    ['key' => 'field_fb_cta_table_btn_url', 'label' => 'Bouton', 'name' => 'button_url', 'type' => 'link', 'return_format' => 'array'],
                                 ],
                             ],
                             // Newsletter fields
@@ -712,8 +677,7 @@ add_action('acf/include_fields', function () {
                                     ['key' => 'field_fb_cta_card_title', 'label' => 'Titre', 'name' => 'title', 'type' => 'text'],
                                     ['key' => 'field_fb_cta_card_desc', 'label' => 'Description', 'name' => 'description', 'type' => 'textarea', 'rows' => 2],
                                     ['key' => 'field_fb_cta_card_value', 'label' => 'Valeur mise en avant', 'name' => 'value', 'type' => 'text', 'instructions' => 'Ex: 2 500 €, 85%, etc.'],
-                                    ['key' => 'field_fb_cta_card_btn_text', 'label' => 'Texte du bouton', 'name' => 'button_text', 'type' => 'text'],
-                                    ['key' => 'field_fb_cta_card_btn_url', 'label' => 'Lien du bouton', 'name' => 'button_url', 'type' => 'url'],
+                                    ['key' => 'field_fb_cta_card_btn_url', 'label' => 'Bouton', 'name' => 'button_url', 'type' => 'link', 'return_format' => 'array'],
                                 ],
                             ],
                             // Tabs repeater (tabs_mobile)
@@ -733,8 +697,7 @@ add_action('acf/include_fields', function () {
                                 'sub_fields' => [
                                     ['key' => 'field_fb_cta_tab_label', 'label' => 'Titre de l\'onglet', 'name' => 'label', 'type' => 'text'],
                                     ['key' => 'field_fb_cta_tab_desc', 'label' => 'Description', 'name' => 'description', 'type' => 'textarea', 'rows' => 2],
-                                    ['key' => 'field_fb_cta_tab_btn_text', 'label' => 'Texte du bouton', 'name' => 'button_text', 'type' => 'text'],
-                                    ['key' => 'field_fb_cta_tab_btn_url', 'label' => 'Lien du bouton', 'name' => 'button_url', 'type' => 'url'],
+                                    ['key' => 'field_fb_cta_tab_btn_url', 'label' => 'Bouton', 'name' => 'button_url', 'type' => 'link', 'return_format' => 'array'],
                                     ['key' => 'field_fb_cta_tab_features', 'label' => 'Fonctionnalités', 'name' => 'features', 'type' => 'textarea', 'rows' => 4, 'instructions' => 'Une fonctionnalité par ligne.'],
                                 ],
                             ],
@@ -916,20 +879,11 @@ add_action('acf/include_fields', function () {
                                 ],
                             ],
                             [
-                                'key' => 'field_fb_content_cta_text',
-                                'label' => 'Texte du bouton',
-                                'name' => 'cta_text',
-                                'type' => 'text',
-                                'conditional_logic' => [
-                                    [[ 'field' => 'field_fb_content_layout', 'operator' => '==', 'value' => 'cards' ]],
-                                    [[ 'field' => 'field_fb_content_layout', 'operator' => '==', 'value' => 'features_list' ]],
-                                ],
-                            ],
-                            [
                                 'key' => 'field_fb_content_cta_url',
-                                'label' => 'URL du bouton',
+                                'label' => 'Bouton CTA',
                                 'name' => 'cta_url',
-                                'type' => 'url',
+                                'type' => 'link',
+                                'return_format' => 'array',
                                 'conditional_logic' => [
                                     [[ 'field' => 'field_fb_content_layout', 'operator' => '==', 'value' => 'cards' ]],
                                     [[ 'field' => 'field_fb_content_layout', 'operator' => '==', 'value' => 'features_list' ]],
@@ -1146,17 +1100,11 @@ add_action('acf/include_fields', function () {
                                         ],
                                     ],
                                     [
-                                        'key' => 'field_fb_plan_cta_text',
-                                        'label' => 'Texte du bouton',
-                                        'name' => 'cta_text',
-                                        'type' => 'text',
-                                        'default_value' => 'Choisir',
-                                    ],
-                                    [
                                         'key' => 'field_fb_plan_cta_url',
-                                        'label' => 'Lien du bouton',
+                                        'label' => 'Bouton CTA',
                                         'name' => 'cta_url',
-                                        'type' => 'url',
+                                        'type' => 'link',
+                                        'return_format' => 'array',
                                     ],
                                     [
                                         'key' => 'field_fb_plan_highlighted',
@@ -1352,13 +1300,15 @@ add_action('acf/include_fields', function () {
                                                 'key' => 'field_fb_member_linkedin',
                                                 'label' => 'LinkedIn',
                                                 'name' => 'linkedin',
-                                                'type' => 'url',
+                                                'type' => 'link',
+                                                'return_format' => 'array',
                                             ],
                                             [
                                                 'key' => 'field_fb_member_twitter',
                                                 'label' => 'Twitter/X',
                                                 'name' => 'twitter',
-                                                'type' => 'url',
+                                                'type' => 'link',
+                                                'return_format' => 'array',
                                             ],
                                             [
                                                 'key' => 'field_fb_member_email',
@@ -1841,22 +1791,12 @@ add_action('acf/include_fields', function () {
                                 ],
                             ],
                             [
-                                'key' => 'field_fb_sp_cta_text',
-                                'label' => 'Texte du bouton',
-                                'name' => 'ctaText',
-                                'type' => 'text',
-                                'instructions' => 'Texte du lien CTA (variante Icônes + CTA).',
-                                'show_in_graphql' => 1,
-                                'conditional_logic' => [
-                                    [[ 'field' => 'field_fb_sp_variant', 'operator' => '==', 'value' => 'icons_cta' ]],
-                                ],
-                            ],
-                            [
                                 'key' => 'field_fb_sp_cta_url',
-                                'label' => 'URL du bouton',
+                                'label' => 'Bouton CTA',
                                 'name' => 'ctaUrl',
-                                'type' => 'url',
-                                'instructions' => 'URL du lien CTA (variante Icônes + CTA).',
+                                'type' => 'link',
+                                'return_format' => 'array',
+                                'instructions' => 'Lien CTA (variante Icônes + CTA).',
                                 'show_in_graphql' => 1,
                                 'conditional_logic' => [
                                     [[ 'field' => 'field_fb_sp_variant', 'operator' => '==', 'value' => 'icons_cta' ]],
@@ -1929,7 +1869,8 @@ add_action('acf/include_fields', function () {
                                         'key' => 'field_fb_logo_url',
                                         'label' => 'Lien',
                                         'name' => 'url',
-                                        'type' => 'url',
+                                        'type' => 'link',
+                                        'return_format' => 'array',
                                     ],
                                     [
                                         'key' => 'field_fb_logo_since',
@@ -2037,7 +1978,8 @@ add_action('acf/include_fields', function () {
                                         'key' => 'field_fb_blog_post_url',
                                         'label' => 'Lien',
                                         'name' => 'url',
-                                        'type' => 'url',
+                                        'type' => 'link',
+                                        'return_format' => 'array',
                                     ],
                                     [
                                         'key' => 'field_fb_blog_post_category',
@@ -2067,16 +2009,11 @@ add_action('acf/include_fields', function () {
                                 ],
                             ],
                             [
-                                'key' => 'field_fb_blog_cta_text',
-                                'label' => 'Texte du lien "voir tout"',
-                                'name' => 'cta_text',
-                                'type' => 'text',
-                            ],
-                            [
                                 'key' => 'field_fb_blog_cta_url',
-                                'label' => 'URL du lien "voir tout"',
+                                'label' => 'Lien "voir tout"',
                                 'name' => 'cta_url',
-                                'type' => 'url',
+                                'type' => 'link',
+                                'return_format' => 'array',
                             ],
                             [
                                 'key' => 'field_fb_blog_variant',
@@ -2167,7 +2104,8 @@ add_action('acf/include_fields', function () {
                                         'key' => 'field_fb_project_url',
                                         'label' => 'Lien',
                                         'name' => 'url',
-                                        'type' => 'url',
+                                        'type' => 'link',
+                                        'return_format' => 'array',
                                     ],
                                     [
                                         'key' => 'field_fb_project_category',
@@ -2178,16 +2116,11 @@ add_action('acf/include_fields', function () {
                                 ],
                             ],
                             [
-                                'key' => 'field_fb_portfolio_cta_text',
-                                'label' => 'Texte du bouton',
-                                'name' => 'cta_text',
-                                'type' => 'text',
-                            ],
-                            [
                                 'key' => 'field_fb_portfolio_cta_url',
-                                'label' => 'Lien du bouton',
+                                'label' => 'Bouton CTA',
                                 'name' => 'cta_url',
-                                'type' => 'url',
+                                'type' => 'link',
+                                'return_format' => 'array',
                             ],
                             [
                                 'key' => 'field_fb_portfolio_variant',
@@ -2244,16 +2177,11 @@ add_action('acf/include_fields', function () {
                                 'rows' => 2,
                             ],
                             [
-                                'key' => 'field_fb_banner_cta_text',
-                                'label' => 'Texte du lien',
-                                'name' => 'cta_text',
-                                'type' => 'text',
-                            ],
-                            [
                                 'key' => 'field_fb_banner_cta_url',
-                                'label' => 'URL du lien',
+                                'label' => 'Lien CTA',
                                 'name' => 'cta_url',
-                                'type' => 'url',
+                                'type' => 'link',
+                                'return_format' => 'array',
                             ],
                             [
                                 'key' => 'field_fb_banner_dismissible',
@@ -2358,16 +2286,11 @@ add_action('acf/include_fields', function () {
                                         'type' => 'text',
                                     ],
                                     [
-                                        'key' => 'field_fb_event_cta_text',
-                                        'label' => 'Texte du lien',
-                                        'name' => 'cta_text',
-                                        'type' => 'text',
-                                    ],
-                                    [
                                         'key' => 'field_fb_event_cta_url',
-                                        'label' => 'URL du lien',
+                                        'label' => 'Lien CTA',
                                         'name' => 'cta_url',
-                                        'type' => 'url',
+                                        'type' => 'link',
+                                        'return_format' => 'array',
                                     ],
                                 ],
                             ],
@@ -2432,30 +2355,20 @@ add_action('acf/include_fields', function () {
                                 'type' => 'text',
                             ],
                             [
-                                'key' => 'field_fb_hero_hp_cta_text',
-                                'label' => 'Texte lien 1',
-                                'name' => 'cta_text',
-                                'type' => 'text',
+                                'key' => 'field_fb_hero_hp_cta_url',
+                                'label' => 'Lien 1',
+                                'name' => 'cta_url',
+                                'type' => 'link',
+                                'return_format' => 'array',
                                 'instructions' => 'Lien texte simple (souligné)',
                             ],
                             [
-                                'key' => 'field_fb_hero_hp_cta_url',
-                                'label' => 'URL lien 1',
-                                'name' => 'cta_url',
-                                'type' => 'url',
-                            ],
-                            [
-                                'key' => 'field_fb_hero_hp_cta2_text',
-                                'label' => 'Texte bouton 2',
-                                'name' => 'cta2_text',
-                                'type' => 'text',
-                                'instructions' => 'Bouton principal (avec fond)',
-                            ],
-                            [
                                 'key' => 'field_fb_hero_hp_cta2_url',
-                                'label' => 'URL bouton 2',
+                                'label' => 'Bouton 2',
                                 'name' => 'cta2_url',
-                                'type' => 'url',
+                                'type' => 'link',
+                                'return_format' => 'array',
+                                'instructions' => 'Bouton principal (avec fond)',
                             ],
                             [
                                 'key' => 'field_fb_hero_hp_images',
@@ -3147,27 +3060,12 @@ add_action('acf/include_fields', function (): void {
                 'instructions'      => 'La barre de navigation reste visible au scroll.',
             ],
             [
-                'key'               => 'field_ts_navbar_cta_text',
-                'label'             => 'Texte du bouton CTA',
-                'name'              => 'navbar_cta_text',
-                'type'              => 'text',
-                'instructions'      => 'Texte affiché dans le bouton d\'appel à l\'action (variante "Avec bouton CTA").',
-                'conditional_logic' => [
-                    [
-                        [
-                            'field'     => 'field_ts_navbar_variant',
-                            'operator'  => '==',
-                            'value'     => 'with_cta',
-                        ],
-                    ],
-                ],
-            ],
-            [
                 'key'               => 'field_ts_navbar_cta_url',
-                'label'             => 'Lien du bouton CTA',
+                'label'             => 'Bouton CTA',
                 'name'              => 'navbar_cta_url',
-                'type'              => 'url',
-                'instructions'      => 'URL du bouton d\'appel à l\'action.',
+                'type'              => 'link',
+                'return_format'     => 'array',
+                'instructions'      => 'Bouton d\'appel à l\'action (variante "Avec bouton CTA").',
                 'conditional_logic' => [
                     [
                         [
@@ -3290,40 +3188,11 @@ add_action('acf/include_fields', function (): void {
                 ],
             ],
             [
-                'key'               => 'field_ts_footer_cta_button_text',
-                'label'             => 'Bouton principal — Texte',
-                'name'              => 'footer_cta_button_text',
-                'type'              => 'text',
-                'conditional_logic' => [
-                    [
-                        [
-                            'field'     => 'field_ts_footer_variant',
-                            'operator'  => '==',
-                            'value'     => 'pre_footer_cta',
-                        ],
-                    ],
-                ],
-            ],
-            [
                 'key'               => 'field_ts_footer_cta_button_url',
-                'label'             => 'Bouton principal — URL',
+                'label'             => 'Bouton principal',
                 'name'              => 'footer_cta_button_url',
-                'type'              => 'url',
-                'conditional_logic' => [
-                    [
-                        [
-                            'field'     => 'field_ts_footer_variant',
-                            'operator'  => '==',
-                            'value'     => 'pre_footer_cta',
-                        ],
-                    ],
-                ],
-            ],
-            [
-                'key'               => 'field_ts_footer_cta_button2_text',
-                'label'             => 'Bouton secondaire — Texte',
-                'name'              => 'footer_cta_button2_text',
-                'type'              => 'text',
+                'type'              => 'link',
+                'return_format'     => 'array',
                 'conditional_logic' => [
                     [
                         [
@@ -3336,9 +3205,10 @@ add_action('acf/include_fields', function (): void {
             ],
             [
                 'key'               => 'field_ts_footer_cta_button2_url',
-                'label'             => 'Bouton secondaire — URL',
+                'label'             => 'Bouton secondaire',
                 'name'              => 'footer_cta_button2_url',
-                'type'              => 'url',
+                'type'              => 'link',
+                'return_format'     => 'array',
                 'conditional_logic' => [
                     [
                         [
@@ -3512,9 +3382,10 @@ add_action('acf/include_fields', function (): void {
                     ],
                     [
                         'key'           => 'field_ts_footer_nav_url',
-                        'label'         => 'URL',
+                        'label'         => 'Lien',
                         'name'          => 'url',
-                        'type'          => 'url',
+                        'type'          => 'link',
+                        'return_format' => 'array',
                         'show_in_graphql' => true,
                     ],
                 ],

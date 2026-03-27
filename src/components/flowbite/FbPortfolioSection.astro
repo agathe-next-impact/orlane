@@ -1,9 +1,10 @@
 ---
+import { linkAttrs } from '../../lib/link-attrs';
 import type { WPACFFbPortfolioSection } from '../../types/wp';
 
 interface Props extends WPACFFbPortfolioSection {}
 
-const { heading, description, projects = [], variant = 'cards', ctaText, ctaUrl } = Astro.props;
+const { heading, description, projects = [], variant = 'cards', ctaText, ctaUrl, ctaUrlTarget } = Astro.props;
 ---
 
 {variant === 'cards' && (
@@ -32,7 +33,7 @@ const { heading, description, projects = [], variant = 'cards', ctaText, ctaUrl 
               {project.title && (
                 <h3 class="text-xl font-bold text-canvas mb-1">
                   {project.url ? (
-                    <a href={project.url} class="accent-text-hover transition-colors">{project.title}</a>
+                    <a href={project.url} {...linkAttrs(project.urlTarget)} class="accent-text-hover transition-colors">{project.title}</a>
                   ) : project.title}
                 </h3>
               )}
@@ -45,7 +46,7 @@ const { heading, description, projects = [], variant = 'cards', ctaText, ctaUrl 
       </div>
       {ctaText && ctaUrl && (
         <div class="text-center mt-12">
-          <a href={ctaUrl} class="btn-primary text-canvas accent-bg accent-bg-hover focus:ring-4 focus:outline-none accent-ring">
+          <a href={ctaUrl} {...linkAttrs(ctaUrlTarget)} class="btn-primary text-canvas accent-bg accent-bg-hover focus:ring-4 focus:outline-none accent-ring">
             {ctaText}
           </a>
         </div>
@@ -62,7 +63,7 @@ const { heading, description, projects = [], variant = 'cards', ctaText, ctaUrl 
       )}
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map((project) => (
-          <a href={project.url || '#'} class="group block">
+          <a href={project.url || '#'} {...linkAttrs(project.urlTarget)} class="group block">
             {project.image && (
               <img class="w-full h-48 object-cover rounded-lg mb-4 group-hover:opacity-90 transition-opacity" src={project.image.sourceUrl} alt={project.image.altText || project.title || ''} loading="lazy" />
             )}
@@ -103,7 +104,7 @@ const { heading, description, projects = [], variant = 'cards', ctaText, ctaUrl 
               )}
               {project.title && (
                 <h3 class="text-lg font-bold text-ink">
-                  {project.url ? <a href={project.url} class="accent-text-hover transition-colors">{project.title}</a> : project.title}
+                  {project.url ? <a href={project.url} {...linkAttrs(project.urlTarget)} class="accent-text-hover transition-colors">{project.title}</a> : project.title}
                 </h3>
               )}
             </div>

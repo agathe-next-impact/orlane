@@ -1,9 +1,10 @@
 ---
 import type { WPACFFbPopup } from '../../types/wp';
+import { linkAttrs } from '../../lib/link-attrs';
 
 interface Props extends WPACFFbPopup {}
 
-const { heading, description, image, ctaText, ctaUrl, cta2Text, cta2Url, variant = 'centered' } = Astro.props;
+const { heading, description, image, ctaText, ctaUrl, ctaUrlTarget, cta2Text, cta2Url, cta2UrlTarget, variant = 'centered' } = Astro.props;
 ---
 
 {variant === 'centered' && (
@@ -27,7 +28,7 @@ const { heading, description, image, ctaText, ctaUrl, cta2Text, cta2Url, variant
           )}
           <div class="flex justify-center gap-3">
             {ctaText && ctaUrl && (
-              <a href={ctaUrl} class="btn-primary text-sm text-canvas accent-bg accent-bg-hover">
+              <a href={ctaUrl} {...linkAttrs(ctaUrlTarget)} class="btn-primary text-sm text-canvas accent-bg accent-bg-hover">
                 {ctaText}
               </a>
             )}
@@ -66,7 +67,7 @@ const { heading, description, image, ctaText, ctaUrl, cta2Text, cta2Url, variant
               <p class="mb-6 text-ink/70">{description}</p>
             )}
             {ctaText && ctaUrl && (
-              <a href={ctaUrl} class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium text-canvas accent-bg accent-bg-hover rounded-lg transition-colors">
+              <a href={ctaUrl} {...linkAttrs(ctaUrlTarget)} class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium text-canvas accent-bg accent-bg-hover rounded-lg transition-colors">
                 {ctaText}
               </a>
             )}

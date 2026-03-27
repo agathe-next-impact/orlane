@@ -28,9 +28,48 @@ interface Props {
 const { blocks = [] } = Astro.props;
 
 /**
- * Normalizes WPGraphQL for ACF v2 image data to flat WPImage format.
- * v2 wraps single images in { node: { sourceUrl, ... } } and galleries in { nodes: [...] }.
- * Components expect flat { sourceUrl, altText, mediaDetails } format.
+ * Checks if a value is an ACF link object ({ url, title, target }).
+ */
+function isAcfLink(val: any): boolean {
+  return val && typeof val === 'object' && !Array.isArray(val)
+    && 'url' in val && ('title' in val || 'target' in val)
+    && !('sourceUrl' in val) && !('node' in val) && !('nodes' in val);
+}
+
+/**
+ * ACF link field mappings: fieldName → companion text field name.
+ * When a link object is detected, it is flattened:
+ *   { url, title, target } → fieldName = url, textField = title, fieldName + 'Target' = target
+ * This keeps components backward-compatible (they still use ctaText + ctaUrl as strings).
+ */
+const linkTextMap: Record<string, string> = {
+  ctaUrl: 'ctaText',
+  cta2Url: 'cta2Text',
+  buttonUrl: 'buttonText',
+  button2Url: 'button2Text',
+  ctaUrl: 'ctaText',
+};
+
+/**
+ * Flattens an ACF link object into separate url/text/target properties.
+ */
+function flattenLink(normalized: any, key: string, value: any): void {
+  normalized[key] = value.url || '';
+  // Populate companion text field from link title
+  const textField = linkTextMap[key];
+  if (textField && value.title) {
+    normalized[textField] = value.title;
+  }
+  // Store target for <a> rendering (e.g. "_blank")
+  normalized[key + 'Target'] = value.target || null;
+}
+
+/**
+ * Normalizes WPGraphQL for ACF v2 data to flat format.
+ * - Images: { node: { sourceUrl, ... } } → { sourceUrl, ... }
+ * - Galleries: { nodes: [...] } → [...]
+ * - Links: { url, title, target } → flattened to url string + companion text/target fields
+ * - Selects: ["value"] → "value"
  */
 function normalizeBlock(block: any): any {
   if (!block || typeof block !== 'object') return block;
@@ -39,13 +78,25 @@ function normalizeBlock(block: any): any {
 
   for (const [key, value] of Object.entries(normalized)) {
     if (value && typeof value === 'object' && !Array.isArray(value)) {
+      // ACF link: { url, title, target } → flatten to string + companions
+      if (isAcfLink(value)) {
+        flattenLink(normalized, key, value);
+        continue;
+      }
       // Single image: { node: { sourceUrl, altText, ... } } → { sourceUrl, altText, ... }
       if ('node' in (value as any) && (value as any).node?.sourceUrl) {
         normalized[key] = (value as any).node;
+        continue;
       }
       // Gallery: { nodes: [{ sourceUrl, ... }] } → [{ sourceUrl, ... }]
-      else if ('nodes' in (value as any) && Array.isArray((value as any).nodes)) {
+      if ('nodes' in (value as any) && Array.isArray((value as any).nodes)) {
         normalized[key] = (value as any).nodes;
+        continue;
+      }
+      // Nested group (e.g. social { linkedin, twitter }) — recurse into it
+      const nestedNormalized = normalizeBlock(value);
+      if (nestedNormalized !== value) {
+        normalized[key] = nestedNormalized;
       }
     }
 

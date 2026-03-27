@@ -1,5 +1,6 @@
 ---
 import type { WPACFFbCustomerLogosSection } from '../../types/wp';
+import { linkAttrs } from '../../lib/link-attrs';
 
 interface Props extends WPACFFbCustomerLogosSection {}
 
@@ -21,7 +22,7 @@ const { heading, description, logos = [], variant = 'grid' } = Astro.props;
       )}
       <div class="grid grid-cols-2 gap-8 sm:gap-12 md:grid-cols-3 lg:grid-cols-6">
         {logos.map((logo) => (
-          <a href={logo.url || '#'} class="flex justify-center items-center group" target={logo.url ? '_blank' : undefined} rel={logo.url ? 'noopener noreferrer' : undefined}>
+          <a href={logo.url || '#'} class="flex justify-center items-center group" {...linkAttrs(logo.urlTarget)}>
             {logo.image ? (
               <img
                 src={logo.image.sourceUrl}
@@ -48,7 +49,7 @@ const { heading, description, logos = [], variant = 'grid' } = Astro.props;
       )}
       <div class="flex flex-wrap justify-center items-center gap-8 lg:gap-16">
         {logos.map((logo) => (
-          <a href={logo.url || '#'} class="flex justify-center items-center group" target={logo.url ? '_blank' : undefined} rel={logo.url ? 'noopener noreferrer' : undefined}>
+          <a href={logo.url || '#'} class="flex justify-center items-center group" {...linkAttrs(logo.urlTarget)}>
             {logo.image ? (
               <img
                 src={logo.image.sourceUrl}
@@ -83,8 +84,7 @@ const { heading, description, logos = [], variant = 'grid' } = Astro.props;
           <a
             href={logo.url || '#'}
             class="flex flex-col items-center p-6 bg-surface/50 rounded-lg hover:bg-surface transition-colors group"
-            target={logo.url ? '_blank' : undefined}
-            rel={logo.url ? 'noopener noreferrer' : undefined}
+            {...linkAttrs(logo.urlTarget)}
           >
             {logo.image ? (
               <img
@@ -130,7 +130,7 @@ const { heading, description, logos = [], variant = 'grid' } = Astro.props;
         <div class="lg:w-2/3 mt-8 lg:mt-0">
           <div class="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4">
             {logos.map((logo) => (
-              <a href={logo.url || '#'} class="flex justify-center items-center group" target={logo.url ? '_blank' : undefined} rel={logo.url ? 'noopener noreferrer' : undefined}>
+              <a href={logo.url || '#'} class="flex justify-center items-center group" {...linkAttrs(logo.urlTarget)}>
                 {logo.image ? (
                   <img
                     src={logo.image.sourceUrl}

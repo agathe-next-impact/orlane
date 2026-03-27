@@ -1,10 +1,11 @@
 ---
+import { linkAttrs } from '../../lib/link-attrs';
 import type { WPACFFbHeroHomepage } from '../../types/wp';
 import AnimatedHeartSVG from '../AnimatedHeartSVG.astro';
 
 interface Props extends WPACFFbHeroHomepage {}
 
-const { heading, highlight, subtitle, ctaText, ctaUrl, cta2Text, cta2Url, images = [], showHeartAnimation = true } = Astro.props;
+const { heading, highlight, subtitle, ctaText, ctaUrl, cta2Text, cta2Url, ctaUrlTarget, cta2UrlTarget, images = [], showHeartAnimation = true } = Astro.props;
 ---
 
 <section class="relative h-[calc(100vh-4rem)] w-fullhero bg-gradient-to-br from-surface py-6 to-canvas overflow-hidden">
@@ -33,10 +34,10 @@ const { heading, highlight, subtitle, ctaText, ctaUrl, cta2Text, cta2Url, images
         )}
         <div class="flex flex-wrap gap-4">
           {ctaText && ctaUrl && (
-            <a href={ctaUrl} class="btn-primary text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{ctaText}</a>
+            <a href={ctaUrl} {...linkAttrs(ctaUrlTarget)} class="btn-primary text-canvas accent-bg accent-bg-hover focus:ring-4 accent-ring">{ctaText}</a>
           )}
           {cta2Text && cta2Url && (
-            <a href={cta2Url} class="btn-secondary btn-secondary--outlined accent-text accent-border focus:ring-4 accent-ring">{cta2Text}</a>
+            <a href={cta2Url} {...linkAttrs(cta2UrlTarget)} class="btn-secondary accent-text focus:ring-4 accent-ring">{cta2Text}</a>
           )}
         </div>
       </div>

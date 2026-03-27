@@ -148,6 +148,18 @@
   color: var(--block-text);
 }
 
+.color-variation :where(.btn-secondary) {
+  color: var(--block-title) !important;
+  border-color: color-mix(in srgb, var(--block-title) 30%, transparent) !important;
+}
+.color-variation :where(.btn-secondary):hover {
+  background: color-mix(in srgb, var(--block-title) 10%, transparent) !important;
+}
+
+.color-variation :where(.btn-primary) {
+  color: var(--block-bg) !important;
+}
+
 /* Block accent utilities — use --block-accent from variation or default sauge */
 .accent-border { border-color: var(--block-accent) !important; }
 .accent-text { color: var(--block-accent) !important; }
@@ -224,7 +236,7 @@
   /* Colors via accent utilities — add accent-bg accent-bg-hover text-canvas */
 }
 
-/* Secondary CTA button — outlined (default) */
+/* Secondary CTA button — style driven by --btn2-style (outlined|ghost|filled|link) */
 .btn-secondary {
   display: inline-flex;
   align-items: center;
@@ -238,47 +250,53 @@
   border-radius: var(--btn-radius);
   box-shadow: var(--btn-shadow);
   transition: background-color 0.15s, box-shadow 0.15s;
+  /* Default visual props — overridden by style variants below */
+  border: var(--_btn2-border, 1px solid rgb(var(--color-ink-rgb) / 0.3));
+  color: var(--_btn2-color, rgb(var(--color-ink-rgb)));
+  background: var(--_btn2-bg, transparent);
+}
+.btn-secondary:hover {
+  background: var(--_btn2-bg-hover, rgb(var(--color-ink-rgb) / 0.1));
 }
 
-/* Secondary style variants — applied automatically via --btn2-style */
-.btn-secondary--outlined {
-  border: 1px solid;
-  border-color: rgb(var(--color-ink-rgb) / 0.3);
-  color: rgb(var(--color-ink-rgb));
-  background: transparent;
-}
-.btn-secondary--outlined:hover {
-  background: rgb(var(--color-ink-rgb) / 0.1);
-}
-
-.btn-secondary--ghost {
-  border: none;
-  color: rgb(var(--color-ink-rgb));
-  background: transparent;
-}
-.btn-secondary--ghost:hover {
-  background: rgb(var(--color-ink-rgb) / 0.08);
-}
-
-.btn-secondary--filled {
-  border: none;
-  color: rgb(var(--color-ink-rgb));
-  background: rgb(var(--color-surface-rgb) / 0.6);
-}
-.btn-secondary--filled:hover {
-  background: rgb(var(--color-surface-rgb) / 0.9);
-}
-
-.btn-secondary--link {
-  border: none;
-  background: transparent;
-  padding: 0;
-  box-shadow: none;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-.btn-secondary--link:hover {
-  opacity: 0.7;
+/* Style variants — auto-applied via --btn2-style from theme, or manually via modifier class */
+@supports (--btn2-style: outlined) {
+  [style*="--btn2-style: outlined"] .btn-secondary,
+  .btn-secondary--outlined {
+    --_btn2-border: 1px solid rgb(var(--color-ink-rgb) / 0.3);
+    --_btn2-color: rgb(var(--color-ink-rgb));
+    --_btn2-bg: transparent;
+    --_btn2-bg-hover: rgb(var(--color-ink-rgb) / 0.1);
+  }
+  [style*="--btn2-style: ghost"] .btn-secondary,
+  .btn-secondary--ghost {
+    --_btn2-border: none;
+    --_btn2-color: rgb(var(--color-ink-rgb));
+    --_btn2-bg: transparent;
+    --_btn2-bg-hover: rgb(var(--color-ink-rgb) / 0.08);
+  }
+  [style*="--btn2-style: filled"] .btn-secondary,
+  .btn-secondary--filled {
+    --_btn2-border: none;
+    --_btn2-color: rgb(var(--color-ink-rgb));
+    --_btn2-bg: rgb(var(--color-surface-rgb) / 0.6);
+    --_btn2-bg-hover: rgb(var(--color-surface-rgb) / 0.9);
+  }
+  [style*="--btn2-style: link"] .btn-secondary,
+  .btn-secondary--link {
+    --_btn2-border: none;
+    --_btn2-color: rgb(var(--color-ink-rgb));
+    --_btn2-bg: transparent;
+    --_btn2-bg-hover: transparent;
+    padding: 0;
+    box-shadow: none;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  [style*="--btn2-style: link"] .btn-secondary:hover,
+  .btn-secondary--link:hover {
+    opacity: 0.7;
+  }
 }
 
 /* ── Theme-driven input styles ──────────────────────────────────────── */
